@@ -1,0 +1,1049 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Online Essentials — Sales Script v2</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Syne:wght@600;700;800&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0e0f11; --surface: #16181c; --surface2: #1e2026; --border: #2a2d35;
+    --accent: #b5f23c; --accent-dim: rgba(181,242,60,0.12); --text: #eceef2;
+    --text-mid: #9a9fad; --text-dim: #5a5f6d; --red: #ff5a5a; --blue: #5ab4ff;
+    --orange: #ffaa5a; --purple: #c07aff; --teal: #5affd4;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { background: var(--bg); color: var(--text); font-family: 'DM Sans', sans-serif; font-size: 15px; line-height: 1.6; }
+  #sidebar { position: fixed; top: 0; left: 0; width: 240px; height: 100vh; background: var(--surface); border-right: 1px solid var(--border); padding: 28px 0; overflow-y: auto; z-index: 100; }
+  #sidebar .logo { padding: 0 20px 24px; border-bottom: 1px solid var(--border); margin-bottom: 16px; }
+  #sidebar .logo span { font-family: 'Syne', sans-serif; font-weight: 800; font-size: 13px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--accent); }
+  #sidebar .logo p { font-size: 11px; color: var(--text-dim); margin-top: 2px; }
+  .nav-section { padding: 0 12px 8px; }
+  .nav-label { font-family: 'DM Mono', monospace; font-size: 10px; color: var(--text-dim); text-transform: uppercase; letter-spacing: 0.1em; padding: 8px 8px 4px; }
+  .nav-item { display: flex; align-items: center; gap: 8px; padding: 7px 8px; border-radius: 6px; cursor: pointer; font-size: 13px; color: var(--text-mid); transition: all 0.15s; text-decoration: none; }
+  .nav-item:hover { background: var(--surface2); color: var(--text); }
+  .nav-item.active { background: var(--accent-dim); color: var(--accent); }
+  .nav-item .dot { width: 6px; height: 6px; border-radius: 50%; background: var(--text-dim); flex-shrink: 0; }
+  .nav-item.active .dot { background: var(--accent); }
+  #main { margin-left: 240px; padding: 40px 48px; max-width: 900px; }
+  .phase { margin-bottom: 48px; }
+  .phase-tag { font-family: 'DM Mono', monospace; font-size: 11px; color: var(--text-dim); text-transform: uppercase; letter-spacing: 0.12em; margin-bottom: 8px; }
+  .phase-title { font-family: 'Syne', sans-serif; font-size: 26px; font-weight: 800; color: var(--text); margin-bottom: 6px; }
+  .phase-subtitle { font-size: 14px; color: var(--text-mid); margin-bottom: 28px; }
+  .divider { border: none; border-top: 1px solid var(--border); margin: 40px 0; }
+  .context-banner { background: rgba(90,180,255,0.07); border: 1px solid rgba(90,180,255,0.2); border-radius: 10px; padding: 16px 20px; margin-bottom: 32px; font-size: 13px; color: var(--text-mid); }
+  .context-banner strong { color: var(--blue); display: block; margin-bottom: 6px; font-family: 'DM Mono', monospace; font-size: 11px; text-transform: uppercase; letter-spacing: 0.08em; }
+  .context-banner ul { padding-left: 16px; }
+  .context-banner li { margin-bottom: 4px; }
+  .script-block { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; overflow: hidden; margin-bottom: 16px; }
+  .script-header { display: flex; align-items: center; gap: 12px; padding: 14px 18px; background: var(--surface2); border-bottom: 1px solid var(--border); }
+  .script-role { font-family: 'DM Mono', monospace; font-size: 11px; font-weight: 500; text-transform: uppercase; letter-spacing: 0.1em; padding: 3px 8px; border-radius: 4px; }
+  .role-you { background: var(--accent-dim); color: var(--accent); }
+  .role-tip { background: rgba(90,180,255,0.1); color: var(--blue); }
+  .role-warn { background: rgba(255,90,90,0.1); color: var(--red); }
+  .role-alt { background: rgba(255,170,90,0.1); color: var(--orange); }
+  .script-body { padding: 16px 18px; color: var(--text); line-height: 1.8; }
+  .script-body em { font-style: italic; color: var(--text-mid); }
+  .insight { border-left: 3px solid var(--accent); background: var(--accent-dim); padding: 12px 16px; border-radius: 0 8px 8px 0; margin: 16px 0; font-size: 14px; color: var(--text); }
+  .insight strong { color: var(--accent); }
+  .insight-blue { border-left: 3px solid var(--blue); background: rgba(90,180,255,0.07); padding: 12px 16px; border-radius: 0 8px 8px 0; margin: 16px 0; font-size: 14px; color: var(--text); }
+  .insight-blue strong { color: var(--blue); }
+  .signal-row { display: flex; flex-wrap: wrap; gap: 8px; margin: 12px 0; }
+  .signal { font-size: 12px; padding: 4px 10px; border-radius: 20px; font-family: 'DM Mono', monospace; cursor: pointer; }
+  .signal-website { background: rgba(90,255,212,0.1); color: var(--teal); }
+  .signal-seo { background: rgba(181,242,60,0.1); color: var(--accent); }
+  .signal-ads { background: rgba(255,170,90,0.1); color: var(--orange); }
+  .signal-listings { background: rgba(90,180,255,0.1); color: var(--blue); }
+  .signal-social { background: rgba(192,122,255,0.1); color: var(--purple); }
+  .product-accordion { border: 1px solid var(--border); border-radius: 12px; overflow: hidden; margin-bottom: 12px; }
+  .product-toggle { display: flex; align-items: center; justify-content: space-between; padding: 16px 20px; background: var(--surface2); cursor: pointer; transition: background 0.15s; user-select: none; }
+  .product-toggle:hover { background: #22252d; }
+  .product-toggle-left { display: flex; align-items: center; gap: 12px; }
+  .product-icon { width: 32px; height: 32px; border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: 15px; }
+  .product-name { font-family: 'Syne', sans-serif; font-size: 16px; font-weight: 700; color: var(--text); }
+  .product-price { font-family: 'DM Mono', monospace; font-size: 12px; color: var(--text-mid); }
+  .chevron { color: var(--text-dim); font-size: 14px; transition: transform 0.2s; }
+  .product-accordion.open .chevron { transform: rotate(180deg); }
+  .product-body { display: none; padding: 20px; border-top: 1px solid var(--border); background: var(--surface); }
+  .product-accordion.open .product-body { display: block; }
+  .pitch-line { font-size: 14px; color: var(--text-mid); font-style: italic; margin-bottom: 16px; padding-bottom: 16px; border-bottom: 1px solid var(--border); }
+  .plans-row { display: grid; gap: 10px; margin-bottom: 16px; }
+  .plans-row.two { grid-template-columns: 1fr 1fr; }
+  .plans-row.three { grid-template-columns: 1fr 1fr 1fr; }
+  .plan-card { background: var(--surface2); border: 1px solid var(--border); border-radius: 8px; padding: 12px 14px; }
+  .plan-name { font-family: 'DM Mono', monospace; font-size: 11px; text-transform: uppercase; letter-spacing: 0.08em; color: var(--accent); margin-bottom: 4px; }
+  .plan-price { font-family: 'Syne', sans-serif; font-size: 18px; font-weight: 700; color: var(--text); margin-bottom: 8px; }
+  .plan-price span { font-size: 12px; font-weight: 400; color: var(--text-dim); font-family: 'DM Sans', sans-serif; }
+  .plan-features { list-style: none; font-size: 12px; color: var(--text-mid); }
+  .plan-features li { padding: 2px 0; display: flex; gap: 6px; align-items: flex-start; }
+  .plan-features li::before { content: '+'; color: var(--accent); font-weight: 700; flex-shrink: 0; }
+  .ksp-section h4 { font-family: 'DM Mono', monospace; font-size: 11px; text-transform: uppercase; letter-spacing: 0.1em; color: var(--text-dim); margin-bottom: 10px; margin-top: 16px; }
+  .ksp-list { display: flex; flex-direction: column; gap: 8px; margin-bottom: 16px; }
+  .ksp-item { display: flex; gap: 10px; font-size: 13px; color: var(--text-mid); }
+  .ksp-item::before { content: '◆'; color: var(--accent); font-size: 8px; margin-top: 4px; flex-shrink: 0; }
+  .ksp-item strong { color: var(--text); }
+  .script-prompt { background: var(--accent-dim); border: 1px solid rgba(181,242,60,0.2); border-radius: 8px; padding: 12px 14px; font-size: 13px; font-style: italic; color: var(--text); margin-top: 12px; }
+  .script-prompt::before { content: '💬 Say: '; font-style: normal; font-weight: 600; color: var(--accent); font-family: 'DM Mono', monospace; font-size: 11px; }
+  .obj-table { width: 100%; border-collapse: collapse; margin: 16px 0; font-size: 13px; }
+  .obj-table th { text-align: left; font-family: 'DM Mono', monospace; font-size: 10px; text-transform: uppercase; letter-spacing: 0.1em; color: var(--text-dim); padding: 8px 12px; background: var(--surface2); border-bottom: 1px solid var(--border); }
+  .obj-table td { padding: 10px 12px; border-bottom: 1px solid var(--border); vertical-align: top; }
+  .obj-table tr:last-child td { border-bottom: none; }
+  .obj-table .objection { font-family: 'DM Mono', monospace; font-size: 12px; color: var(--red); white-space: nowrap; }
+  .obj-table .response { color: var(--text-mid); line-height: 1.6; }
+  .close-options { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin: 16px 0; }
+  .close-card { background: var(--surface2); border: 1px solid var(--border); border-radius: 10px; padding: 16px; }
+  .close-card h4 { font-family: 'Syne', sans-serif; font-size: 14px; font-weight: 700; color: var(--text); margin-bottom: 8px; }
+  .close-card p { font-size: 13px; color: var(--text-mid); }
+  .oneliners { display: flex; flex-direction: column; gap: 10px; margin: 16px 0; }
+  .oneliner { background: var(--surface2); border-left: 3px solid var(--accent); padding: 12px 16px; border-radius: 0 8px 8px 0; font-style: italic; color: var(--text); font-size: 14px; }
+  .progress-bar { position: fixed; top: 0; left: 240px; right: 0; height: 3px; background: var(--border); z-index: 200; }
+  .progress-fill { height: 100%; background: var(--accent); width: 0%; transition: width 0.2s; }
+  .ph { color: var(--orange); font-style: normal; font-weight: 500; }
+  /* Q-BLOCKS */
+  .q-block { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; overflow: hidden; margin-bottom: 12px; }
+  .q-block-header { display: flex; align-items: flex-start; justify-content: space-between; padding: 16px 18px; gap: 16px; }
+  .q-block-left { display: flex; gap: 14px; align-items: flex-start; flex: 1; }
+  .q-tag { font-family: 'DM Mono', monospace; font-size: 11px; font-weight: 500; color: var(--accent); background: var(--accent-dim); padding: 4px 8px; border-radius: 4px; white-space: nowrap; margin-top: 2px; }
+  .q-block-title { font-family: 'DM Mono', monospace; font-size: 11px; text-transform: uppercase; letter-spacing: 0.08em; color: var(--text-dim); margin-bottom: 6px; }
+  .q-block-main { font-size: 15px; color: var(--text); font-style: italic; line-height: 1.6; cursor: pointer; border-radius: 4px; padding: 2px 4px; margin: -2px -4px; transition: background 0.15s; }
+  .q-block-main:hover { background: var(--accent-dim); }
+  .q-block-main.selected { background: var(--accent-dim); color: var(--accent); }
+  .q-block-right { display: flex; flex-direction: column; align-items: flex-end; gap: 6px; flex-shrink: 0; }
+  .q-jump { font-family: 'DM Mono', monospace; font-size: 11px; padding: 4px 10px; border-radius: 20px; white-space: nowrap; transition: all 0.15s; border: none; cursor: pointer; }
+  .q-jump-teal { background: rgba(90,255,212,0.1); color: var(--teal); }
+  .q-jump-green { background: rgba(181,242,60,0.1); color: var(--accent); }
+  .q-jump-blue { background: rgba(90,180,255,0.1); color: var(--blue); }
+  .q-jump-orange { background: rgba(255,170,90,0.1); color: var(--orange); }
+  .q-jump-purple { background: rgba(192,122,255,0.1); color: var(--purple); }
+  .q-jump:hover { opacity: 0.8; }
+  .q-more-btn { font-family: 'DM Mono', monospace; font-size: 11px; color: var(--text-dim); background: none; border: 1px solid var(--border); padding: 4px 10px; border-radius: 20px; cursor: pointer; transition: all 0.15s; white-space: nowrap; }
+  .q-more-btn:hover { color: var(--text); border-color: var(--text-dim); }
+  .q-more-btn.open { color: var(--accent); border-color: var(--accent); }
+  .q-more-body { display: none; border-top: 1px solid var(--border); background: var(--surface2); padding: 12px 18px; }
+  .q-more-body.open { display: block; }
+  .q-more-item { font-size: 14px; font-style: italic; color: var(--text-mid); padding: 8px 0; border-bottom: 1px solid var(--border); cursor: pointer; border-radius: 4px; transition: all 0.15s; }
+  .q-more-item:hover { background: var(--accent-dim); color: var(--text); padding-left: 6px; }
+  .q-more-item.selected { background: var(--accent-dim); color: var(--accent); padding-left: 6px; }
+  .q-more-item:last-child { border-bottom: none; }
+  .q-goal-bar { font-size: 12px; color: var(--text-dim); padding: 8px 18px; background: var(--surface2); border-top: 1px solid var(--border); }
+  /* SELECTED PANEL */
+  #selected-panel { background: var(--surface2); border: 1px solid rgba(181,242,60,0.25); border-radius: 12px; overflow: hidden; margin-bottom: 24px; }
+  #selected-panel .panel-header { font-family: 'DM Mono', monospace; font-size: 11px; text-transform: uppercase; letter-spacing: 0.1em; color: var(--accent); padding: 12px 16px 10px; border-bottom: 1px solid var(--border); background: var(--accent-dim); }
+  #selected-list { padding: 4px 0; }
+  .selected-q-item { display: flex; align-items: flex-start; gap: 10px; padding: 10px 16px; font-size: 13px; color: var(--text); line-height: 1.5; border-bottom: 1px solid var(--border); cursor: pointer; transition: background 0.1s; }
+  .selected-q-item:last-child { border-bottom: none; }
+  .selected-q-item:hover { background: rgba(255,90,90,0.05); }
+  .selected-q-item .sq-tag { font-family: 'DM Mono', monospace; font-size: 10px; color: var(--accent); background: var(--accent-dim); padding: 2px 6px; border-radius: 3px; flex-shrink: 0; margin-top: 2px; }
+  .selected-q-item .sq-remove { color: var(--red); font-size: 12px; margin-left: auto; flex-shrink: 0; opacity: 0.4; }
+  .selected-q-item:hover .sq-remove { opacity: 1; }
+  /* RECOMMENDATION PANEL */
+  #rec-panel { margin-top: 24px; }
+  .rec-primary { background: var(--surface2); border: 1px solid rgba(181,242,60,0.3); border-radius: 12px; overflow: hidden; margin-bottom: 12px; }
+  .rec-primary-header { background: var(--accent-dim); padding: 14px 18px; display: flex; align-items: center; justify-content: space-between; }
+  .rec-label { font-family: 'DM Mono', monospace; font-size: 10px; text-transform: uppercase; letter-spacing: 0.1em; color: var(--accent); }
+  .rec-pkg-name { font-family: 'Syne', sans-serif; font-size: 18px; font-weight: 800; color: var(--text); margin: 4px 0; }
+  .rec-pkg-price { font-family: 'DM Mono', monospace; font-size: 13px; color: var(--text-mid); }
+  .rec-jump-btn { font-family: 'DM Mono', monospace; font-size: 11px; padding: 6px 14px; border-radius: 20px; border: none; cursor: pointer; background: var(--accent); color: #000; font-weight: 600; transition: opacity 0.15s; }
+  .rec-jump-btn:hover { opacity: 0.85; }
+  .rec-body { padding: 16px 18px; }
+  .rec-why-title { font-family: 'DM Mono', monospace; font-size: 10px; text-transform: uppercase; letter-spacing: 0.1em; color: var(--text-dim); margin-bottom: 10px; }
+  .rec-conclusion { display: flex; gap: 10px; font-size: 13px; color: var(--text-mid); padding: 6px 0; border-bottom: 1px solid var(--border); }
+  .rec-conclusion:last-child { border-bottom: none; }
+  .rec-conclusion::before { content: '→'; color: var(--accent); flex-shrink: 0; }
+  .rec-alt { background: var(--surface); border: 1px solid var(--border); border-radius: 10px; padding: 14px 16px; margin-bottom: 10px; display: flex; align-items: center; justify-content: space-between; gap: 16px; }
+  .rec-alt-left h4 { font-family: 'Syne', sans-serif; font-size: 14px; font-weight: 700; color: var(--text); margin-bottom: 4px; }
+  .rec-alt-left p { font-size: 12px; color: var(--text-mid); }
+  .rec-alt-btn { font-family: 'DM Mono', monospace; font-size: 11px; padding: 5px 12px; border-radius: 20px; border: 1px solid var(--border); background: none; color: var(--text-mid); cursor: pointer; white-space: nowrap; transition: all 0.15s; flex-shrink: 0; }
+  .rec-alt-btn:hover { color: var(--accent); border-color: var(--accent); }
+  #rec-empty { padding: 20px 18px; font-size: 13px; color: var(--text-dim); font-style: italic; }
+  /* BACK + RESET */
+  .back-to-discovery { display: inline-flex; align-items: center; gap: 6px; font-family: 'DM Mono', monospace; font-size: 11px; color: var(--text-dim); background: none; border: 1px solid var(--border); padding: 4px 12px; border-radius: 20px; margin-bottom: 14px; cursor: pointer; transition: all 0.15s; }
+  .back-to-discovery:hover { color: var(--accent); border-color: var(--accent); }
+  .reset-btn { width: calc(100% - 24px); margin: 0 12px 16px; padding: 8px; background: rgba(255,90,90,0.08); border: 1px solid rgba(255,90,90,0.2); border-radius: 6px; color: var(--red); font-family: 'DM Mono', monospace; font-size: 11px; text-transform: uppercase; letter-spacing: 0.08em; cursor: pointer; transition: all 0.15s; }
+  .reset-btn:hover { background: rgba(255,90,90,0.15); }
+  html { scroll-behavior: smooth; }
+  section { scroll-margin-top: 24px; }
+</style>
+</head>
+<body>
+<div class="progress-bar"><div class="progress-fill" id="progress"></div></div>
+<nav id="sidebar">
+  <div class="logo"><span>Online Essentials</span><p>Sales Script — v2</p></div>
+  <div class="nav-section">
+    <div class="nav-label">Script</div>
+    <a class="nav-item active" href="javascript:void(0)" onclick="jumpTo('context')"><span class="dot"></span>🗂 Context & Prep</a>
+    <a class="nav-item" href="javascript:void(0)" onclick="jumpTo('intro')"><span class="dot"></span>01 · Intro</a>
+    <a class="nav-item" href="javascript:void(0)" onclick="jumpTo('reconnect')"><span class="dot"></span>02 · Reconnect</a>
+    <a class="nav-item" href="javascript:void(0)" onclick="jumpTo('discovery')"><span class="dot"></span>03 · Discovery</a>
+    <a class="nav-item" href="javascript:void(0)" onclick="jumpTo('diagnosis')"><span class="dot"></span>04 · Diagnosis</a>
+    <a class="nav-item" href="javascript:void(0)" onclick="jumpTo('presentation')"><span class="dot"></span>05 · Presentation</a>
+    <a class="nav-item" href="javascript:void(0)" onclick="jumpTo('packages')"><span class="dot"></span>06 · Packages</a>
+    <a class="nav-item" href="javascript:void(0)" onclick="jumpTo('products')"><span class="dot"></span>07 · Products</a>
+    <a class="nav-item" href="javascript:void(0)" onclick="jumpTo('objections')"><span class="dot"></span>08 · Objections</a>
+    <a class="nav-item" href="javascript:void(0)" onclick="jumpTo('close')"><span class="dot"></span>09 · Close</a>
+    <a class="nav-item" href="javascript:void(0)" onclick="jumpTo('journey')"><span class="dot"></span>↳ Customer Journey</a>
+  </div>
+  <div class="nav-section">
+    <div class="nav-label">Packages</div>
+    <a class="nav-item" href="javascript:void(0)" onclick="jumpTo('pkg-visibility')">👁 Visibility — €99</a>
+    <a class="nav-item" href="javascript:void(0)" onclick="jumpTo('pkg-local')">📍 Local Search — €305</a>
+    <a class="nav-item" href="javascript:void(0)" onclick="jumpTo('pkg-leads')">🎯 Leads — €585</a>
+  </div>
+  <div class="nav-section">
+    <div class="nav-label">Products</div>
+    <a class="nav-item" href="javascript:void(0)" onclick="jumpTo('p-website')">🌐 Website (Duda)</a>
+    <a class="nav-item" href="javascript:void(0)" onclick="jumpTo('p-website-wp')">💻 Website (WP)</a>
+    <a class="nav-item" href="javascript:void(0)" onclick="jumpTo('p-listings')">📍 Listings</a>
+    <a class="nav-item" href="javascript:void(0)" onclick="jumpTo('p-seo')">🔍 SEO</a>
+    <a class="nav-item" href="javascript:void(0)" onclick="jumpTo('p-ads')">📢 Online Advertising</a>
+    <a class="nav-item" href="javascript:void(0)" onclick="jumpTo('p-social')">✨ AI Social</a>
+  </div>
+  <div class="nav-section"><div class="nav-label">Call</div></div>
+  <button class="reset-btn" onclick="resetCall()">↺ Reset for new call</button>
+</nav>
+<main id="main">
+
+<!-- CONTEXT -->
+<section id="context" class="phase">
+  <div class="phase-tag">Before You Call</div>
+  <div class="phase-title">Context & Preparation</div>
+  <div class="phase-subtitle">These are not cold leads. Know the situation before you pick up the phone.</div>
+  <div class="context-banner">
+    <strong>🔁 Who you're calling</strong>
+    <ul>
+      <li>Long-standing customers who had a website built and managed through <strong>Telenet</strong></li>
+      <li>Spotzer Digital built and maintained their site — <strong>we already have a relationship with them</strong></li>
+      <li>They've received an email about the transition to Online Essentials</li>
+      <li>They're not a new prospect to convince — they're an existing customer to retain <em>and</em> grow</li>
+    </ul>
+  </div>
+  <div class="insight-blue"><strong>💡 Your mindset on this call</strong><br>You're not selling to a stranger. You're the new account manager for someone who already trusted this company. Warm, peer-to-peer, confident.</div>
+  <div class="script-block">
+    <div class="script-header"><span class="script-role role-tip">Prep</span><span style="font-size:13px;color:var(--text-mid)">Before each call, know:</span></div>
+    <div class="script-body">
+      <strong style="color:var(--accent)">1. Do they still have an active website with us?</strong><br>If yes — when was it last updated? Is it mobile-friendly?<br><br>
+      <strong style="color:var(--accent)">2. What product were they on through Telenet?</strong><br>Basic site only? Any extras? This tells you what upsell gap exists.<br><br>
+      <strong style="color:var(--accent)">3. Have they opened the transition email?</strong><br>If yes — they know what's coming. If no — they may be surprised.<br><br>
+      <strong style="color:var(--accent)">4. What's their business type?</strong><br>Knowing their sector lets you speak their language immediately.
+    </div>
+  </div>
+</section>
+<hr class="divider">
+
+<!-- INTRO -->
+<section id="intro" class="phase">
+  <div class="phase-tag">Phase 01</div>
+  <div class="phase-title">Introduction</div>
+  <div class="phase-subtitle">Lead with the opportunity. Short, sharp, compelling — then context.</div>
+  <div class="script-block">
+    <div class="script-header"><span class="script-role role-you">You</span><span style="font-size:13px;color:var(--text-mid)">Opening line</span></div>
+    <div class="script-body">"Hi <span class="ph">[Name]</span>, my name is Nathan from Online Essentials. I'm calling because Telenet is giving all their current customers the opportunity to upgrade their business online and see how your business has been doing so far. Is now a good time to talk for a few minutes?"</div>
+  </div>
+  <div class="insight"><strong>💡 Why this order works:</strong> Lead with what's in it for them — an opportunity, not an explanation. The context comes <em>after</em> they say yes.</div>
+  <div class="script-block">
+    <div class="script-header"><span class="script-role role-you">You</span><span style="font-size:13px;color:var(--text-mid)">After they say yes — give the context</span></div>
+    <div class="script-body">"Great. So a bit of background — we're the team that built and managed your website through Telenet. Which means that we'll now directly work with you under Online Essentials, so we're able to give more — covering everything you need to grow your business online.<br><br>As I mentioned my name is Nathan. I'm your new point of contact — and my goal today is simple: understand how your business is doing and make sure we're actually helping you grow."</div>
+  </div>
+</section>
+<hr class="divider">
+
+<!-- RECONNECT -->
+<section id="reconnect" class="phase">
+  <div class="phase-tag">Phase 02</div>
+  <div class="phase-title">Reconnect</div>
+  <div class="phase-subtitle">Acknowledge the existing relationship before asking anything. Make them feel known.</div>
+  <div class="script-block">
+    <div class="script-header"><span class="script-role role-you">You</span><span style="font-size:13px;color:var(--text-mid)">Acknowledge the history</span></div>
+    <div class="script-body">"<span class="ph">[Name]</span>, you've been with us for a while now <span class="ph">[years]</span>, I hope the business has been growing in these years. First what I'd love to do today is just take a few minutes to understand how the website has been working for you, whether anything has changed in the business, and see if there's anything we can be doing better."<br><br><em>"This isn't a hard sell — I just want to make sure we're actually delivering value for you."</em></div>
+  </div>
+  <div class="insight-blue"><strong>💡 Why this works:</strong> Long-term customers often feel ignored once they've signed up. "I don't take that for granted" immediately differentiates you from every vendor who just takes renewal money and disappears.</div>
+  <div class="script-block">
+    <div class="script-header"><span class="script-role role-you">You</span><span style="font-size:13px;color:var(--text-mid)">Quick check-in on their site</span></div>
+    <div class="script-body">"<span class="ph">[Name]</span>, have you had a chance to look at <span class="ph">[website name]</span> recently? How are you feeling about it — does it still represent where your business is today?"<br><br><em>[Let them talk. Most will either say "it's fine" (dig deeper) or mention something that bothers them — that's your opening.]</em></div>
+  </div>
+</section>
+<hr class="divider">
+<!-- DISCOVERY -->
+<section id="discovery" class="phase">
+  <div class="phase-tag">Phase 03</div>
+  <div class="phase-title">Discovery</div>
+  <div class="phase-subtitle">They already have a website. Go deeper — performance, visibility, growth. Click any question to select it.</div>
+  <div class="insight"><strong>💡 Shift in focus:</strong> With these customers, ask "is your website actually working for you" — not "do you have one."</div>
+
+  <!-- Q1 -->
+  <div class="q-block">
+    <div class="q-block-header">
+      <div class="q-block-left">
+        <div class="q-tag">Q1</div>
+        <div>
+          <div class="q-block-title">Website performance</div>
+          <div class="q-block-main">"Your website is often the first impression someone gets of your business — does it represent the quality of what you actually do?"</div>
+        </div>
+      </div>
+      <div class="q-block-right">
+        <button class="q-jump q-jump-teal" onclick="jumpTo('p-website')">🌐 Website →</button>
+        <button class="q-more-btn" onclick="toggleQBlock(this)">+ more questions</button>
+      </div>
+    </div>
+    <div class="q-more-body">
+      <div class="q-more-item">"When did you last update your website? Does it still reflect where your business is today?"</div>
+      <div class="q-more-item">"Have you checked lately how your website looks compared to your competitors? Are they showing up stronger than you online?"</div>
+      <div class="q-more-item">"Are you getting enquiries through your website, or are most of your leads still coming through word of mouth?"</div>
+    </div>
+    <div class="q-goal-bar">Opens website performance conversation → <span style="color:var(--teal)">Website upgrade</span></div>
+  </div>
+
+  <!-- Q2 -->
+  <div class="q-block">
+    <div class="q-block-header">
+      <div class="q-block-left">
+        <div class="q-tag">Q2</div>
+        <div>
+          <div class="q-block-title">Google visibility</div>
+          <div class="q-block-main">"If someone in <span class="ph">[city]</span> searches for <span class="ph">[their service]</span> right now — do you think you'd come up?"</div>
+        </div>
+      </div>
+      <div class="q-block-right">
+        <button class="q-jump q-jump-green" onclick="jumpTo('p-seo')">🔍 SEO →</button>
+        <button class="q-jump q-jump-blue" onclick="jumpTo('p-listings')">📍 Listings →</button>
+        <button class="q-more-btn" onclick="toggleQBlock(this)">+ more questions</button>
+      </div>
+    </div>
+    <div class="q-more-body">
+      <div class="q-more-item">"Do you know where you rank on Google for your main service?"</div>
+      <div class="q-more-item">"Would you be willing to invest in being found organically on Google over the next 6–12 months?"</div>
+      <div class="q-more-item">"Is ranking higher on Google something you'd prioritise as a growth strategy?"</div>
+      <div class="q-more-item">"Are you aware that SEO is a long-term investment — and does that appeal to you?"</div>
+    </div>
+    <div class="q-goal-bar">Visibility gap → <span style="color:var(--blue)">Listings</span> / If SEO intent confirmed → <span style="color:var(--accent)">SEO / Local Search</span></div>
+  </div>
+
+  <!-- Q3 -->
+  <div class="q-block">
+    <div class="q-block-header">
+      <div class="q-block-left">
+        <div class="q-tag">Q3</div>
+        <div>
+          <div class="q-block-title">Business changes</div>
+          <div class="q-block-main">"Has anything changed in the business since we last worked on your site — new services, different focus, new location?"</div>
+        </div>
+      </div>
+      <div class="q-block-right">
+        <button class="q-jump q-jump-teal" onclick="jumpTo('p-website')">🌐 Website →</button>
+        <button class="q-jump q-jump-green" onclick="jumpTo('p-website-wp')">💻 WordPress →</button>
+        <button class="q-more-btn" onclick="toggleQBlock(this)">+ more questions</button>
+      </div>
+    </div>
+    <div class="q-more-body">
+      <div class="q-more-item">"Have you launched any new services or products that aren't on your site yet?"</div>
+      <div class="q-more-item">"Does your website still feel like you — or has your business moved on from it?"</div>
+    </div>
+    <div class="q-goal-bar">Reveals outdated content → <span style="color:var(--teal)">Website update / upgrade</span></div>
+  </div>
+
+  <!-- Q4 -->
+  <div class="q-block">
+    <div class="q-block-header">
+      <div class="q-block-left">
+        <div class="q-tag">Q4</div>
+        <div>
+          <div class="q-block-title">Reviews & reputation</div>
+          <div class="q-block-main">"What does your Google rating look like right now — are customers leaving reviews?"</div>
+        </div>
+      </div>
+      <div class="q-block-right">
+        <button class="q-jump q-jump-blue" onclick="jumpTo('p-listings')">📍 Listings →</button>
+        <button class="q-more-btn" onclick="toggleQBlock(this)">+ more questions</button>
+      </div>
+    </div>
+    <div class="q-more-body">
+      <div class="q-more-item">"Do you respond to your reviews — good and bad?"</div>
+    </div>
+    <div class="q-goal-bar">Opens reputation management → <span style="color:var(--blue)">Listings Standard / Ultimate</span></div>
+  </div>
+
+  <!-- Q5 -->
+  <div class="q-block">
+    <div class="q-block-header">
+      <div class="q-block-left">
+        <div class="q-tag">Q5</div>
+        <div>
+          <div class="q-block-title">Customer acquisition</div>
+          <div class="q-block-main">"Outside of word of mouth — how are new customers finding you today?"</div>
+        </div>
+      </div>
+      <div class="q-block-right">
+        <button class="q-jump q-jump-green" onclick="jumpTo('p-seo')">🔍 SEO →</button>
+        <button class="q-jump q-jump-orange" onclick="jumpTo('p-ads')">📢 Ads →</button>
+        <button class="q-more-btn" onclick="toggleQBlock(this)">+ more questions</button>
+      </div>
+    </div>
+    <div class="q-more-body">
+      <div class="q-more-item">"Is your online presence actively bringing you new business, or is it more passive?"</div>
+      <div class="q-more-item">"If you could get more leads online without relying on referrals — would that make a difference?"</div>
+    </div>
+    <div class="q-goal-bar">Opens growth conversation → <span style="color:var(--accent)">SEO</span> / <span style="color:var(--orange)">Advertising</span></div>
+  </div>
+
+  <!-- Q6 -->
+  <div class="q-block">
+    <div class="q-block-header">
+      <div class="q-block-left">
+        <div class="q-tag">Q6</div>
+        <div>
+          <div class="q-block-title">Social media</div>
+          <div class="q-block-main">"Are you active on social media at all — Instagram, Facebook? How consistent has that been?"</div>
+        </div>
+      </div>
+      <div class="q-block-right">
+        <button class="q-jump q-jump-purple" onclick="jumpTo('p-social')">✨ AI Social →</button>
+        <button class="q-more-btn" onclick="toggleQBlock(this)">+ more questions</button>
+      </div>
+    </div>
+    <div class="q-more-body">
+      <div class="q-more-item">"Do you feel like your social media reflects the quality of your business?"</div>
+      <div class="q-more-item">"How much time do you actually spend on social media for your business each week?"</div>
+      <div class="q-more-item">"Is staying consistent on social something you struggle with?"</div>
+      <div class="q-more-item">"If your social media was always active and on-brand without you thinking about it — would that help?"</div>
+    </div>
+    <div class="q-goal-bar">Opens social visibility conversation → <span style="color:var(--purple)">AI Social Visibility</span></div>
+  </div>
+
+  <!-- Q7 -->
+  <div class="q-block">
+    <div class="q-block-header">
+      <div class="q-block-left">
+        <div class="q-tag">Q7</div>
+        <div>
+          <div class="q-block-title">Paid advertising</div>
+          <div class="q-block-main">"Have you ever tried Google Ads or paid advertising? How did that go?"</div>
+        </div>
+      </div>
+      <div class="q-block-right">
+        <button class="q-jump q-jump-orange" onclick="jumpTo('p-ads')">📢 Ads →</button>
+        <button class="q-more-btn" onclick="toggleQBlock(this)">+ more questions</button>
+      </div>
+    </div>
+    <div class="q-more-body">
+      <div class="q-more-item">"Are you currently spending anything on online advertising?"</div>
+      <div class="q-more-item">"Have you ever felt like you're invisible on Google compared to competitors?"</div>
+      <div class="q-more-item">"Is getting more leads quickly something that's important to you right now?"</div>
+      <div class="q-more-item">"If every €1 you spent on ads brought back €3 — would you want to know how?"</div>
+    </div>
+    <div class="q-goal-bar">Opens paid advertising → <span style="color:var(--orange)">Online Advertising</span></div>
+  </div>
+
+  <!-- Q8 -->
+  <div class="q-block">
+    <div class="q-block-header">
+      <div class="q-block-left">
+        <div class="q-tag">Q8</div>
+        <div>
+          <div class="q-block-title">Goals</div>
+          <div class="q-block-main">"What's your main focus for the business over the next 12 months — grow, stabilise, expand?"</div>
+        </div>
+      </div>
+      <div class="q-block-right">
+        <button class="q-more-btn" onclick="toggleQBlock(this)">+ more questions</button>
+      </div>
+    </div>
+    <div class="q-more-body">
+      <div class="q-more-item">"If everything went well this year — what would that look like for your business?"</div>
+      <div class="q-more-item">"Where do you want to be in a year from now, and is your online presence set up to get you there?"</div>
+      <div class="q-more-item">"Are you where you want to be in terms of growth, or is there more potential you're not reaching?"</div>
+      <div class="q-more-item">"Is your business growing the way you want it to — or do you feel like you're leaving customers on the table?"</div>
+    </div>
+    <div class="q-goal-bar">Anchors recommendations to their actual ambition</div>
+  </div>
+
+  <div class="script-block" style="margin-top:24px">
+    <div class="script-header"><span class="script-role role-tip">Tip</span><span style="font-size:13px;color:var(--text-mid)">Reading the signals</span></div>
+    <div class="script-body">
+      As they answer, mentally tag what you're hearing:<br><br>
+      <div class="signal-row">
+        <span class="signal signal-website" onclick="jumpTo('p-website')">Site feels outdated → Website ↗</span>
+        <span class="signal signal-seo" onclick="jumpTo('p-seo')">Can't be found → SEO ↗</span>
+        <span class="signal signal-listings" onclick="jumpTo('p-listings')">Low reviews → Listings ↗</span>
+        <span class="signal signal-ads" onclick="jumpTo('p-ads')">Needs leads fast → Ads ↗</span>
+        <span class="signal signal-social" onclick="jumpTo('p-social')">Inconsistent social → AI Social ↗</span>
+      </div>
+    </div>
+  </div>
+</section>
+<hr class="divider">
+<!-- DIAGNOSIS -->
+<section id="diagnosis" class="phase">
+  <div class="phase-tag">Phase 04</div>
+  <div class="phase-title">Diagnosis</div>
+  <div class="phase-subtitle">Reflect back what you heard. Name the gap. Make them feel understood before you offer anything.</div>
+
+  <div id="selected-panel">
+    <div class="panel-header">📋 Questions that resonated this call</div>
+    <div id="selected-list"></div>
+    <div id="selected-empty" style="padding:14px 16px;font-size:13px;color:var(--text-dim);font-style:italic;">No questions selected yet — go back to Discovery and click the ones that landed.</div>
+  </div>
+
+  <div class="script-block">
+    <div class="script-header"><span class="script-role role-you">You</span><span style="font-size:13px;color:var(--text-mid)">Summarise before pitching</span></div>
+    <div class="script-body">"Okay, so from what you've told me — [paraphrase 2–3 specific things]. What I'm hearing is that [core problem or gap]. That's something we can help with directly through Online Essentials — let me show you exactly how."</div>
+  </div>
+  <div class="insight"><strong>💡 The website lens check</strong> — use this if they seem satisfied but the site is dated:<br><br>"When was the last time you looked at your site through the eyes of a new customer? Not as someone who knows the business — but as a complete stranger deciding whether to call you or a competitor?"</div>
+  <div class="script-block">
+    <div class="script-header"><span class="script-role role-tip">Tip</span><span style="font-size:13px;color:var(--text-mid)">Red flags — use your health check</span></div>
+    <div class="script-body">Run the health check on their website before or during the call and reference what you see specifically:<br><br><em>"I've actually had a look at your website — and based on what I can see, <span class="ph">[specific finding: not mobile-friendly / slow loading / missing contact form / low Google ranking]</span>. That's exactly the kind of thing we can fix."</em><br><br>The more specific you are, the more real it becomes. Don't speak in generalities — name what you see.</div>
+  </div>
+</section>
+<hr class="divider">
+
+<!-- PRESENTATION -->
+<section id="presentation" class="phase">
+  <div class="phase-tag">Phase 05</div>
+  <div class="phase-title">Presentation</div>
+  <div class="phase-subtitle">Frame Online Essentials as the natural evolution — not a new product, a better version of what they already have.</div>
+  <div class="script-block">
+    <div class="script-header"><span class="script-role role-you">You</span><span style="font-size:13px;color:var(--text-mid)">Transition into product(s)</span></div>
+    <div class="script-body">"So what we've built with Online Essentials is essentially everything we were doing for you through Telenet — but now as a complete package you work with us on directly, with more features, better support, and the ability to grow it as your business grows.<br><br>Based on what you've told me, I'd focus on <span class="ph">[1–2 specific things]</span>. Let me walk you through those."</div>
+  </div>
+  <div class="oneliners">
+    <div class="oneliner">"We're not just building a site — we're building trust and visibility for your business."</div>
+    <div class="oneliner">"From domain to design, SEO to support — everything in one place, one team, one bill."</div>
+    <div class="oneliner">"You've already trusted us with your website. This is just the full picture of what we can do."</div>
+  </div>
+</section>
+<hr class="divider">
+<!-- PACKAGES -->
+<section id="packages" class="phase">
+  <div class="phase-tag">Phase 06</div>
+  <div class="phase-title">Packages</div>
+  <div class="phase-subtitle">Lead with a package — it's simpler for the customer and better for value. Open only what fits.</div>
+  <div class="insight"><strong>💡 Package first:</strong> Based on what you heard in Discovery, recommend the package that best matches their situation. Only go to individual products if they need something specific a package doesn't cover.</div>
+
+  <!-- VISIBILITY -->
+  <div id="pkg-visibility" class="product-accordion">
+    <div class="product-toggle" onclick="toggleAccordion(this)">
+      <div class="product-toggle-left">
+        <div class="product-icon" style="background:rgba(90,180,255,0.1);">👁</div>
+        <div><div class="product-name">Online Essentials — Visibility</div><div class="product-price">€99 p/m ex VAT · Best for: get found and look credible</div></div>
+      </div><span class="chevron">▼</span>
+    </div>
+    <div class="product-body">
+      <button class="back-to-discovery" onclick="jumpTo('discovery')">← Back to Discovery</button>
+      <div class="pitch-line">"A complete online presence — professional 5-page website, listings across 30+ directories, and review management. Everything a customer sees before they call you, taken care of."</div>
+      <div class="plans-row two">
+        <div class="plan-card"><div class="plan-name">5-page Website</div><ul class="plan-features"><li>Professionally designed</li><li>Responsive on all devices</li><li>Basic on-site SEO</li><li>Up to 5 professional emails</li><li>Domain & SSL included</li><li>Unlimited ongoing support</li></ul></div>
+        <div class="plan-card"><div class="plan-name">Listings Pro + Reviews</div><ul class="plan-features"><li>Google, Apple Maps, Facebook + 30 others</li><li>Always up-to-date (active sync)</li><li>Review monitoring & response</li><li>Inbound & outbound support</li></ul></div>
+      </div>
+      <div class="ksp-section"><h4>Key Selling Points</h4>
+        <div class="ksp-list">
+          <div class="ksp-item"><div><strong>Professional Website</strong> — Mobile-optimised, built to convert, represents your brand from day one.</div></div>
+          <div class="ksp-item"><div><strong>Domain + Hosting + 3 Branded Emails</strong> — Everything to get online, all included.</div></div>
+          <div class="ksp-item"><div><strong>Listings Across 30+ Directories</strong> — Show up where customers are searching.</div></div>
+          <div class="ksp-item"><div><strong>Review Management</strong> — Track, respond, build trust automatically.</div></div>
+          <div class="ksp-item"><div><strong>Seamless Onboarding</strong> — Our team handles everything.</div></div>
+        </div>
+      </div>
+      <div class="script-prompt">"For €99 a month — professional website, visible across every major directory, reviews managed. That's your entire online presence, done."</div>
+    </div>
+  </div>
+
+  <!-- LOCAL SEARCH -->
+  <div id="pkg-local" class="product-accordion">
+    <div class="product-toggle" onclick="toggleAccordion(this)">
+      <div class="product-toggle-left">
+        <div class="product-icon" style="background:rgba(181,242,60,0.1);">📍</div>
+        <div><div class="product-name">Online Essentials — Local Search</div><div class="product-price">€305 p/m ex VAT · Best for: rank locally on Google</div></div>
+      </div><span class="chevron">▼</span>
+    </div>
+    <div class="product-body">
+      <button class="back-to-discovery" onclick="jumpTo('discovery')">← Back to Discovery</button>
+      <div class="pitch-line">"Everything in Visibility, plus active SEO — so not only does your website look great, it actually gets found when people search for your service locally."</div>
+      <div class="plans-row three">
+        <div class="plan-card"><div class="plan-name">3-page Website</div><ul class="plan-features"><li>Professionally designed</li><li>Responsive on all devices</li><li>Basic on-site SEO</li><li>Up to 3 professional emails</li><li>Domain & SSL included</li></ul></div>
+        <div class="plan-card"><div class="plan-name">Listings</div><ul class="plan-features"><li>30+ directory listings</li><li>Review monitoring & management</li><li>Duplicate suppression</li><li>Social location page</li></ul></div>
+        <div class="plan-card"><div class="plan-name">SEO — Elite</div><ul class="plan-features"><li>3 keyword clusters</li><li>5 pages optimised</li><li>Annual strategy review</li><li>Monthly monitoring</li><li>12 AI blogs per year</li></ul></div>
+      </div>
+      <div class="ksp-section"><h4>Key Selling Points</h4>
+        <div class="ksp-list">
+          <div class="ksp-item"><div><strong>Local SEO Included</strong> — Keyword research to help you rank higher in local Google searches.</div></div>
+          <div class="ksp-item"><div><strong>Listings Across 30+ Directories</strong> — Consistent, verified info on Google, Apple, Bing, Facebook and more.</div></div>
+          <div class="ksp-item"><div><strong>Review Monitoring</strong> — Stay on top of your reputation across platforms.</div></div>
+          <div class="ksp-item"><div><strong>Built-In CTAs</strong> — Encourage enquiries, bookings, and visits from day one.</div></div>
+        </div>
+      </div>
+      <div class="script-prompt">"If you want to show up when someone in <span class="ph">[city]</span> searches for <span class="ph">[their service]</span> — this is the package. Website, listings, and SEO working together. €305 a month, fully managed."</div>
+    </div>
+  </div>
+
+  <!-- LEADS -->
+  <div id="pkg-leads" class="product-accordion">
+    <div class="product-toggle" onclick="toggleAccordion(this)">
+      <div class="product-toggle-left">
+        <div class="product-icon" style="background:rgba(255,170,90,0.1);">🎯</div>
+        <div><div class="product-name">Online Essentials — Leads</div><div class="product-price">€585 p/m ex VAT · Best for: actively generate new customers</div></div>
+      </div><span class="chevron">▼</span>
+    </div>
+    <div class="product-body">
+      <button class="back-to-discovery" onclick="jumpTo('discovery')">← Back to Discovery</button>
+      <div class="pitch-line">"The full package — website, listings, and a fully managed Google Ads campaign with €375 ad budget included. You get found, you look credible, and you get leads. All in one."</div>
+      <div class="plans-row three">
+        <div class="plan-card"><div class="plan-name">3-page Website</div><ul class="plan-features"><li>Professionally designed</li><li>Responsive on all devices</li><li>Basic on-site SEO</li><li>Up to 3 professional emails</li><li>Domain & SSL included</li></ul></div>
+        <div class="plan-card"><div class="plan-name">Listings</div><ul class="plan-features"><li>30+ directory listings</li><li>Always up-to-date info</li><li>Inbound & outbound support</li></ul></div>
+        <div class="plan-card"><div class="plan-name">Online Advertising</div><ul class="plan-features"><li>Onboarding & strategy</li><li>Keyword research & targeting</li><li>Direct results campaign</li><li>Monthly report</li><li>€375 ad budget included</li></ul></div>
+      </div>
+      <div class="ksp-section"><h4>Key Selling Points</h4>
+        <div class="ksp-list">
+          <div class="ksp-item"><div><strong>Paid Search Campaign Included</strong> — Instant visibility on Google with €375 ad spend — reach ready-to-buy customers fast.</div></div>
+          <div class="ksp-item"><div><strong>Keyword Research & Targeting</strong> — Right search terms, relevant high-converting traffic.</div></div>
+          <div class="ksp-item"><div><strong>Ongoing Support & Monthly Reporting</strong> — Clear performance updates and real support.</div></div>
+          <div class="ksp-item"><div><strong>End-to-End Onboarding</strong> — From setup to launch, we handle the hard stuff.</div></div>
+        </div>
+      </div>
+      <div class="script-prompt">"€585 a month — website, listings, and Google Ads running for you. If that brings two or three new customers a month, it pays for itself immediately."</div>
+    </div>
+  </div>
+</section>
+<hr class="divider">
+<!-- PRODUCTS -->
+<section id="products" class="phase">
+  <div class="phase-tag">Phase 07</div>
+  <div class="phase-title">Individual Products</div>
+  <div class="phase-subtitle">Use when a package doesn't fit — or to explain individual components in detail.</div>
+
+  <div id="p-website" class="product-accordion">
+    <div class="product-toggle" onclick="toggleAccordion(this)">
+      <div class="product-toggle-left"><div class="product-icon" style="background:rgba(90,255,212,0.1);">🌐</div><div><div class="product-name">Website — Duda</div><div class="product-price">From €70 p/m · Basic or Standard</div></div></div><span class="chevron">▼</span>
+    </div>
+    <div class="product-body">
+      <button class="back-to-discovery" onclick="jumpTo('discovery')">← Back to Discovery</button>
+      <div class="pitch-line">"We built your site — and now we can take it to the next level. Fast, mobile-perfect, fully managed."</div>
+      <div class="plans-row two">
+        <div class="plan-card"><div class="plan-name">Basic</div><div class="plan-price">€70 <span>p/m ex VAT · 1yr min</span></div><ul class="plan-features"><li>3-page website</li><li>Professionally designed</li><li>Responsive on all devices</li><li>Basic on-site SEO</li><li>Up to 3 professional emails</li><li>Domain & SSL included</li></ul></div>
+        <div class="plan-card"><div class="plan-name">Standard</div><div class="plan-price">€89 <span>p/m ex VAT · 1yr min</span></div><ul class="plan-features"><li>5-page website</li><li>Professionally designed</li><li>Responsive on all devices</li><li>Basic on-site SEO</li><li>Up to 5 professional emails</li><li>Domain & SSL included</li></ul></div>
+      </div>
+      <div class="ksp-section"><h4>Key Selling Points</h4><div class="ksp-list"><div class="ksp-item"><div><strong>Custom Domain Included</strong> — Set up, secured with SSL, ready from day one.</div></div><div class="ksp-item"><div><strong>Professional Design</strong> — Custom-designed to reflect your brand, not a template.</div></div><div class="ksp-item"><div><strong>Mobile Responsive</strong> — Works perfectly on every device. 65%+ of searches are on mobile.</div></div><div class="ksp-item"><div><strong>Unlimited Basic Revisions</strong> — Update text or swap images anytime, for life.</div></div><div class="ksp-item"><div><strong>Expert Support</strong> — Dedicated Client Management team every step of the way.</div></div></div></div>
+      <div class="script-prompt">"Your current site has done its job — now let's make sure it works as hard as your business does."</div>
+    </div>
+  </div>
+
+  <div id="p-website-wp" class="product-accordion">
+    <div class="product-toggle" onclick="toggleAccordion(this)">
+      <div class="product-toggle-left"><div class="product-icon" style="background:rgba(181,242,60,0.1);">💻</div><div><div class="product-name">Website — WordPress Pro</div><div class="product-price">€105 p/m + €1,100 setup · Bigger builds</div></div></div><span class="chevron">▼</span>
+    </div>
+    <div class="product-body">
+      <button class="back-to-discovery" onclick="jumpTo('discovery')">← Back to Discovery</button>
+      <div class="pitch-line">"10 pages, 100% bespoke design, e-commerce ready, and after 12 months the site is entirely yours."</div>
+      <div class="plans-row"><div class="plan-card" style="grid-column:1/-1"><div class="plan-name">Pro</div><div class="plan-price">€105 <span>p/m ex VAT + €1,100 setup · 1yr min</span></div><ul class="plan-features" style="columns:2;gap:16px;"><li>10-page custom built website</li><li>Professional design & advanced features</li><li>Responsive on all devices</li><li>Basic on-site SEO</li><li>Extensive content & landing pages</li><li>Domain & SSL included</li><li>E-commerce add-on (optional)</li><li>Custom development available</li></ul></div></div>
+      <div class="ksp-section"><h4>Key Selling Points</h4><div class="ksp-list"><div class="ksp-item"><div><strong>Fully Bespoke Design</strong> — Senior designers, no templates, 100% unique.</div></div><div class="ksp-item"><div><strong>You Own It</strong> — After 12 months, 100% yours to host and manage as you wish.</div></div><div class="ksp-item"><div><strong>Scalable Integrations</strong> — CRMs, booking tools, e-commerce, multilingual.</div></div></div></div>
+      <div class="script-prompt">"You've been with us long enough to know our quality. This is the premium version — and after a year, it's completely yours."</div>
+    </div>
+  </div>
+
+  <div id="p-listings" class="product-accordion">
+    <div class="product-toggle" onclick="toggleAccordion(this)">
+      <div class="product-toggle-left"><div class="product-icon" style="background:rgba(90,180,255,0.1);">📍</div><div><div class="product-name">Listings & Reviews</div><div class="product-price">From €39 p/m · No setup fee</div></div></div><span class="chevron">▼</span>
+    </div>
+    <div class="product-body">
+      <button class="back-to-discovery" onclick="jumpTo('discovery')">← Back to Discovery</button>
+      <div class="pitch-line">"83% of people use Google to find local businesses. If your info is wrong or missing — or you have no reviews — customers choose someone else before they even reach your website."</div>
+      <div class="plans-row three">
+        <div class="plan-card"><div class="plan-name">Basic</div><div class="plan-price">€39 <span>p/m ex VAT</span></div><ul class="plan-features"><li>Google, Apple Maps, Facebook + 30 others</li><li>Always up-to-date (active sync)</li><li>Unlimited basic changes</li></ul></div>
+        <div class="plan-card"><div class="plan-name">Standard</div><div class="plan-price">€45 <span>p/m ex VAT</span></div><ul class="plan-features"><li>All Basic, plus:</li><li>Reputation management</li><li>Duplicate suppression</li><li>Social posting</li><li>Analytics dashboard</li></ul></div>
+        <div class="plan-card"><div class="plan-name">Ultimate</div><div class="plan-price">€49 <span>p/m ex VAT</span></div><ul class="plan-features"><li>All Standard, plus:</li><li>Review response platform</li><li>Review monitoring notifications</li></ul></div>
+      </div>
+      <div class="ksp-section"><h4>Key Selling Points</h4><div class="ksp-list"><div class="ksp-item"><div><strong>83%</strong> of people use Google to find local businesses.</div></div><div class="ksp-item"><div><strong>1-star rating increase = up to 10% revenue boost.</strong></div></div><div class="ksp-item"><div><strong>4–5 star businesses rank 9% higher</strong> in Google's local pack.</div></div><div class="ksp-item"><div><strong>80% of consumers</strong> choose businesses based on online reviews.</div></div></div></div>
+      <div class="script-prompt">"A great website is only half the picture. If your Google listing is outdated or you have two old reviews — that's the first impression. We fix all of that."</div>
+    </div>
+  </div>
+
+  <div id="p-seo" class="product-accordion">
+    <div class="product-toggle" onclick="toggleAccordion(this)">
+      <div class="product-toggle-left"><div class="product-icon" style="background:rgba(181,242,60,0.1);">🔍</div><div><div class="product-name">SEO</div><div class="product-price">From €229 p/m · All plans include full audit</div></div></div><span class="chevron">▼</span>
+    </div>
+    <div class="product-body">
+      <button class="back-to-discovery" onclick="jumpTo('discovery')">← Back to Discovery</button>
+      <div class="pitch-line">"Your website exists — but can your customers actually find it? SEO is what turns a nice-looking site into one that consistently brings in new business."</div>
+      <div class="plans-row three">
+        <div class="plan-card"><div class="plan-name">Elite</div><div class="plan-price">€229 <span>p/m ex VAT</span></div><ul class="plan-features"><li>3 keyword clusters</li><li>5 pages optimised</li><li>Annual strategy review</li><li>Monthly monitoring</li><li>12 AI blogs/year</li></ul></div>
+        <div class="plan-card"><div class="plan-name">Premium</div><div class="plan-price">€499 <span>p/m ex VAT</span></div><ul class="plan-features"><li>3 keyword clusters</li><li>8 pages optimised</li><li>6-monthly strategy review</li><li>Monthly monitoring</li><li>12 professional blogs/year</li></ul></div>
+        <div class="plan-card"><div class="plan-name">Ultimate</div><div class="plan-price">€1,299 <span>p/m ex VAT</span></div><ul class="plan-features"><li>8 keyword clusters</li><li>8 pages optimised</li><li>Quarterly strategy review</li><li>Monthly monitoring</li><li>24 professional blogs/year</li><li>1 Backlink (DA20+)</li></ul></div>
+      </div>
+      <div class="ksp-section"><h4>Key Selling Points</h4><div class="ksp-list"><div class="ksp-item"><div><strong>More Traffic Without Ad Spend</strong> — Higher rankings bring steady organic customers.</div></div><div class="ksp-item"><div><strong>Long-Term ROI</strong> — Unlike ads, SEO keeps compounding over time.</div></div><div class="ksp-item"><div><strong>Stay Ahead of Competitors</strong> — If you're not doing it, they are.</div></div></div></div>
+      <div class="script-prompt">"We built your site to be found — SEO is what actually makes that happen consistently. Think of it as the engine behind the website you already have."</div>
+    </div>
+  </div>
+
+  <div id="p-ads" class="product-accordion">
+    <div class="product-toggle" onclick="toggleAccordion(this)">
+      <div class="product-toggle-left"><div class="product-icon" style="background:rgba(255,170,90,0.1);">📢</div><div><div class="product-name">Online Advertising</div><div class="product-price">From €500 p/m · Fully managed PPC</div></div></div><span class="chevron">▼</span>
+    </div>
+    <div class="product-body">
+      <button class="back-to-discovery" onclick="jumpTo('discovery')">← Back to Discovery</button>
+      <div class="pitch-line">"SEO is the long game. If you need customers now — paid advertising puts you at the top of Google immediately, and you only pay when someone clicks."</div>
+      <div class="plans-row three">
+        <div class="plan-card"><div class="plan-name">Basic</div><div class="plan-price">€500 <span>p/m · Mgmt: €150</span></div><ul class="plan-features"><li>Fully managed</li><li>1 product/service campaign</li><li>Continuous optimisation</li><li>Monthly report & dashboard</li></ul></div>
+        <div class="plan-card"><div class="plan-name">Standard</div><div class="plan-price">€1,000 <span>p/m · Mgmt: €180</span></div><ul class="plan-features"><li>Everything in Basic</li><li>Two products/services</li><li>Bi-monthly performance call</li></ul></div>
+        <div class="plan-card"><div class="plan-name">Plus</div><div class="plan-price">€2,500 <span>p/m · Mgmt: €250</span></div><ul class="plan-features"><li>Everything in Standard</li><li>Up to 4 products/services</li></ul></div>
+      </div>
+      <div class="ksp-section"><h4>Key Selling Points</h4><div class="ksp-list"><div class="ksp-item"><div><strong>Immediate Visibility</strong> — Top of Google from day one.</div></div><div class="ksp-item"><div><strong>Only Pay for Results</strong> — PPC = pay per click, full budget control.</div></div><div class="ksp-item"><div><strong>High-Intent Traffic</strong> — People actively searching = higher conversion.</div></div></div></div>
+      <div class="script-prompt">"€500 a month. If that brings you two or three new clients, it's already paid for itself. And we manage everything."</div>
+    </div>
+  </div>
+
+  <div id="p-social" class="product-accordion">
+    <div class="product-toggle" onclick="toggleAccordion(this)">
+      <div class="product-toggle-left"><div class="product-icon" style="background:rgba(192,122,255,0.1);">✨</div><div><div class="product-name">AI Social Visibility</div><div class="product-price">3 packages: Leads · Local Search · Visibility</div></div></div><span class="chevron">▼</span>
+    </div>
+    <div class="product-body">
+      <button class="back-to-discovery" onclick="jumpTo('discovery')">← Back to Discovery</button>
+      <div class="pitch-line">"What would it look like if your social media was always active, always on-brand — without you needing to think about it?"</div>
+      <div class="plans-row three">
+        <div class="plan-card"><div class="plan-name">Leads</div><div class="plan-price" style="font-size:14px">Lead generation focus</div><ul class="plan-features"><li>Content designed to drive enquiries</li></ul></div>
+        <div class="plan-card"><div class="plan-name">Local Search</div><div class="plan-price" style="font-size:14px">Local visibility focus</div><ul class="plan-features"><li>Boosts local search & AI discoverability</li></ul></div>
+        <div class="plan-card"><div class="plan-name">Visibility</div><div class="plan-price" style="font-size:14px">Brand awareness focus</div><ul class="plan-features"><li>Always-on brand presence</li></ul></div>
+      </div>
+      <div class="ksp-section"><h4>Objection Handling</h4>
+        <table class="obj-table"><tr><th>Objection</th><th>Response</th></tr>
+          <tr><td class="objection">"I can post myself"</td><td class="response">You can — and you can add your own posts too. But we make sure your brand stays visible every month without you needing to think about it.</td></tr>
+          <tr><td class="objection">"I don't have time"</td><td class="response">That's exactly why businesses choose this. We handle planning, writing, scheduling, and publishing.</td></tr>
+          <tr><td class="objection">"AI can do this"</td><td class="response">AI generates ideas quickly — but someone still needs to protect your brand voice and publish consistently. We combine AI with expert oversight.</td></tr>
+        </table>
+      </div>
+      <div class="script-prompt">"How often do you currently post? Do you have a content plan for the next three months? Most business owners don't — and that's not a criticism, it's a time problem. We solve that."</div>
+    </div>
+  </div>
+</section>
+<hr class="divider">
+<!-- OBJECTIONS -->
+<section id="objections" class="phase">
+  <div class="phase-tag">Phase 08</div>
+  <div class="phase-title">Objections</div>
+  <div class="phase-subtitle">These customers already know us. Objections here are mostly about value, price, or change aversion — not trust.</div>
+
+  <div class="script-block">
+    <div class="script-header"><span class="script-role role-warn">Transition</span><span style="font-size:13px;color:var(--text-mid)">Objections about switching from Telenet</span></div>
+    <div class="script-body">
+      <table class="obj-table"><tr><th>Objection</th><th>Response</th></tr>
+        <tr><td class="objection">"I'm happy with what I had through Telenet"</td><td class="response">That makes sense — because we're the ones who built and managed it. Nothing changes in terms of quality. What does change is you now work with us directly — faster support, more flexibility, and a full suite of products we couldn't offer through that channel.</td></tr>
+        <tr><td class="objection">"Why can't I just stay on Telenet?"</td><td class="response">The Telenet partnership has come to an end — that's why we're making this transition. But you're not losing anything. You're actually gaining a more direct relationship with the team that's been doing the work all along.</td></tr>
+        <tr><td class="objection">"I didn't ask for this change"</td><td class="response">I completely understand — and I appreciate your patience with it. I'm personally here to make sure this transition goes smoothly for you.</td></tr>
+      </table>
+    </div>
+  </div>
+
+  <div class="script-block">
+    <div class="script-header"><span class="script-role role-warn">Price</span><span style="font-size:13px;color:var(--text-mid)">Handling cost objections</span></div>
+    <div class="script-body">
+      <table class="obj-table"><tr><th>Objection</th><th>Response</th></tr>
+        <tr><td class="objection">"It's more expensive than before"</td><td class="response">You're getting more than before — a more capable platform, more products, and direct access to our team. But let's be practical: if this brings you even one extra customer a month, what does that cover? For most businesses, it more than pays for itself.</td></tr>
+        <tr><td class="objection">"I can do it myself"</td><td class="response">Absolutely — tools like Wix exist. But you'd be trading our expertise and support for something you manage yourself. If that's 5–10 hours a month, what does that cost you? And if something breaks, who fixes it?</td></tr>
+        <tr><td class="objection">"I need to think about it"</td><td class="response">Of course. Can I ask — is it the price, the product, or something else? I'd rather understand and come back with the right answer than leave you with an open question.</td></tr>
+        <tr><td class="objection">"I already have someone doing this"</td><td class="response">Fair enough — when did you last review the results they're delivering? We're happy to do a quick audit and show you exactly where you stand. If they're doing a great job, brilliant. If not, you'll know.</td></tr>
+      </table>
+    </div>
+  </div>
+</section>
+<hr class="divider">
+
+<!-- CLOSE -->
+<section id="close" class="phase">
+  <div class="phase-tag">Phase 09</div>
+  <div class="phase-title">Close</div>
+  <div class="phase-subtitle">You've earned the right to ask. Confident, clear, no pressure.</div>
+
+  <div class="script-block">
+    <div class="script-header"><span class="script-role role-you">You</span><span style="font-size:13px;color:var(--text-mid)">The ask</span></div>
+    <div class="script-body">"Based on everything you've told me today, and knowing the work we've already done for you — I'd recommend <span class="ph">[specific product + plan]</span>. It's <span class="ph">[price]</span>, and we can have everything sorted within <span class="ph">[timeframe]</span>.<br><br>Does that work for you?"</div>
+  </div>
+
+  <!-- RECOMMENDATION PANEL -->
+  <div id="rec-panel">
+    <div style="font-family:'DM Mono',monospace;font-size:11px;text-transform:uppercase;letter-spacing:0.1em;color:var(--text-dim);margin-bottom:12px;">💡 Based on this call</div>
+    <div id="rec-content">
+      <div id="rec-empty" style="background:var(--surface2);border:1px solid var(--border);border-radius:10px;padding:18px;font-size:13px;color:var(--text-dim);font-style:italic;">Select questions in Discovery to generate a personalised recommendation here.</div>
+    </div>
+  </div>
+
+  <div class="close-options" style="margin-top:24px">
+    <div class="close-card">
+      <h4>✅ If they say yes</h4>
+      <p style="margin-bottom:10px">Confirm the details, then say:</p>
+      <p style="font-style:italic;color:var(--text);margin-bottom:10px">"Perfect. What we'll do now is get you booked in for an onboarding call — that's where we'll walk you through everything, get all the details we need from you, and make sure the setup is exactly right for your business. You'll hear from us shortly to confirm the time."</p>
+      <p>Confirm their email address, keep the energy warm. They've been a customer — treat them like one.</p>
+    </div>
+    <div class="close-card">
+      <h4>⏳ If they need time</h4>
+      <p>"No problem — can I send you a summary of what we discussed? And when's a good time to follow up — would Thursday or Friday work?" Always book the follow-up before ending the call.</p>
+    </div>
+    <div class="close-card">
+      <h4>🚫 If they say no</h4>
+      <p>"I appreciate your honesty. Can I ask — is it the product, the price, or the timing? I'd rather understand now so I can come back when the fit is right."</p>
+    </div>
+    <div class="close-card">
+      <h4>📋 Always</h4>
+      <p>Log the outcome, note objections, set a follow-up reminder. A no today from a long-term customer is often a yes in 3 months.</p>
+    </div>
+  </div>
+
+  <div class="oneliners" style="margin-top:24px">
+    <div class="oneliner">"You've trusted us with your website for years. This is just the next step in that same relationship."</div>
+    <div class="oneliner">"We're not asking you to take a leap of faith — you already know the quality of our work."</div>
+  </div>
+</section>
+<hr class="divider">
+
+<!-- CUSTOMER JOURNEY -->
+<section id="journey" class="phase">
+  <div class="phase-tag">After the Sale</div>
+  <div class="phase-title">Customer Journey & Sign-Up Process</div>
+  <div class="phase-subtitle">Know what happens after you close — so you can set expectations confidently on the call.</div>
+  <div class="insight-blue"><strong>💡 Tell the customer what happens next</strong><br>After they say yes, briefly walk them through the journey. It removes uncertainty and builds confidence in the decision they just made.</div>
+  <div class="script-block">
+    <div class="script-header"><span class="script-role role-you">You</span><span style="font-size:13px;color:var(--text-mid)">What to say after closing</span></div>
+    <div class="script-body">"Perfect. Here's what happens from here — we'll get you booked in for an onboarding call where we gather everything we need. Our team then builds your site, and you'll have an approval call to review it before anything goes live. We handle revisions, final quality checks, and then you're live with ongoing support from that point forward."</div>
+  </div>
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;margin:16px 0;">
+    <div class="script-block" style="margin:0">
+      <div class="script-header"><span class="script-role role-tip">Customer Journey</span></div>
+      <div class="script-body" style="font-size:13px;">
+        <div style="display:flex;flex-direction:column;gap:10px;">
+          <div style="display:flex;gap:10px;align-items:flex-start;"><span style="color:var(--accent);font-family:'DM Mono',monospace;font-size:11px;flex-shrink:0;margin-top:2px;">01</span><div><strong style="color:var(--text)">Sale + book approval call</strong><br><span style="color:var(--text-mid)">Close the sale and schedule the first approval call</span></div></div>
+          <div style="display:flex;gap:10px;align-items:flex-start;"><span style="color:var(--accent);font-family:'DM Mono',monospace;font-size:11px;flex-shrink:0;margin-top:2px;">02</span><div><strong style="color:var(--text)">Order placed & website built</strong><br><span style="color:var(--text-mid)">Our team builds the website based on the brief</span></div></div>
+          <div style="display:flex;gap:10px;align-items:flex-start;"><span style="color:var(--accent);font-family:'DM Mono',monospace;font-size:11px;flex-shrink:0;margin-top:2px;">03</span><div><strong style="color:var(--text)">Approval call</strong><br><span style="color:var(--text-mid)">Customer reviews the first version</span></div></div>
+          <div style="display:flex;gap:10px;align-items:flex-start;"><span style="color:var(--accent);font-family:'DM Mono',monospace;font-size:11px;flex-shrink:0;margin-top:2px;">04</span><div><strong style="color:var(--text)">Revisions</strong><br><span style="color:var(--text-mid)">Production & revisions based on feedback</span></div></div>
+          <div style="display:flex;gap:10px;align-items:flex-start;"><span style="color:var(--accent);font-family:'DM Mono',monospace;font-size:11px;flex-shrink:0;margin-top:2px;">05</span><div><strong style="color:var(--text)">2nd Approval Call</strong><br><span style="color:var(--text-mid)">Final review with customer before going live</span></div></div>
+          <div style="display:flex;gap:10px;align-items:flex-start;"><span style="color:var(--accent);font-family:'DM Mono',monospace;font-size:11px;flex-shrink:0;margin-top:2px;">06</span><div><strong style="color:var(--text)">Final QA checks</strong><br><span style="color:var(--text-mid)">Internal quality assurance before launch</span></div></div>
+          <div style="display:flex;gap:10px;align-items:flex-start;"><span style="color:var(--accent);font-family:'DM Mono',monospace;font-size:11px;flex-shrink:0;margin-top:2px;">07</span><div><strong style="color:var(--text)">Set Live & Ongoing Support</strong><br><span style="color:var(--text-mid)">Website goes live — ongoing support from here</span></div></div>
+        </div>
+      </div>
+    </div>
+    <div class="script-block" style="margin:0">
+      <div class="script-header"><span class="script-role role-tip">Sales Sign-Up Process</span><span style="font-size:11px;color:var(--text-dim)">(until Salesforce payments go live)</span></div>
+      <div class="script-body" style="font-size:13px;">
+        <div style="display:flex;flex-direction:column;gap:10px;">
+          <div style="display:flex;gap:10px;align-items:flex-start;"><span style="color:var(--orange);font-family:'DM Mono',monospace;font-size:11px;flex-shrink:0;margin-top:2px;">01</span><div><strong style="color:var(--text)">Read confirmation script</strong><br><span style="color:var(--text-mid)">Read the closing script to the customer</span></div></div>
+          <div style="display:flex;gap:10px;align-items:flex-start;"><span style="color:var(--orange);font-family:'DM Mono',monospace;font-size:11px;flex-shrink:0;margin-top:2px;">02</span><div><strong style="color:var(--text)">Complete online salesform</strong><br><span style="color:var(--text-mid)">Fill in the order form online</span></div></div>
+          <div style="display:flex;gap:10px;align-items:flex-start;"><span style="color:var(--orange);font-family:'DM Mono',monospace;font-size:11px;flex-shrink:0;margin-top:2px;">03</span><div><strong style="color:var(--text)">Richie/Fidel places order</strong><br><span style="color:var(--text-mid)">Internal team processes and places the order</span></div></div>
+          <div style="display:flex;gap:10px;align-items:flex-start;"><span style="color:var(--orange);font-family:'DM Mono',monospace;font-size:11px;flex-shrink:0;margin-top:2px;">04</span><div><strong style="color:var(--text)">Customer receives payment link</strong><br><span style="color:var(--text-mid)">Payment link sent to the customer</span></div></div>
+          <div style="display:flex;gap:10px;align-items:flex-start;"><span style="color:var(--orange);font-family:'DM Mono',monospace;font-size:11px;flex-shrink:0;margin-top:2px;">05</span><div><strong style="color:var(--text)">Customer pays → Order placed</strong><br><span style="color:var(--text-mid)">Payment confirmed, production begins</span></div></div>
+          <div style="display:flex;gap:10px;align-items:flex-start;"><span style="color:var(--red);font-family:'DM Mono',monospace;font-size:11px;flex-shrink:0;margin-top:2px;">!</span><div><strong style="color:var(--red)">If not paid within 1 business day</strong><br><span style="color:var(--text-mid)">Sales to follow up with the customer directly</span></div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+</main>
+<script>
+function toggleAccordion(h){const a=h.closest('.product-accordion');a.classList.toggle('open');}
+function toggleQBlock(btn){const block=btn.closest('.q-block');const body=block.querySelector('.q-more-body');body.classList.toggle('open');btn.classList.toggle('open');btn.textContent=body.classList.contains('open')?'− less questions':'+ more questions';}
+function jumpTo(id){const el=document.getElementById(id);if(!el)return;if(el.classList.contains('product-accordion'))el.classList.add('open');el.scrollIntoView({behavior:'smooth',block:'start'});}
+
+// ── QUESTION SELECTION ──
+const selectedQuestions=[];
+
+const conclusionMap={
+  'Your website is often the first impression someone gets of your business — does it represent the quality of what you actually do?':'Your website doesn\'t fully represent the quality of what you actually do.',
+  'When did you last update your website? Does it still reflect where your business is today?':'Your website no longer reflects where your business is today.',
+  'Have you checked lately how your website looks compared to your competitors? Are they showing up stronger than you online?':'Your competitors are showing up stronger online than you are.',
+  'Are you getting enquiries through your website, or are most of your leads still coming through word of mouth?':'Your website isn\'t actively generating leads for you.',
+  'If someone in [city] searches for [their service] right now — do you think you\'d come up?':'You\'re likely not showing up when potential customers search for you.',
+  'Do you know where you rank on Google for your main service?':'You don\'t have a clear picture of your Google ranking.',
+  'Would you be willing to invest in being found organically on Google over the next 6–12 months?':'You\'re open to investing in long-term organic Google visibility.',
+  'Is ranking higher on Google something you\'d prioritise as a growth strategy?':'Ranking higher on Google is a clear growth priority for you.',
+  'Are you aware that SEO is a long-term investment — and does that appeal to you?':'You understand SEO is a long-term play and are open to that investment.',
+  'Has anything changed in the business since we last worked on your site — new services, different focus, new location?':'Your website doesn\'t reflect the current state of your business.',
+  'Have you launched any new services or products that aren\'t on your site yet?':'New services you offer aren\'t visible to potential customers online.',
+  'Does your website still feel like you — or has your business moved on from it?':'Your business has moved on but your website hasn\'t kept up.',
+  'What does your Google rating look like right now — are customers leaving reviews?':'Your online reputation isn\'t being actively managed.',
+  'Do you respond to your reviews — good and bad?':'You\'re not responding to reviews, which is hurting your visibility and trust.',
+  'Outside of word of mouth — how are new customers finding you today?':'You\'re relying too heavily on word of mouth for new customers.',
+  'Is your online presence actively bringing you new business, or is it more passive?':'Your online presence is passive — it\'s not working hard enough for you.',
+  'If you could get more leads online without relying on referrals — would that make a difference?':'There\'s untapped lead potential online you\'re not reaching.',
+  'Are you active on social media at all — Instagram, Facebook? How consistent has that been?':'Your social media presence is inconsistent.',
+  'Do you feel like your social media reflects the quality of your business?':'Your social media doesn\'t reflect the quality of your business.',
+  'How much time do you actually spend on social media for your business each week?':'Social media is taking too much time away from running your business.',
+  'Is staying consistent on social something you struggle with?':'Consistency on social media is a real challenge for you.',
+  'If your social media was always active and on-brand without you thinking about it — would that help?':'You\'d benefit from having social handled without the time investment.',
+  'Have you ever tried Google Ads or paid advertising? How did that go?':'Previous ad attempts haven\'t delivered the results you needed.',
+  'Are you currently spending anything on online advertising?':'You\'re not currently investing in online advertising.',
+  'Have you ever felt like you\'re invisible on Google compared to competitors?':'You feel like competitors are outpacing you on Google.',
+  'Is getting more leads quickly something that\'s important to you right now?':'Getting new leads quickly is a priority for the business.',
+  'If every €1 you spent on ads brought back €3 — would you want to know how?':'You\'re open to paid advertising if the ROI is clear.',
+  'What\'s your main focus for the business over the next 12 months — grow, stabilise, expand?':'Growth is the main priority for the business this year.',
+  'If everything went well this year — what would that look like for your business?':'You have a clear vision of where you want the business to be.',
+  'Where do you want to be in a year from now, and is your online presence set up to get you there?':'Your online presence isn\'t aligned with your growth goals.',
+  'Are you where you want to be in terms of growth, or is there more potential you\'re not reaching?':'There\'s more potential in the business that isn\'t being reached.',
+  'Is your business growing the way you want it to — or do you feel like you\'re leaving customers on the table?':'You feel like you\'re leaving customers on the table.'
+};
+
+function getConclusion(text){
+  const clean=text.replace(/<[^>]+>/g,'').trim().replace(/^[""]|[""]$/g,'').trim();
+  return conclusionMap[clean]||text.replace(/<[^>]+>/g,'').trim();
+}
+
+// Signal categories
+function getSignals(){
+  const signals={website:0,seo:0,seoIntent:0,listings:0,ads:0,social:0,growth:0};
+  selectedQuestions.forEach(q=>{
+    const t=q.tag;
+    const text=q.text;
+    if(t==='Q1'||t==='Q3')signals.website++;
+    // Q2: only count as seoIntent if they confirmed willingness to invest
+    if(t==='Q2'){
+      if(text.includes('willing to invest')||text.includes('prioritise as a growth')||text.includes('long-term investment'))signals.seoIntent++;
+      else signals.listings++; // visibility gap only = listings signal
+    }
+    if(t==='Q4')signals.listings++;
+    if(t==='Q5'){
+      if(text.includes('relying on referrals')||text.includes('passive'))signals.listings++;
+      else signals.ads++;
+    }
+    if(t==='Q6')signals.social++;
+    if(t==='Q7')signals.ads++;
+    if(t==='Q8')signals.growth++;
+  });
+  // Promote seoIntent to seo only if confirmed intent
+  signals.seo=signals.seoIntent;
+  return signals;
+}
+
+function getRecommendation(signals){
+  const hasAds=signals.ads>=2;
+  const hasSEO=signals.seoIntent>=1&&(signals.growth>=1||signals.seoIntent>=2); // SEO intent + growth goal OR 2+ SEO intent questions
+  const hasWebsite=signals.website>=1;
+  const hasListings=signals.listings>=1;
+  const hasSocial=signals.social>=2;
+
+  let primary=null,secondary=null,alts=[];
+
+  // Package logic — raised thresholds
+  if(hasAds&&(hasWebsite||hasListings)){
+    primary={id:'pkg-leads',name:'Online Essentials — Leads',price:'€585 p/m',icon:'🎯',reason:'Strong signals around needing fast leads and paid visibility, combined with website and listings needs.'};
+    if(hasSEO)secondary={id:'pkg-local',name:'Online Essentials — Local Search',price:'€305 p/m',icon:'📍',reason:'Local SEO signals suggest strong organic growth potential alongside or instead of paid ads.'};
+  } else if(hasSEO&&(hasWebsite||hasListings)){
+    primary={id:'pkg-local',name:'Online Essentials — Local Search',price:'€305 p/m',icon:'📍',reason:'Confirmed interest in long-term SEO investment, combined with website and listings needs — Local Search covers all of this.'};
+    if(hasAds)secondary={id:'pkg-leads',name:'Online Essentials — Leads',price:'€585 p/m',icon:'🎯',reason:'If they want faster results alongside SEO, the Leads package adds a managed ad campaign.'};
+  } else if(hasWebsite||hasListings){
+    primary={id:'pkg-visibility',name:'Online Essentials — Visibility',price:'€99 p/m',icon:'👁',reason:'Core signals around website quality and online presence — Visibility is the right foundation without overcommitting.'};
+  }
+
+  // Individual product alternatives
+  if(hasSocial&&!primary)primary={id:'p-social',name:'AI Social Visibility',price:'Ask for pricing',icon:'✨',reason:'Consistent social media struggle — AI Social Visibility handles this without taking up their time.'};
+  if(hasWebsite)alts.push({id:'p-website',name:'Website — Duda',price:'From €70 p/m',icon:'🌐',reason:'Entry-level option: refresh the website without a full package commitment.'});
+  if(signals.seoIntent>=1&&!hasSEO)alts.push({id:'p-seo',name:'SEO',price:'From €229 p/m',icon:'🔍',reason:'They showed some interest in Google ranking — SEO as a standalone lets them start without the full package.'});
+  if(hasListings&&!primary)alts.push({id:'p-listings',name:'Listings & Reviews',price:'From €39 p/m',icon:'📍',reason:'Quick win: get listings and reputation under control at a low entry price.'});
+  if(hasSocial)alts.push({id:'p-social',name:'AI Social Visibility',price:'Ask for pricing',icon:'✨',reason:'Handles social media completely — no time investment needed.'});
+  if(signals.ads>=1&&!hasAds&&!primary?.id?.includes('leads'))alts.push({id:'p-ads',name:'Online Advertising',price:'From €500 p/m',icon:'📢',reason:'Some interest in paid ads — standalone campaign as a lighter entry point.'});
+
+  // Dedupe and limit alts
+  alts=alts.filter(a=>a.id!==primary?.id&&a.id!==secondary?.id);
+  alts=alts.slice(0,2);
+
+  return{primary,secondary,alts};
+}
+
+function renderRecommendation(){
+  const content=document.getElementById('rec-content');
+  const empty=document.getElementById('rec-empty');
+  if(selectedQuestions.length===0){
+    content.innerHTML='<div id="rec-empty" style="background:var(--surface2);border:1px solid var(--border);border-radius:10px;padding:18px;font-size:13px;color:var(--text-dim);font-style:italic;">Select questions in Discovery to generate a personalised recommendation here.</div>';
+    return;
+  }
+  const signals=getSignals();
+  const{primary,secondary,alts}=getRecommendation(signals);
+  const conclusions=selectedQuestions.map(q=>`<div class="rec-conclusion">${getConclusion(q.text)}</div>`).join('');
+
+  let html='';
+  if(primary){
+    html+=`<div class="rec-primary">
+      <div class="rec-primary-header">
+        <div><div class="rec-label">⭐ Primary recommendation</div><div class="rec-pkg-name">${primary.icon} ${primary.name}</div><div class="rec-pkg-price">${primary.price}</div></div>
+        <button class="rec-jump-btn" onclick="jumpTo('${primary.id}')">View details →</button>
+      </div>
+      <div class="rec-body">
+        <div class="rec-why-title">Why this fits — based on what you heard:</div>
+        ${conclusions}
+        <div style="margin-top:12px;font-size:12px;color:var(--text-dim);font-style:italic;">${primary.reason}</div>
+      </div>
+    </div>`;
+  }
+  if(secondary){
+    html+=`<div class="rec-primary" style="border-color:rgba(90,180,255,0.3);">
+      <div class="rec-primary-header" style="background:rgba(90,180,255,0.07);">
+        <div><div class="rec-label" style="color:var(--blue);">🔄 Alternative package</div><div class="rec-pkg-name">${secondary.icon} ${secondary.name}</div><div class="rec-pkg-price">${secondary.price}</div></div>
+        <button class="rec-jump-btn" style="background:var(--blue);" onclick="jumpTo('${secondary.id}')">View details →</button>
+      </div>
+      <div class="rec-body"><div style="font-size:12px;color:var(--text-dim);font-style:italic;">${secondary.reason}</div></div>
+    </div>`;
+  }
+  if(alts.length>0){
+    html+=`<div style="font-family:'DM Mono',monospace;font-size:10px;text-transform:uppercase;letter-spacing:0.1em;color:var(--text-dim);margin:16px 0 8px;">💡 Lighter alternatives — individual products</div>`;
+    alts.forEach(a=>{
+      html+=`<div class="rec-alt"><div class="rec-alt-left"><h4>${a.icon} ${a.name} — ${a.price}</h4><p>${a.reason}</p></div><button class="rec-alt-btn" onclick="jumpTo('${a.id}')">View details →</button></div>`;
+    });
+  }
+  if(!primary&&!secondary&&alts.length===0){
+    html='<div style="background:var(--surface2);border:1px solid var(--border);border-radius:10px;padding:18px;font-size:13px;color:var(--text-dim);">Not enough signals yet — keep asking questions to refine the recommendation.</div>';
+  }
+  content.innerHTML=html;
+}
+
+function selectQuestion(el,tag,text){
+  const cleanText=text.replace(/<[^>]+>/g,'').trim().replace(/^[""]|[""]$/g,'').trim();
+  const key=tag+':'+cleanText;
+  const idx=selectedQuestions.findIndex(q=>q.key===key);
+  if(idx>-1){selectedQuestions.splice(idx,1);el.classList.remove('selected');}
+  else{selectedQuestions.push({key,tag,text:cleanText});el.classList.add('selected');}
+  renderSelected();
+  renderRecommendation();
+}
+
+function renderSelected(){
+  const list=document.getElementById('selected-list');
+  const empty=document.getElementById('selected-empty');
+  if(selectedQuestions.length===0){list.innerHTML='';if(empty)empty.style.display='block';return;}
+  if(empty)empty.style.display='none';
+  list.innerHTML=selectedQuestions.map((q,i)=>`<div class="selected-q-item" onclick="removeSelected(${i})"><span class="sq-tag">${q.tag}</span><span>${getConclusion(q.text)}</span><span class="sq-remove">✕</span></div>`).join('');
+}
+
+function removeSelected(i){
+  const q=selectedQuestions[i];
+  document.querySelectorAll('.q-block-main.selected,.q-more-item.selected').forEach(el=>{
+    const t=el.textContent.replace(/<[^>]+>/g,'').trim();
+    if(t===q.text||t.slice(0,30)===q.text.slice(0,30))el.classList.remove('selected');
+  });
+  selectedQuestions.splice(i,1);
+  renderSelected();
+  renderRecommendation();
+}
+
+function resetCall(){
+  selectedQuestions.length=0;
+  document.querySelectorAll('.q-block-main.selected,.q-more-item.selected').forEach(el=>el.classList.remove('selected'));
+  renderSelected();
+  renderRecommendation();
+}
+
+document.addEventListener('DOMContentLoaded',()=>{
+  document.querySelectorAll('.q-block').forEach(block=>{
+    const tag=block.querySelector('.q-tag').textContent.trim();
+    const mainEl=block.querySelector('.q-block-main');
+    const mainText=mainEl.textContent.trim();
+    mainEl.onclick=()=>selectQuestion(mainEl,tag,mainText);
+    block.querySelectorAll('.q-more-item').forEach(item=>{
+      const itemText=item.textContent.trim();
+      item.onclick=()=>selectQuestion(item,tag,itemText);
+    });
+  });
+});
+
+window.addEventListener('scroll',()=>{
+  const doc=document.documentElement;
+  document.getElementById('progress').style.width=(doc.scrollTop/(doc.scrollHeight-doc.clientHeight)*100)+'%';
+  let current='';
+  document.querySelectorAll('section[id]').forEach(s=>{if(window.scrollY>=s.offsetTop-80)current=s.id;});
+  document.querySelectorAll('.nav-item').forEach(n=>{n.classList.remove('active');if(n.getAttribute('onclick')&&n.getAttribute('onclick').includes("'"+current+"'"))n.classList.add('active');});
+});
+</script>
+</body>
+</html>
