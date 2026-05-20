@@ -163,6 +163,10 @@
   .reset-btn:hover { background: rgba(255,90,90,0.15); }
   html { scroll-behavior: smooth; }
   section { scroll-margin-top: 24px; }
+  /* LANG TOGGLE */
+  .lang-toggle { display: flex; gap: 4px; padding: 12px 16px 4px; }
+  .lang-btn { flex: 1; padding: 6px; background: var(--surface2); border: 1px solid var(--border); border-radius: 6px; color: var(--text-mid); font-family: 'DM Mono', monospace; font-size: 12px; font-weight: 600; cursor: pointer; transition: all 0.15s; }
+  .lang-btn.active { background: var(--accent-dim); border-color: var(--accent); color: var(--accent); }
   /* HAMBURGER / MOBILE */
   #hamburger { display: none; position: fixed; top: 12px; left: 12px; z-index: 300; background: var(--surface); border: 1px solid var(--border); border-radius: 8px; padding: 8px 10px; cursor: pointer; flex-direction: column; gap: 5px; }
   #hamburger span { display: block; width: 20px; height: 2px; background: var(--text); border-radius: 2px; transition: all 0.2s; }
@@ -192,6 +196,10 @@
 <div id="overlay" onclick="toggleSidebar()"></div>
 <nav id="sidebar">
   <div class="logo"><span>Online Essentials</span><p>Sales Script — v2</p></div>
+  <div class="lang-toggle">
+    <button class="lang-btn active" data-lang="en" onclick="setLang('en')">EN</button>
+    <button class="lang-btn" data-lang="nl" onclick="setLang('nl')">NL</button>
+  </div>
   <div class="nav-section">
     <div class="nav-label">Script</div>
     <a class="nav-item active" href="javascript:void(0)" onclick="jumpTo('context')"><span class="dot"></span>🗂 Context & Prep</a>
@@ -207,13 +215,13 @@
     <a class="nav-item" href="javascript:void(0)" onclick="jumpTo('journey')"><span class="dot"></span>↳ Customer Journey</a>
   </div>
   <div class="nav-section">
-    <div class="nav-label">Packages</div>
+    <div class="nav-label" data-nl="Pakketten">Packages</div>
     <a class="nav-item" href="javascript:void(0)" onclick="jumpTo('pkg-visibility')">👁 Visibility — €99</a>
     <a class="nav-item" href="javascript:void(0)" onclick="jumpTo('pkg-local')">📍 Local Search — €305</a>
     <a class="nav-item" href="javascript:void(0)" onclick="jumpTo('pkg-leads')">🎯 Leads — €585</a>
   </div>
   <div class="nav-section">
-    <div class="nav-label">Products</div>
+    <div class="nav-label" data-nl="Producten">Products</div>
     <a class="nav-item" href="javascript:void(0)" onclick="jumpTo('p-website')">🌐 Website (Duda)</a>
     <a class="nav-item" href="javascript:void(0)" onclick="jumpTo('p-website-wp')">💻 Website (WP)</a>
     <a class="nav-item" href="javascript:void(0)" onclick="jumpTo('p-listings')">📍 Listings</a>
@@ -221,17 +229,17 @@
     <a class="nav-item" href="javascript:void(0)" onclick="jumpTo('p-ads')">📢 Online Advertising</a>
     <a class="nav-item" href="javascript:void(0)" onclick="jumpTo('p-social')">✨ AI Social</a>
   </div>
-  <div class="nav-section"><div class="nav-label">Call</div></div>
-  <button class="reset-btn" onclick="resetCall()">↺ Reset for new call</button>
+  <div class="nav-section"><div class="nav-label" data-nl="Gesprek">Call</div></div>
+  <button class="reset-btn" onclick="resetCall()" data-nl="↺ Reset voor nieuw gesprek">↺ Reset for new call</button>
 </nav>
 <main id="main">
 
 <!-- CONTEXT -->
 <section id="context" class="phase">
-  <div class="phase-tag">Before You Call</div>
-  <div class="phase-title">Context & Preparation</div>
-  <div class="phase-subtitle">These are not cold leads. Know the situation before you pick up the phone.</div>
-  <div class="context-banner">
+  <div class="phase-tag" data-nl="Voor het gesprek">Before You Call</div>
+  <div class="phase-title" data-nl="Context & Voorbereiding">Context & Preparation</div>
+  <div class="phase-subtitle" data-nl="Dit zijn geen koude leads. Ken de situatie voordat u de telefoon oppakt.">These are not cold leads. Know the situation before you pick up the phone.</div>
+  <div class="context-banner" data-nl="<strong>🔁 Wie u belt</strong><ul><li>Langdurige klanten die via <strong>Telenet</strong> een website hebben laten bouwen en beheren</li><li>Spotzer Digital heeft hun site gebouwd en beheerd — <strong>we hebben al een relatie met hen</strong></li><li>Ze hebben een e-mail ontvangen over de overgang naar Online Essentials</li><li>Dit is geen nieuwe prospect die u moet overtuigen — dit is een bestaande klant die u wilt behouden <em>én</em> laten groeien</li></ul>">
     <strong>🔁 Who you're calling</strong>
     <ul>
       <li>Long-standing customers who had a website built and managed through <strong>Telenet</strong></li>
@@ -240,10 +248,10 @@
       <li>They're not a new prospect to convince — they're an existing customer to retain <em>and</em> grow</li>
     </ul>
   </div>
-  <div class="insight-blue"><strong>💡 Your mindset on this call</strong><br>You're not selling to a stranger. You're the new account manager for someone who already trusted this company. Warm, peer-to-peer, confident.</div>
+  <div class="insight-blue" data-nl="<strong>💡 Uw mindset bij dit gesprek</strong><br>U verkoopt niet aan een vreemde. U bent de nieuwe contactpersoon voor iemand die dit bedrijf al vertrouwde. Warm, gelijkwaardig, zelfverzekerd."><strong>💡 Your mindset on this call</strong><br>You're not selling to a stranger. You're the new account manager for someone who already trusted this company. Warm, peer-to-peer, confident.</div>
   <div class="script-block">
-    <div class="script-header"><span class="script-role role-tip">Prep</span><span style="font-size:13px;color:var(--text-mid)">Before each call, know:</span></div>
-    <div class="script-body">
+    <div class="script-header"><span class="script-role role-tip">Prep</span><span style="font-size:13px;color:var(--text-mid)" data-nl="Weet dit voor elk gesprek:">Before each call, know:</span></div>
+    <div class="script-body" data-nl="<strong style='color:var(--accent)'>1. Heeft u nog een actieve website bij ons?</strong><br>Zo ja — wanneer is hij voor het laatst bijgewerkt? Is hij mobiel-vriendelijk?<br><br><strong style='color:var(--accent)'>2. Welk product hadden ze via Telenet?</strong><br>Alleen een basissite? Extras? Dit zegt u welke upsell-kans er is.<br><br><strong style='color:var(--accent)'>3. Hebben ze de overgangs-e-mail geopend?</strong><br>Zo ja — ze weten wat er komt. Zo nee — ze zijn misschien verrast.<br><br><strong style='color:var(--accent)'>4. Wat voor soort bedrijf is het?</strong><br>Hun sector kennen stelt u in staat meteen in hun taal te spreken.">
       <strong style="color:var(--accent)">1. Do they still have an active website with us?</strong><br>If yes — when was it last updated? Is it mobile-friendly?<br><br>
       <strong style="color:var(--accent)">2. What product were they on through Telenet?</strong><br>Basic site only? Any extras? This tells you what upsell gap exists.<br><br>
       <strong style="color:var(--accent)">3. Have they opened the transition email?</strong><br>If yes — they know what's coming. If no — they may be surprised.<br><br>
@@ -256,16 +264,16 @@
 <!-- INTRO -->
 <section id="intro" class="phase">
   <div class="phase-tag">Phase 01</div>
-  <div class="phase-title">Introduction</div>
-  <div class="phase-subtitle">Lead with the opportunity. Short, sharp, compelling — then context.</div>
+  <div class="phase-title" data-nl="Introductie">Introduction</div>
+  <div class="phase-subtitle" data-nl="Begin met de kans. Kort, krachtig, overtuigend — context komt daarna.">Lead with the opportunity. Short, sharp, compelling — then context.</div>
   <div class="script-block">
-    <div class="script-header"><span class="script-role role-you">You</span><span style="font-size:13px;color:var(--text-mid)">Opening line</span></div>
-    <div class="script-body">"Hi <span class="ph">[Name]</span>, my name is Nathan from Online Essentials. I'm calling because Telenet has given all their current customers the opportunity to upgrade their business online and see how your business has been doing so far. Is now a good time to talk for a few minutes?"</div>
+    <div class="script-header"><span class="script-role role-you">You</span><span style="font-size:13px;color:var(--text-mid)" data-nl="Openingszin">Opening line</span></div>
+    <div class="script-body" data-nl="&ldquo;Goedemiddag <span class='ph'>[Naam]</span>, u spreekt met Nathan van Online Essentials. Ik bel u omdat Telenet al hun huidige klanten de kans heeft gegeven om hun online aanwezigheid te versterken en te kijken hoe het digitaal met uw bedrijf gaat. Heeft u even een paar minuten voor een kort gesprek?&rdquo;">"Hi <span class="ph">[Name]</span>, my name is Nathan from Online Essentials. I'm calling because Telenet has given all their current customers the opportunity to upgrade their business online and see how your business has been doing so far. Is now a good time to talk for a few minutes?"</div>
   </div>
-  <div class="insight"><strong>💡 Why this order works:</strong> Lead with what's in it for them — an opportunity, not an explanation. The context comes <em>after</em> they say yes.</div>
+  <div class="insight" data-nl="<strong>💡 Waarom deze volgorde werkt:</strong> Begin met wat het hen oplevert — een kans, geen uitleg. De context komt <em>nadat</em> ze ja zeggen."><strong>💡 Why this order works:</strong> Lead with what's in it for them — an opportunity, not an explanation. The context comes <em>after</em> they say yes.</div>
   <div class="script-block">
-    <div class="script-header"><span class="script-role role-you">You</span><span style="font-size:13px;color:var(--text-mid)">After they say yes — give the context</span></div>
-    <div class="script-body">"Great. And as you're likely aware, a bit of background — we're the team that built and managed your website through Telenet. Which means that we'll now directly work with you under Online Essentials, so we're able to give more — covering everything you need to grow your business online.<br><br>As I mentioned my name is Nathan. I'm your new point of contact — and my goal today is simple: understand how your business is doing and make sure we're actually helping you grow."</div>
+    <div class="script-header"><span class="script-role role-you">You</span><span style="font-size:13px;color:var(--text-mid)" data-nl="Nadat ze ja zeggen — geef de context">After they say yes — give the context</span></div>
+    <div class="script-body" data-nl="&ldquo;Prima. En zoals u wellicht al weet — wij zijn het team dat via Telenet uw website heeft gebouwd en beheerd. Dat betekent dat we nu rechtstreeks met u samenwerken via Online Essentials, waardoor we meer kunnen bieden — alles wat u nodig heeft om online te groeien.<br><br>Mijn naam is Nathan. Ik ben uw nieuwe contactpersoon — en mijn doel vandaag is simpel: begrijpen hoe het met uw bedrijf gaat en zorgen dat we u ook echt helpen groeien.&rdquo;">"Great. And as you're likely aware, a bit of background — we're the team that built and managed your website through Telenet. Which means that we'll now directly work with you under Online Essentials, so we're able to give more — covering everything you need to grow your business online.<br><br>As I mentioned my name is Nathan. I'm your new point of contact — and my goal today is simple: understand how your business is doing and make sure we're actually helping you grow."</div>
   </div>
 </section>
 <hr class="divider">
@@ -274,15 +282,15 @@
 <section id="reconnect" class="phase">
   <div class="phase-tag">Phase 02</div>
   <div class="phase-title">Reconnect</div>
-  <div class="phase-subtitle">Acknowledge the existing relationship before asking anything. Make them feel known.</div>
+  <div class="phase-subtitle" data-nl="Erken de bestaande relatie voordat u iets vraagt. Laat hen voelen dat ze bekend zijn.">Acknowledge the existing relationship before asking anything. Make them feel known.</div>
   <div class="script-block">
-    <div class="script-header"><span class="script-role role-you">You</span><span style="font-size:13px;color:var(--text-mid)">Acknowledge the history</span></div>
-    <div class="script-body">"<span class="ph">[Name]</span>, you've been with us for a while now <span class="ph">[years]</span>, I hope the business has been growing in these years. First what I'd love to do today is just take a few minutes to understand how the website has been working for you, whether anything has changed in the business, and see if there's anything we can be doing better."<br><br><em>"This isn't a hard sell — I just want to make sure we're actually delivering value for you."</em></div>
+    <div class="script-header"><span class="script-role role-you">You</span><span style="font-size:13px;color:var(--text-mid)" data-nl="Erken de geschiedenis">Acknowledge the history</span></div>
+    <div class="script-body" data-nl="&ldquo;<span class='ph'>[Naam]</span>, u bent al een tijdje klant bij ons — <span class='ph'>[jaren]</span> jaar — ik hoop dat het de afgelopen tijd goed is gegaan met uw bedrijf. Wat ik vandaag graag even wil doen is een paar minuten nemen om te begrijpen hoe de website voor u heeft gewerkt, of er iets veranderd is in het bedrijf, en of er iets is dat we beter kunnen doen.&rdquo;<br><br><em>&ldquo;Dit is geen verkooppraatje — ik wil gewoon zeker weten dat we u ook echt iets bijbrengen.&rdquo;</em>">"<span class="ph">[Name]</span>, you've been with us for a while now <span class="ph">[years]</span>, I hope the business has been growing in these years. First what I'd love to do today is just take a few minutes to understand how the website has been working for you, whether anything has changed in the business, and see if there's anything we can be doing better."<br><br><em>"This isn't a hard sell — I just want to make sure we're actually delivering value for you."</em></div>
   </div>
-  <div class="insight-blue"><strong>💡 Why this works:</strong> Long-term customers often feel ignored once they've signed up. "I don't take that for granted" immediately differentiates you from every vendor who just takes renewal money and disappears.</div>
+  <div class="insight-blue" data-nl="<strong>💡 Waarom dit werkt:</strong> Langdurige klanten voelen zich vaak genegeerd zodra ze getekend hebben. Dit onderscheidt u onmiddellijk van elke leverancier die gewoon het verlengingsgeld incasseert en verdwijnt."><strong>💡 Why this works:</strong> Long-term customers often feel ignored once they've signed up. "I don't take that for granted" immediately differentiates you from every vendor who just takes renewal money and disappears.</div>
   <div class="script-block">
-    <div class="script-header"><span class="script-role role-you">You</span><span style="font-size:13px;color:var(--text-mid)">Quick check-in on their site</span></div>
-    <div class="script-body">"<span class="ph">[Name]</span>, have you had a chance to look at <span class="ph">[website name]</span> recently? How are you feeling about it — does it still represent where your business is today?"<br><br><em>[Let them talk. Most will either say "it's fine" (dig deeper) or mention something that bothers them — that's your opening.]</em></div>
+    <div class="script-header"><span class="script-role role-you">You</span><span style="font-size:13px;color:var(--text-mid)" data-nl="Korte check over hun site">Quick check-in on their site</span></div>
+    <div class="script-body" data-nl="&ldquo;<span class='ph'>[Naam]</span>, heeft u onlangs nog eens gekeken naar <span class='ph'>[websitenaam]</span>? Hoe voelt u erover — weerspiegelt die nog waar uw bedrijf vandaag staat?&rdquo;<br><br><em>[Laat ze praten. De meesten zeggen 'gaat wel' (ga dieper) of noemen iets wat hen stoort — dat is uw opening.]</em>">"<span class="ph">[Name]</span>, have you had a chance to look at <span class="ph">[website name]</span> recently? How are you feeling about it — does it still represent where your business is today?"<br><br><em>[Let them talk. Most will either say "it's fine" (dig deeper) or mention something that bothers them — that's your opening.]</em></div>
   </div>
 </section>
 <hr class="divider">
@@ -290,8 +298,8 @@
 <section id="discovery" class="phase">
   <div class="phase-tag">Phase 03</div>
   <div class="phase-title">Discovery</div>
-  <div class="phase-subtitle">They already have a website. Go deeper — performance, visibility, growth. Click any question to select it.</div>
-  <div class="insight"><strong>💡 Shift in focus:</strong> With these customers, ask "is your website actually working for you" — not "do you have one."</div>
+  <div class="phase-subtitle" data-nl="Ze hebben al een website. Ga dieper — prestaties, zichtbaarheid, groei. Klik op een vraag om hem te selecteren.">They already have a website. Go deeper — performance, visibility, growth. Click any question to select it.</div>
+  <div class="insight" data-nl="<strong>💡 Andere focus:</strong> Bij deze klanten vraagt u &lsquo;werkt uw website voor u&rsquo; — niet &lsquo;heeft u er een&rsquo;."><strong>💡 Shift in focus:</strong> With these customers, ask "is your website actually working for you" — not "do you have one."</div>
 
   <!-- Q1 -->
   <div class="q-block">
@@ -299,8 +307,8 @@
       <div class="q-block-left">
         <div class="q-tag">Q1</div>
         <div>
-          <div class="q-block-title">Website performance</div>
-          <div class="q-block-main">"Your website is often the first impression someone gets of your business — does it represent the quality of what you actually do?"</div>
+          <div class="q-block-title" data-nl="Websiteprestaties">Website performance</div>
+          <div class="q-block-main" data-nl="&ldquo;Uw website is vaak de eerste indruk die iemand van uw bedrijf krijgt — weerspiegelt die de kwaliteit van wat u werkelijk doet?&rdquo;">"Your website is often the first impression someone gets of your business — does it represent the quality of what you actually do?"</div>
         </div>
       </div>
       <div class="q-block-right">
@@ -309,11 +317,11 @@
       </div>
     </div>
     <div class="q-more-body">
-      <div class="q-more-item">"When did you last update your website? Does it still reflect where your business is today?"</div>
-      <div class="q-more-item">"Have you checked lately how your website looks compared to your competitors? Are they showing up stronger than you online?"</div>
-      <div class="q-more-item">"Are you getting enquiries through your website, or are most of your leads still coming through word of mouth?"</div>
+      <div class="q-more-item" data-nl="&ldquo;Wanneer heeft u uw website voor het laatst bijgewerkt? Geeft hij nog goed weer waar uw bedrijf vandaag staat?&rdquo;">"When did you last update your website? Does it still reflect where your business is today?"</div>
+      <div class="q-more-item" data-nl="&ldquo;Heeft u onlangs gekeken hoe uw website eruitziet vergeleken met die van concurrenten? Staan zij sterker online?&rdquo;">"Have you checked lately how your website looks compared to your competitors? Are they showing up stronger than you online?"</div>
+      <div class="q-more-item" data-nl="&ldquo;Krijgt u aanvragen via uw website, of komen de meeste leads nog via mond-tot-mondreclame?&rdquo;">"Are you getting enquiries through your website, or are most of your leads still coming through word of mouth?"</div>
     </div>
-    <div class="q-goal-bar">Opens website performance conversation → <span style="color:var(--teal)">Website upgrade</span></div>
+    <div class="q-goal-bar" data-nl="Opent gesprek over websiteprestaties → <span style='color:var(--teal)'>Website upgrade</span>">Opens website performance conversation → <span style="color:var(--teal)">Website upgrade</span></div>
   </div>
 
   <!-- Q2 -->
@@ -322,8 +330,8 @@
       <div class="q-block-left">
         <div class="q-tag">Q2</div>
         <div>
-          <div class="q-block-title">Google visibility</div>
-          <div class="q-block-main">"If someone in <span class="ph">[city]</span> searches for <span class="ph">[their service]</span> right now — do you think you'd come up?"</div>
+          <div class="q-block-title" data-nl="Google-zichtbaarheid">Google visibility</div>
+          <div class="q-block-main" data-nl="&ldquo;Als iemand in <span class='ph'>[stad]</span> nu zoekt naar <span class='ph'>[uw dienst]</span> — denkt u dat u tevoorschijn komt?&rdquo;">"If someone in <span class="ph">[city]</span> searches for <span class="ph">[their service]</span> right now — do you think you'd come up?"</div>
         </div>
       </div>
       <div class="q-block-right">
@@ -333,12 +341,12 @@
       </div>
     </div>
     <div class="q-more-body">
-      <div class="q-more-item">"Do you know where you rank on Google for your main service?"</div>
-      <div class="q-more-item">"Would you be willing to invest in being found organically on Google over the next 6–12 months?"</div>
-      <div class="q-more-item">"Is ranking higher on Google something you'd prioritise as a growth strategy?"</div>
-      <div class="q-more-item">"Are you aware that SEO is a long-term investment — and does that appeal to you?"</div>
+      <div class="q-more-item" data-nl="&ldquo;Weet u waar u op Google staat voor uw belangrijkste dienst?&rdquo;">"Do you know where you rank on Google for your main service?"</div>
+      <div class="q-more-item" data-nl="&ldquo;Zou u bereid zijn om te investeren in organische vindbaarheid op Google over de komende 6 tot 12 maanden?&rdquo;">"Would you be willing to invest in being found organically on Google over the next 6–12 months?"</div>
+      <div class="q-more-item" data-nl="&ldquo;Is hoger scoren op Google iets dat u als groeistrategie zou prioriteren?&rdquo;">"Is ranking higher on Google something you'd prioritise as a growth strategy?"</div>
+      <div class="q-more-item" data-nl="&ldquo;Weet u dat SEO een langetermijninvestering is — en spreekt u dat aan?&rdquo;">"Are you aware that SEO is a long-term investment — and does that appeal to you?"</div>
     </div>
-    <div class="q-goal-bar">Visibility gap → <span style="color:var(--blue)">Listings</span> / If SEO intent confirmed → <span style="color:var(--accent)">SEO / Local Search</span></div>
+    <div class="q-goal-bar" data-nl="Zichtbaarheidsgat → <span style='color:var(--blue)'>Listings</span> / Als SEO-intentie bevestigd → <span style='color:var(--accent)'>SEO / Local Search</span>">Visibility gap → <span style="color:var(--blue)">Listings</span> / If SEO intent confirmed → <span style="color:var(--accent)">SEO / Local Search</span></div>
   </div>
 
   <!-- Q3 -->
@@ -347,8 +355,8 @@
       <div class="q-block-left">
         <div class="q-tag">Q3</div>
         <div>
-          <div class="q-block-title">Business changes</div>
-          <div class="q-block-main">"Has anything changed in the business since we last worked on your site — new services, different focus, new location?"</div>
+          <div class="q-block-title" data-nl="Bedrijfsveranderingen">Business changes</div>
+          <div class="q-block-main" data-nl="&ldquo;Is er iets veranderd in het bedrijf sinds we voor het laatst aan uw website hebben gewerkt — nieuwe diensten, andere focus, nieuwe locatie?&rdquo;">"Has anything changed in the business since we last worked on your site — new services, different focus, new location?"</div>
         </div>
       </div>
       <div class="q-block-right">
@@ -358,10 +366,10 @@
       </div>
     </div>
     <div class="q-more-body">
-      <div class="q-more-item">"Have you launched any new services or products that aren't on your site yet?"</div>
-      <div class="q-more-item">"Does your website still feel like you — or has your business moved on from it?"</div>
+      <div class="q-more-item" data-nl="&ldquo;Heeft u nieuwe diensten of producten die nog niet op uw site staan?&rdquo;">"Have you launched any new services or products that aren't on your site yet?"</div>
+      <div class="q-more-item" data-nl="&ldquo;Voelt uw website nog als uw bedrijf — of is uw bedrijf er allang voorbij?&rdquo;">"Does your website still feel like you — or has your business moved on from it?"</div>
     </div>
-    <div class="q-goal-bar">Reveals outdated content → <span style="color:var(--teal)">Website update / upgrade</span></div>
+    <div class="q-goal-bar" data-nl="Onthult verouderde content → <span style='color:var(--teal)'>Website-update / upgrade</span>">Reveals outdated content → <span style="color:var(--teal)">Website update / upgrade</span></div>
   </div>
 
   <!-- Q4 -->
@@ -370,8 +378,8 @@
       <div class="q-block-left">
         <div class="q-tag">Q4</div>
         <div>
-          <div class="q-block-title">Reviews & reputation</div>
-          <div class="q-block-main">"What does your Google rating look like right now — are customers leaving reviews?"</div>
+          <div class="q-block-title" data-nl="Reviews & reputatie">Reviews & reputation</div>
+          <div class="q-block-main" data-nl="&ldquo;Hoe ziet uw Google-beoordeling er nu uit — laten klanten reviews achter?&rdquo;">"What does your Google rating look like right now — are customers leaving reviews?"</div>
         </div>
       </div>
       <div class="q-block-right">
@@ -380,9 +388,9 @@
       </div>
     </div>
     <div class="q-more-body">
-      <div class="q-more-item">"Do you respond to your reviews — good and bad?"</div>
+      <div class="q-more-item" data-nl="&ldquo;Reageert u op uw reviews — de goede én de slechte?&rdquo;">"Do you respond to your reviews — good and bad?"</div>
     </div>
-    <div class="q-goal-bar">Opens reputation management → <span style="color:var(--blue)">Listings Standard / Ultimate</span></div>
+    <div class="q-goal-bar" data-nl="Opent reputatiebeheer → <span style='color:var(--blue)'>Listings Standard / Ultimate</span>">Opens reputation management → <span style="color:var(--blue)">Listings Standard / Ultimate</span></div>
   </div>
 
   <!-- Q5 -->
@@ -391,8 +399,8 @@
       <div class="q-block-left">
         <div class="q-tag">Q5</div>
         <div>
-          <div class="q-block-title">Customer acquisition</div>
-          <div class="q-block-main">"Outside of word of mouth — how are new customers finding you today?"</div>
+          <div class="q-block-title" data-nl="Klantacquisitie">Customer acquisition</div>
+          <div class="q-block-main" data-nl="&ldquo;Hoe vinden nieuwe klanten u vandaag, buiten mond-tot-mondreclame?&rdquo;">"Outside of word of mouth — how are new customers finding you today?"</div>
         </div>
       </div>
       <div class="q-block-right">
@@ -402,10 +410,10 @@
       </div>
     </div>
     <div class="q-more-body">
-      <div class="q-more-item">"Is your online presence actively bringing you new business, or is it more passive?"</div>
-      <div class="q-more-item">"If you could get more leads online without relying on referrals — would that make a difference?"</div>
+      <div class="q-more-item" data-nl="&ldquo;Is uw online aanwezigheid actief bezig nieuwe klanten aan te trekken, of is het meer passief?&rdquo;">"Is your online presence actively bringing you new business, or is it more passive?"</div>
+      <div class="q-more-item" data-nl="&ldquo;Als u meer leads online kon krijgen zonder te leunen op doorverwijzingen — zou dat een verschil maken?&rdquo;">"If you could get more leads online without relying on referrals — would that make a difference?"</div>
     </div>
-    <div class="q-goal-bar">Opens growth conversation → <span style="color:var(--accent)">SEO</span> / <span style="color:var(--orange)">Advertising</span></div>
+    <div class="q-goal-bar" data-nl="Opent groeigesprek → <span style='color:var(--accent)'>SEO</span> / <span style='color:var(--orange)'>Adverteren</span>">Opens growth conversation → <span style="color:var(--accent)">SEO</span> / <span style="color:var(--orange)">Advertising</span></div>
   </div>
 
   <!-- Q6 -->
@@ -415,7 +423,7 @@
         <div class="q-tag">Q6</div>
         <div>
           <div class="q-block-title">Social media</div>
-          <div class="q-block-main">"Are you active on social media at all — Instagram, Facebook? How consistent has that been?"</div>
+          <div class="q-block-main" data-nl="&ldquo;Bent u actief op social media — Instagram, Facebook? Hoe consistent is dat geweest?&rdquo;">"Are you active on social media at all — Instagram, Facebook? How consistent has that been?"</div>
         </div>
       </div>
       <div class="q-block-right">
@@ -424,12 +432,12 @@
       </div>
     </div>
     <div class="q-more-body">
-      <div class="q-more-item">"Do you feel like your social media reflects the quality of your business?"</div>
-      <div class="q-more-item">"How much time do you actually spend on social media for your business each week?"</div>
-      <div class="q-more-item">"Is staying consistent on social something you struggle with?"</div>
-      <div class="q-more-item">"If your social media was always active and on-brand without you thinking about it — would that help?"</div>
+      <div class="q-more-item" data-nl="&ldquo;Vindt u dat uw social media de kwaliteit van uw bedrijf weerspiegelt?&rdquo;">"Do you feel like your social media reflects the quality of your business?"</div>
+      <div class="q-more-item" data-nl="&ldquo;Hoeveel tijd besteedt u per week werkelijk aan social media voor uw bedrijf?&rdquo;">"How much time do you actually spend on social media for your business each week?"</div>
+      <div class="q-more-item" data-nl="&ldquo;Is consistent blijven op social media iets waar u mee worstelt?&rdquo;">"Is staying consistent on social something you struggle with?"</div>
+      <div class="q-more-item" data-nl="&ldquo;Als uw social media altijd actief en on-brand was zonder dat u erover hoefde na te denken — zou dat helpen?&rdquo;">"If your social media was always active and on-brand without you thinking about it — would that help?"</div>
     </div>
-    <div class="q-goal-bar">Opens social visibility conversation → <span style="color:var(--purple)">AI Social Visibility</span></div>
+    <div class="q-goal-bar" data-nl="Opent gesprek over sociale zichtbaarheid → <span style='color:var(--purple)'>AI Social Visibility</span>">Opens social visibility conversation → <span style="color:var(--purple)">AI Social Visibility</span></div>
   </div>
 
   <!-- Q7 -->
@@ -438,8 +446,8 @@
       <div class="q-block-left">
         <div class="q-tag">Q7</div>
         <div>
-          <div class="q-block-title">Paid advertising</div>
-          <div class="q-block-main">"Have you ever tried Google Ads or paid advertising? How did that go?"</div>
+          <div class="q-block-title" data-nl="Betaald adverteren">Paid advertising</div>
+          <div class="q-block-main" data-nl="&ldquo;Heeft u ooit Google Ads of betaalde advertenties geprobeerd? Hoe is dat gegaan?&rdquo;">"Have you ever tried Google Ads or paid advertising? How did that go?"</div>
         </div>
       </div>
       <div class="q-block-right">
@@ -448,12 +456,12 @@
       </div>
     </div>
     <div class="q-more-body">
-      <div class="q-more-item">"Are you currently spending anything on online advertising?"</div>
-      <div class="q-more-item">"Have you ever felt like you're invisible on Google compared to competitors?"</div>
-      <div class="q-more-item">"Is getting more leads quickly something that's important to you right now?"</div>
-      <div class="q-more-item">"If every €1 you spent on ads brought back €3 — would you want to know how?"</div>
+      <div class="q-more-item" data-nl="&ldquo;Geeft u momenteel iets uit aan online adverteren?&rdquo;">"Are you currently spending anything on online advertising?"</div>
+      <div class="q-more-item" data-nl="&ldquo;Heeft u zich ooit onzichtbaar gevoeld op Google in vergelijking met concurrenten?&rdquo;">"Have you ever felt like you're invisible on Google compared to competitors?"</div>
+      <div class="q-more-item" data-nl="&ldquo;Is snel meer leads krijgen iets wat nu belangrijk voor u is?&rdquo;">"Is getting more leads quickly something that's important to you right now?"</div>
+      <div class="q-more-item" data-nl="&ldquo;Als elke €1 die u aan advertenties uitgeeft €3 terugbrengt — zou u dan willen weten hoe?&rdquo;">"If every €1 you spent on ads brought back €3 — would you want to know how?"</div>
     </div>
-    <div class="q-goal-bar">Opens paid advertising → <span style="color:var(--orange)">Online Advertising</span></div>
+    <div class="q-goal-bar" data-nl="Opent betaald adverteren → <span style='color:var(--orange)'>Online Adverteren</span>">Opens paid advertising → <span style="color:var(--orange)">Online Advertising</span></div>
   </div>
 
   <!-- Q8 -->
@@ -462,8 +470,8 @@
       <div class="q-block-left">
         <div class="q-tag">Q8</div>
         <div>
-          <div class="q-block-title">Goals</div>
-          <div class="q-block-main">"What's your main focus for the business over the next 12 months — grow, stabilise, expand?"</div>
+          <div class="q-block-title" data-nl="Doelen">Goals</div>
+          <div class="q-block-main" data-nl="&ldquo;Wat is uw hoofddoel voor het bedrijf de komende 12 maanden — groeien, stabiliseren, uitbreiden?&rdquo;">"What's your main focus for the business over the next 12 months — grow, stabilise, expand?"</div>
         </div>
       </div>
       <div class="q-block-right">
@@ -471,17 +479,17 @@
       </div>
     </div>
     <div class="q-more-body">
-      <div class="q-more-item">"If everything went well this year — what would that look like for your business?"</div>
-      <div class="q-more-item">"Where do you want to be in a year from now, and is your online presence set up to get you there?"</div>
-      <div class="q-more-item">"Are you where you want to be in terms of growth, or is there more potential you're not reaching?"</div>
-      <div class="q-more-item">"Is your business growing the way you want it to — or do you feel like you're leaving customers on the table?"</div>
+      <div class="q-more-item" data-nl="&ldquo;Als alles dit jaar goed gaat — hoe ziet dat eruit voor uw bedrijf?&rdquo;">"If everything went well this year — what would that look like for your business?"</div>
+      <div class="q-more-item" data-nl="&ldquo;Waar wil u over een jaar staan, en is uw online aanwezigheid er klaar voor om u daar te brengen?&rdquo;">"Where do you want to be in a year from now, and is your online presence set up to get you there?"</div>
+      <div class="q-more-item" data-nl="&ldquo;Bent u waar u wilt zijn qua groei, of is er meer potentieel dat u nog niet bereikt?&rdquo;">"Are you where you want to be in terms of growth, or is there more potential you're not reaching?"</div>
+      <div class="q-more-item" data-nl="&ldquo;Groeit uw bedrijf zoals u wilt — of heeft u het gevoel dat u klanten misloopt?&rdquo;">"Is your business growing the way you want it to — or do you feel like you're leaving customers on the table?"</div>
     </div>
-    <div class="q-goal-bar">Anchors recommendations to their actual ambition</div>
+    <div class="q-goal-bar" data-nl="Verankert aanbevelingen aan hun werkelijke ambitie">Anchors recommendations to their actual ambition</div>
   </div>
 
   <div class="script-block" style="margin-top:24px">
-    <div class="script-header"><span class="script-role role-tip">Tip</span><span style="font-size:13px;color:var(--text-mid)">Reading the signals</span></div>
-    <div class="script-body">
+    <div class="script-header"><span class="script-role role-tip">Tip</span><span style="font-size:13px;color:var(--text-mid)" data-nl="Signalen herkennen">Reading the signals</span></div>
+    <div class="script-body" data-nl="Terwijl ze antwoorden, noteer mentaal wat u hoort:<br><br><div class='signal-row'><span class='signal signal-website' onclick='jumpTo(&quot;p-website&quot;)'>Site voelt verouderd → Website ↗</span><span class='signal signal-seo' onclick='jumpTo(&quot;p-seo&quot;)'>Niet vindbaar → SEO ↗</span><span class='signal signal-listings' onclick='jumpTo(&quot;p-listings&quot;)'>Weinig reviews → Listings ↗</span><span class='signal signal-ads' onclick='jumpTo(&quot;p-ads&quot;)'>Snel leads nodig → Ads ↗</span><span class='signal signal-social' onclick='jumpTo(&quot;p-social&quot;)'>Inconsistente social → AI Social ↗</span></div>">
       As they answer, mentally tag what you're hearing:<br><br>
       <div class="signal-row">
         <span class="signal signal-website" onclick="jumpTo('p-website')">Site feels outdated → Website ↗</span>
@@ -497,23 +505,23 @@
 <!-- DIAGNOSIS -->
 <section id="diagnosis" class="phase">
   <div class="phase-tag">Phase 04</div>
-  <div class="phase-title">Diagnosis</div>
-  <div class="phase-subtitle">Reflect back what you heard. Name the gap. Make them feel understood before you offer anything.</div>
+  <div class="phase-title" data-nl="Diagnose">Diagnosis</div>
+  <div class="phase-subtitle" data-nl="Herhaal wat u gehoord heeft. Benoem de kloof. Laat hen voelen dat ze begrepen worden voordat u iets aanbiedt.">Reflect back what you heard. Name the gap. Make them feel understood before you offer anything.</div>
 
   <div id="selected-panel">
-    <div class="panel-header">📋 Questions that resonated this call</div>
+    <div class="panel-header" data-nl="📋 Vragen die raak waren dit gesprek">📋 Questions that resonated this call</div>
     <div id="selected-list"></div>
-    <div id="selected-empty" style="padding:14px 16px;font-size:13px;color:var(--text-dim);font-style:italic;">No questions selected yet — go back to Discovery and click the ones that landed.</div>
+    <div id="selected-empty" style="padding:14px 16px;font-size:13px;color:var(--text-dim);font-style:italic;" data-nl="Nog geen vragen geselecteerd — ga terug naar Discovery en klik de vragen die aanslaan.">No questions selected yet — go back to Discovery and click the ones that landed.</div>
   </div>
 
   <div class="script-block">
-    <div class="script-header"><span class="script-role role-you">You</span><span style="font-size:13px;color:var(--text-mid)">Summarise before pitching</span></div>
-    <div class="script-body">"Okay, so from what you've told me — [paraphrase 2–3 specific things]. What I'm hearing is that [core problem or gap]. That's something we can help with directly through Online Essentials — let me show you exactly how."</div>
+    <div class="script-header"><span class="script-role role-you">You</span><span style="font-size:13px;color:var(--text-mid)" data-nl="Samenvatten voor het pitchen">Summarise before pitching</span></div>
+    <div class="script-body" data-nl="&ldquo;Oké, op basis van wat u me heeft verteld — [parafraseer 2-3 specifieke dingen]. Wat ik hoor is dat [kernprobleem of -kloof]. Dat is iets waar we u direct mee kunnen helpen via Online Essentials — laat me u precies laten zien hoe.&rdquo;">"Okay, so from what you've told me — [paraphrase 2–3 specific things]. What I'm hearing is that [core problem or gap]. That's something we can help with directly through Online Essentials — let me show you exactly how."</div>
   </div>
-  <div class="insight"><strong>💡 The website lens check</strong> — use this if they seem satisfied but the site is dated:<br><br>"When was the last time you looked at your site through the eyes of a new customer? Not as someone who knows the business — but as a complete stranger deciding whether to call you or a competitor?"</div>
+  <div class="insight" data-nl="<strong>💡 De website-lens check</strong> — gebruik dit als ze tevreden lijken maar de site verouderd is:<br><br>&ldquo;Wanneer heeft u voor het laatst naar uw website gekeken door de ogen van een nieuwe klant? Niet als iemand die het bedrijf kent — maar als een complete vreemdeling die beslist of hij u of een concurrent belt?&rdquo;"><strong>💡 The website lens check</strong> — use this if they seem satisfied but the site is dated:<br><br>"When was the last time you looked at your site through the eyes of a new customer? Not as someone who knows the business — but as a complete stranger deciding whether to call you or a competitor?"</div>
   <div class="script-block">
-    <div class="script-header"><span class="script-role role-tip">Tip</span><span style="font-size:13px;color:var(--text-mid)">Red flags — use your health check</span></div>
-    <div class="script-body">Run the health check on their website before or during the call and reference what you see specifically:<br><br><em>"I've actually had a look at your website — and based on what I can see, <span class="ph">[specific finding: not mobile-friendly / slow loading / missing contact form / low Google ranking]</span>. That's exactly the kind of thing we can fix."</em><br><br>The more specific you are, the more real it becomes. Don't speak in generalities — name what you see.</div>
+    <div class="script-header"><span class="script-role role-tip">Tip</span><span style="font-size:13px;color:var(--text-mid)" data-nl="Rode vlaggen — gebruik uw health check">Red flags — use your health check</span></div>
+    <div class="script-body" data-nl="Doe de health check op hun website voor of tijdens het gesprek en verwijs naar wat u specifiek ziet:<br><br><em>&ldquo;Ik heb even naar uw website gekeken — en op basis van wat ik zie, <span class='ph'>[specifieke bevinding: niet mobiel-vriendelijk / traag / geen contactformulier / lage Google-positie]</span>. Dat is precies het soort ding dat we kunnen oplossen.&rdquo;</em><br><br>Hoe specifieker u bent, hoe echter het wordt. Spreek niet in algemeenheden — benoem wat u ziet.">Run the health check on their website before or during the call and reference what you see specifically:<br><br><em>"I've actually had a look at your website — and based on what I can see, <span class="ph">[specific finding: not mobile-friendly / slow loading / missing contact form / low Google ranking]</span>. That's exactly the kind of thing we can fix."</em><br><br>The more specific you are, the more real it becomes. Don't speak in generalities — name what you see.</div>
   </div>
 </section>
 <hr class="divider">
@@ -521,51 +529,51 @@
 <!-- PRESENTATION -->
 <section id="presentation" class="phase">
   <div class="phase-tag">Phase 05</div>
-  <div class="phase-title">Presentation</div>
-  <div class="phase-subtitle">Frame Online Essentials as the natural evolution — not a new product, a better version of what they already have.</div>
+  <div class="phase-title" data-nl="Presentatie">Presentation</div>
+  <div class="phase-subtitle" data-nl="Presenteer Online Essentials als de logische stap — niet een nieuw product, maar een betere versie van wat ze al hadden.">Frame Online Essentials as the natural evolution — not a new product, a better version of what they already have.</div>
   <div class="script-block">
-    <div class="script-header"><span class="script-role role-you">You</span><span style="font-size:13px;color:var(--text-mid)">Transition into product(s)</span></div>
-    <div class="script-body">"So what we've built with Online Essentials is essentially everything we were doing for you through Telenet — but now as a complete package you work with us on directly, with more features, better support, and the ability to grow it as your business grows.<br><br>Based on what you've told me, I'd focus on <span class="ph">[1–2 specific things]</span>. Let me walk you through those."</div>
+    <div class="script-header"><span class="script-role role-you">You</span><span style="font-size:13px;color:var(--text-mid)" data-nl="Overgang naar product(en)">Transition into product(s)</span></div>
+    <div class="script-body" data-nl="&ldquo;Wat we met Online Essentials hebben gebouwd, is in essentie alles wat we voor u deden via Telenet — maar nu als een compleet pakket waar u rechtstreeks mee werkt, met meer functies, betere ondersteuning en de mogelijkheid om mee te groeien met uw bedrijf.<br><br>Op basis van wat u me heeft verteld, zou ik me focussen op <span class='ph'>[1-2 specifieke dingen]</span>. Laat me u daar doorheen leiden.&rdquo;">"So what we've built with Online Essentials is essentially everything we were doing for you through Telenet — but now as a complete package you work with us on directly, with more features, better support, and the ability to grow it as your business grows.<br><br>Based on what you've told me, I'd focus on <span class="ph">[1–2 specific things]</span>. Let me walk you through those."</div>
   </div>
   <div class="oneliners">
-    <div class="oneliner">"We're not just building a site — we're building trust and visibility for your business."</div>
-    <div class="oneliner">"From domain to design, SEO to support — everything in one place, one team, one bill."</div>
-    <div class="oneliner">"You've already trusted us with your website. This is just the full picture of what we can do."</div>
+    <div class="oneliner" data-nl="&ldquo;We bouwen niet zomaar een website — we bouwen vertrouwen en zichtbaarheid voor uw bedrijf.&rdquo;">"We're not just building a site — we're building trust and visibility for your business."</div>
+    <div class="oneliner" data-nl="&ldquo;Van domein tot design, van SEO tot support — alles op één plek, één team, één factuur.&rdquo;">"From domain to design, SEO to support — everything in one place, one team, one bill."</div>
+    <div class="oneliner" data-nl="&ldquo;U heeft ons al vertrouwd met uw website. Dit is gewoon het volledige plaatje van wat we kunnen doen.&rdquo;">"You've already trusted us with your website. This is just the full picture of what we can do."</div>
   </div>
 </section>
 <hr class="divider">
 <!-- PACKAGES -->
 <section id="packages" class="phase">
   <div class="phase-tag">Phase 06</div>
-  <div class="phase-title">Packages</div>
-  <div class="phase-subtitle">Lead with a package — it's simpler for the customer and better for value. Open only what fits.</div>
-  <div class="insight"><strong>💡 Package first:</strong> Based on what you heard in Discovery, recommend the package that best matches their situation. Only go to individual products if they need something specific a package doesn't cover.</div>
+  <div class="phase-title" data-nl="Pakketten">Packages</div>
+  <div class="phase-subtitle" data-nl="Begin met een pakket — dat is eenvoudiger voor de klant en beter voor de waarde. Open alleen wat van toepassing is.">Lead with a package — it's simpler for the customer and better for value. Open only what fits.</div>
+  <div class="insight" data-nl="<strong>💡 Pakket eerst:</strong> Op basis van wat u in Discovery heeft gehoord, beveel het pakket aan dat het best bij hun situatie past. Ga alleen naar losse producten als ze iets specifieks nodig hebben dat een pakket niet dekt."><strong>💡 Package first:</strong> Based on what you heard in Discovery, recommend the package that best matches their situation. Only go to individual products if they need something specific a package doesn't cover.</div>
 
   <!-- VISIBILITY -->
   <div id="pkg-visibility" class="product-accordion">
     <div class="product-toggle" onclick="toggleAccordion(this)">
       <div class="product-toggle-left">
         <div class="product-icon" style="background:rgba(90,180,255,0.1);">👁</div>
-        <div><div class="product-name">Online Essentials — Visibility</div><div class="product-price">€99 p/m ex VAT · Best for: get found and look credible</div></div>
+        <div><div class="product-name">Online Essentials — Visibility</div><div class="product-price" data-nl="€99 p/m ex BTW · Ideaal voor: gevonden worden en geloofwaardig overkomen">€99 p/m ex VAT · Best for: get found and look credible</div></div>
       </div><span class="chevron">▼</span>
     </div>
     <div class="product-body">
-      <button class="back-to-discovery" onclick="jumpTo('discovery')">← Back to Discovery</button>
-      <div class="pitch-line">"A complete online presence — professional 5-page website, listings across 30+ directories, and review management. Everything a customer sees before they call you, taken care of."</div>
+      <button class="back-to-discovery" onclick="jumpTo('discovery')" data-nl="← Terug naar Vragen">← Back to Discovery</button>
+      <div class="pitch-line" data-nl="&ldquo;Een complete online aanwezigheid — professionele 5-pagina website, vermeldingen op 30+ directories en reviewbeheer. Alles wat een klant ziet voordat ze u bellen, geregeld.&rdquo;">"A complete online presence — professional 5-page website, listings across 30+ directories, and review management. Everything a customer sees before they call you, taken care of."</div>
       <div class="plans-row two">
         <div class="plan-card"><div class="plan-name">5-page Website</div><ul class="plan-features"><li>Professionally designed</li><li>Responsive on all devices</li><li>Basic on-site SEO</li><li>Up to 5 professional emails</li><li>Domain & SSL included</li><li>Unlimited ongoing support</li></ul></div>
         <div class="plan-card"><div class="plan-name">Listings Pro + Reviews</div><ul class="plan-features"><li>Google, Apple Maps, Facebook + 30 others</li><li>Always up-to-date (active sync)</li><li>Review monitoring & response</li><li>Inbound & outbound support</li></ul></div>
       </div>
       <div class="ksp-section"><h4>Key Selling Points</h4>
         <div class="ksp-list">
-          <div class="ksp-item"><div><strong>Professional Website</strong> — Mobile-optimised, built to convert, represents your brand from day one.</div></div>
-          <div class="ksp-item"><div><strong>Domain + Hosting + 3 Branded Emails</strong> — Everything to get online, all included.</div></div>
-          <div class="ksp-item"><div><strong>Listings Across 30+ Directories</strong> — Show up where customers are searching.</div></div>
-          <div class="ksp-item"><div><strong>Review Management</strong> — Track, respond, build trust automatically.</div></div>
-          <div class="ksp-item"><div><strong>Seamless Onboarding</strong> — Our team handles everything.</div></div>
+          <div class="ksp-item"><div><strong data-nl="Professionele website">Professional Website</strong> — <span data-nl="Mobiel geoptimaliseerd, gebouwd om te converteren, vertegenwoordigt uw merk vanaf dag één.">Mobile-optimised, built to convert, represents your brand from day one.</span></div></div>
+          <div class="ksp-item"><div><strong data-nl="Domein + Hosting + 3 zakelijke e-mails">Domain + Hosting + 3 Branded Emails</strong> — <span data-nl="Alles om online te gaan, inbegrepen.">Everything to get online, all included.</span></div></div>
+          <div class="ksp-item"><div><strong data-nl="Vermeldingen op 30+ directories">Listings Across 30+ Directories</strong> — <span data-nl="Zichtbaar waar klanten zoeken.">Show up where customers are searching.</span></div></div>
+          <div class="ksp-item"><div><strong data-nl="Reviewbeheer">Review Management</strong> — <span data-nl="Volgen, reageren, vertrouwen opbouwen automatisch.">Track, respond, build trust automatically.</span></div></div>
+          <div class="ksp-item"><div><strong data-nl="Naadloze onboarding">Seamless Onboarding</strong> — <span data-nl="Ons team regelt alles.">Our team handles everything.</span></div></div>
         </div>
       </div>
-      <div class="script-prompt">"For €99 a month — professional website, visible across every major directory, reviews managed. That's your entire online presence, done."</div>
+      <div class="script-prompt" data-nl="&ldquo;Voor €99 per maand — professionele website, zichtbaar op elke grote directory, reviews beheerd. Dat is uw volledige online aanwezigheid, geregeld.&rdquo;">"For €99 a month — professional website, visible across every major directory, reviews managed. That's your entire online presence, done."</div>
     </div>
   </div>
 
@@ -574,12 +582,12 @@
     <div class="product-toggle" onclick="toggleAccordion(this)">
       <div class="product-toggle-left">
         <div class="product-icon" style="background:rgba(181,242,60,0.1);">📍</div>
-        <div><div class="product-name">Online Essentials — Local Search</div><div class="product-price">€305 p/m ex VAT · Best for: rank locally on Google</div></div>
+        <div><div class="product-name">Online Essentials — Local Search</div><div class="product-price" data-nl="€305 p/m ex BTW · Ideaal voor: lokaal scoren op Google">€305 p/m ex VAT · Best for: rank locally on Google</div></div>
       </div><span class="chevron">▼</span>
     </div>
     <div class="product-body">
-      <button class="back-to-discovery" onclick="jumpTo('discovery')">← Back to Discovery</button>
-      <div class="pitch-line">"Everything in Visibility, plus active SEO — so not only does your website look great, it actually gets found when people search for your service locally."</div>
+      <button class="back-to-discovery" onclick="jumpTo('discovery')" data-nl="← Terug naar Vragen">← Back to Discovery</button>
+      <div class="pitch-line" data-nl="&ldquo;Alles van Visibility, plus actieve SEO — zodat uw website er niet alleen goed uitziet, maar ook daadwerkelijk gevonden wordt wanneer mensen zoeken naar uw dienst in de buurt.&rdquo;">"Everything in Visibility, plus active SEO — so not only does your website look great, it actually gets found when people search for your service locally."</div>
       <div class="plans-row three">
         <div class="plan-card"><div class="plan-name">3-page Website</div><ul class="plan-features"><li>Professionally designed</li><li>Responsive on all devices</li><li>Basic on-site SEO</li><li>Up to 3 professional emails</li><li>Domain & SSL included</li></ul></div>
         <div class="plan-card"><div class="plan-name">Listings</div><ul class="plan-features"><li>30+ directory listings</li><li>Review monitoring & management</li><li>Duplicate suppression</li><li>Social location page</li></ul></div>
@@ -587,13 +595,13 @@
       </div>
       <div class="ksp-section"><h4>Key Selling Points</h4>
         <div class="ksp-list">
-          <div class="ksp-item"><div><strong>Local SEO Included</strong> — Keyword research to help you rank higher in local Google searches.</div></div>
-          <div class="ksp-item"><div><strong>Listings Across 30+ Directories</strong> — Consistent, verified info on Google, Apple, Bing, Facebook and more.</div></div>
-          <div class="ksp-item"><div><strong>Review Monitoring</strong> — Stay on top of your reputation across platforms.</div></div>
-          <div class="ksp-item"><div><strong>Built-In CTAs</strong> — Encourage enquiries, bookings, and visits from day one.</div></div>
+          <div class="ksp-item"><div><strong data-nl="Lokale SEO inbegrepen">Local SEO Included</strong> — <span data-nl="Zoekwoordenonderzoek om hoger te scoren in lokale Google-zoekopdrachten.">Keyword research to help you rank higher in local Google searches.</span></div></div>
+          <div class="ksp-item"><div><strong data-nl="Vermeldingen op 30+ directories">Listings Across 30+ Directories</strong> — <span data-nl="Consistente, geverifieerde info op Google, Apple, Bing, Facebook en meer.">Consistent, verified info on Google, Apple, Bing, Facebook and more.</span></div></div>
+          <div class="ksp-item"><div><strong data-nl="Review monitoring">Review Monitoring</strong> — <span data-nl="Blijf de baas over uw reputatie op alle platforms.">Stay on top of your reputation across platforms.</span></div></div>
+          <div class="ksp-item"><div><strong data-nl="Ingebouwde call-to-actions">Built-In CTAs</strong> — <span data-nl="Stimuleer aanvragen, boekingen en bezoeken vanaf dag één.">Encourage enquiries, bookings, and visits from day one.</span></div></div>
         </div>
       </div>
-      <div class="script-prompt">"If you want to show up when someone in <span class="ph">[city]</span> searches for <span class="ph">[their service]</span> — this is the package. Website, listings, and SEO working together. €305 a month, fully managed."</div>
+      <div class="script-prompt" data-nl="&ldquo;Als u wilt verschijnen wanneer iemand in <span class='ph'>[stad]</span> zoekt naar <span class='ph'>[uw dienst]</span> — dit is het pakket. Website, listings en SEO die samenwerken. €305 per maand, volledig beheerd.&rdquo;">"If you want to show up when someone in <span class="ph">[city]</span> searches for <span class="ph">[their service]</span> — this is the package. Website, listings, and SEO working together. €305 a month, fully managed."</div>
     </div>
   </div>
 
@@ -602,12 +610,12 @@
     <div class="product-toggle" onclick="toggleAccordion(this)">
       <div class="product-toggle-left">
         <div class="product-icon" style="background:rgba(255,170,90,0.1);">🎯</div>
-        <div><div class="product-name">Online Essentials — Leads</div><div class="product-price">€585 p/m ex VAT · Best for: actively generate new customers</div></div>
+        <div><div class="product-name">Online Essentials — Leads</div><div class="product-price" data-nl="€585 p/m ex BTW · Ideaal voor: actief nieuwe klanten aantrekken">€585 p/m ex VAT · Best for: actively generate new customers</div></div>
       </div><span class="chevron">▼</span>
     </div>
     <div class="product-body">
-      <button class="back-to-discovery" onclick="jumpTo('discovery')">← Back to Discovery</button>
-      <div class="pitch-line">"The full package — website, listings, and a fully managed Google Ads campaign with €375 ad budget included. You get found, you look credible, and you get leads. All in one."</div>
+      <button class="back-to-discovery" onclick="jumpTo('discovery')" data-nl="← Terug naar Vragen">← Back to Discovery</button>
+      <div class="pitch-line" data-nl="&ldquo;Het complete pakket — website, listings en een volledig beheerde Google Ads-campagne met €375 advertentiebudget inbegrepen. U wordt gevonden, u ziet er geloofwaardig uit, en u krijgt leads. Alles in één.&rdquo;">"The full package — website, listings, and a fully managed Google Ads campaign with €375 ad budget included. You get found, you look credible, and you get leads. All in one."</div>
       <div class="plans-row three">
         <div class="plan-card"><div class="plan-name">3-page Website</div><ul class="plan-features"><li>Professionally designed</li><li>Responsive on all devices</li><li>Basic on-site SEO</li><li>Up to 3 professional emails</li><li>Domain & SSL included</li></ul></div>
         <div class="plan-card"><div class="plan-name">Listings</div><ul class="plan-features"><li>30+ directory listings</li><li>Always up-to-date info</li><li>Inbound & outbound support</li></ul></div>
@@ -615,13 +623,13 @@
       </div>
       <div class="ksp-section"><h4>Key Selling Points</h4>
         <div class="ksp-list">
-          <div class="ksp-item"><div><strong>Paid Search Campaign Included</strong> — Instant visibility on Google with €375 ad spend — reach ready-to-buy customers fast.</div></div>
-          <div class="ksp-item"><div><strong>Keyword Research & Targeting</strong> — Right search terms, relevant high-converting traffic.</div></div>
-          <div class="ksp-item"><div><strong>Ongoing Support & Monthly Reporting</strong> — Clear performance updates and real support.</div></div>
-          <div class="ksp-item"><div><strong>End-to-End Onboarding</strong> — From setup to launch, we handle the hard stuff.</div></div>
+          <div class="ksp-item"><div><strong data-nl="Betaalde zoekcampagne inbegrepen">Paid Search Campaign Included</strong> — <span data-nl="Directe zichtbaarheid op Google met €375 advertentiebudget — bereik koopklare klanten direct.">Instant visibility on Google with €375 ad spend — reach ready-to-buy customers fast.</span></div></div>
+          <div class="ksp-item"><div><strong data-nl="Zoekwoordenonderzoek & targeting">Keyword Research & Targeting</strong> — <span data-nl="Juiste zoektermen, relevant verkeer met hoge conversie.">Right search terms, relevant high-converting traffic.</span></div></div>
+          <div class="ksp-item"><div><strong data-nl="Doorlopende support & maandrapportage">Ongoing Support & Monthly Reporting</strong> — <span data-nl="Duidelijke prestatie-updates en echte ondersteuning.">Clear performance updates and real support.</span></div></div>
+          <div class="ksp-item"><div><strong data-nl="End-to-end onboarding">End-to-End Onboarding</strong> — <span data-nl="Van opzet tot lancering regelen wij de moeilijke dingen.">From setup to launch, we handle the hard stuff.</span></div></div>
         </div>
       </div>
-      <div class="script-prompt">"€585 a month — website, listings, and Google Ads running for you. If that brings two or three new customers a month, it pays for itself immediately."</div>
+      <div class="script-prompt" data-nl="&ldquo;€585 per maand — website, listings en Google Ads die voor u draaien. Als dat twee of drie nieuwe klanten per maand oplevert, verdient het zichzelf onmiddellijk terug.&rdquo;">"€585 a month — website, listings, and Google Ads running for you. If that brings two or three new customers a month, it pays for itself immediately."</div>
     </div>
   </div>
 </section>
@@ -629,22 +637,22 @@
 <!-- PRODUCTS -->
 <section id="products" class="phase">
   <div class="phase-tag">Phase 07</div>
-  <div class="phase-title">Individual Products</div>
-  <div class="phase-subtitle">Use when a package doesn't fit — or to explain individual components in detail.</div>
+  <div class="phase-title" data-nl="Losse producten">Individual Products</div>
+  <div class="phase-subtitle" data-nl="Gebruik dit als een pakket niet past — of om individuele onderdelen gedetailleerd toe te lichten.">Use when a package doesn't fit — or to explain individual components in detail.</div>
 
   <div id="p-website" class="product-accordion">
     <div class="product-toggle" onclick="toggleAccordion(this)">
       <div class="product-toggle-left"><div class="product-icon" style="background:rgba(90,255,212,0.1);">🌐</div><div><div class="product-name">Website — Duda</div><div class="product-price">From €70 p/m · Basic or Standard</div></div></div><span class="chevron">▼</span>
     </div>
     <div class="product-body">
-      <button class="back-to-discovery" onclick="jumpTo('discovery')">← Back to Discovery</button>
-      <div class="pitch-line">"We built your site — and now we can take it to the next level. Fast, mobile-perfect, fully managed."</div>
+      <button class="back-to-discovery" onclick="jumpTo('discovery')" data-nl="← Terug naar Vragen">← Back to Discovery</button>
+      <div class="pitch-line" data-nl="&ldquo;We hebben uw site gebouwd — en nu kunnen we hem naar het volgende niveau tillen. Snel, mobiel perfect, volledig beheerd.&rdquo;">"We built your site — and now we can take it to the next level. Fast, mobile-perfect, fully managed."</div>
       <div class="plans-row two">
         <div class="plan-card"><div class="plan-name">Basic</div><div class="plan-price">€70 <span>p/m ex VAT · 1yr min</span></div><ul class="plan-features"><li>3-page website</li><li>Professionally designed</li><li>Responsive on all devices</li><li>Basic on-site SEO</li><li>Up to 3 professional emails</li><li>Domain & SSL included</li></ul></div>
         <div class="plan-card"><div class="plan-name">Standard</div><div class="plan-price">€89 <span>p/m ex VAT · 1yr min</span></div><ul class="plan-features"><li>5-page website</li><li>Professionally designed</li><li>Responsive on all devices</li><li>Basic on-site SEO</li><li>Up to 5 professional emails</li><li>Domain & SSL included</li></ul></div>
       </div>
-      <div class="ksp-section"><h4>Key Selling Points</h4><div class="ksp-list"><div class="ksp-item"><div><strong>Custom Domain Included</strong> — Set up, secured with SSL, ready from day one.</div></div><div class="ksp-item"><div><strong>Professional Design</strong> — Custom-designed to reflect your brand, not a template.</div></div><div class="ksp-item"><div><strong>Mobile Responsive</strong> — Works perfectly on every device. 65%+ of searches are on mobile.</div></div><div class="ksp-item"><div><strong>Unlimited Basic Revisions</strong> — Update text or swap images anytime, for life.</div></div><div class="ksp-item"><div><strong>Expert Support</strong> — Dedicated Client Management team every step of the way.</div></div><div class="ksp-item"><div><strong>AI Search Ready</strong> — We place an LLM file on the sitemap so AI systems immediately understand what your site is about — pulling in richer data on the first scan and boosting visibility. One customer went from 30 to 400 in online traffic through this alone.</div></div></div></div>
-      <div class="script-prompt">"Your current site has done its job — now let's make sure it works as hard as your business does."</div>
+      <div class="ksp-section"><h4 data-nl="Kernverkooppunten">Key Selling Points</h4><div class="ksp-list"><div class="ksp-item"><div><strong data-nl="Eigen domein inbegrepen">Custom Domain Included</strong> — <span data-nl="Opgezet, beveiligd met SSL, klaar vanaf dag één.">Set up, secured with SSL, ready from day one.</span></div></div><div class="ksp-item"><div><strong data-nl="Professioneel design">Professional Design</strong> — <span data-nl="Op maat ontworpen om uw merk te weerspiegelen — geen template.">Custom-designed to reflect your brand, not a template.</span></div></div><div class="ksp-item"><div><strong data-nl="Mobiel responsief">Mobile Responsive</strong> — <span data-nl="Werkt perfect op elk apparaat. 65%+ van de zoekopdrachten zijn op mobiel.">Works perfectly on every device. 65%+ of searches are on mobile.</span></div></div><div class="ksp-item"><div><strong data-nl="Onbeperkte basisaanpassingen">Unlimited Basic Revisions</strong> — <span data-nl="Tekst aanpassen of afbeeldingen verwisselen wanneer u wilt — voor altijd.">Update text or swap images anytime, for life.</span></div></div><div class="ksp-item"><div><strong data-nl="Expertondersteuning">Expert Support</strong> — <span data-nl="Dedicated Client Management team bij elke stap.">Dedicated Client Management team every step of the way.</span></div></div><div class="ksp-item"><div><strong data-nl="AI-zoekklaar">AI Search Ready</strong> — <span data-nl="We plaatsen een LLM-bestand op de sitemap zodat AI-systemen onmiddellijk begrijpen waar uw site over gaat — rijkere data bij de eerste scan, meer zichtbaarheid. Eén klant groeide van 30 naar 400 in online verkeer door dit alleen.">We place an LLM file on the sitemap so AI systems immediately understand what your site is about — pulling in richer data on the first scan and boosting visibility. One customer went from 30 to 400 in online traffic through this alone.</span></div></div></div></div>
+      <div class="script-prompt" data-nl="&ldquo;Uw huidige site heeft zijn werk gedaan — laten we er nu voor zorgen dat hij net zo hard werkt als uw bedrijf.&rdquo;">"Your current site has done its job — now let's make sure it works as hard as your business does."</div>
     </div>
   </div>
 
@@ -653,11 +661,11 @@
       <div class="product-toggle-left"><div class="product-icon" style="background:rgba(181,242,60,0.1);">💻</div><div><div class="product-name">Website — WordPress Pro</div><div class="product-price">€105 p/m + €1,100 setup · Bigger builds</div></div></div><span class="chevron">▼</span>
     </div>
     <div class="product-body">
-      <button class="back-to-discovery" onclick="jumpTo('discovery')">← Back to Discovery</button>
-      <div class="pitch-line">"10 pages, 100% bespoke design, e-commerce ready, and after 12 months the site is entirely yours."</div>
+      <button class="back-to-discovery" onclick="jumpTo('discovery')" data-nl="← Terug naar Vragen">← Back to Discovery</button>
+      <div class="pitch-line" data-nl="&ldquo;10 pagina's, 100% maatwerk design, klaar voor e-commerce, en na 12 maanden is de site volledig van u.&rdquo;">"10 pages, 100% bespoke design, e-commerce ready, and after 12 months the site is entirely yours."</div>
       <div class="plans-row"><div class="plan-card" style="grid-column:1/-1"><div class="plan-name">Pro</div><div class="plan-price">€105 <span>p/m ex VAT + €1,100 setup · 1yr min</span></div><ul class="plan-features" style="columns:2;gap:16px;"><li>10-page custom built website</li><li>Professional design & advanced features</li><li>Responsive on all devices</li><li>Basic on-site SEO</li><li>Extensive content & landing pages</li><li>Domain & SSL included</li><li>E-commerce add-on (optional)</li><li>Custom development available</li></ul></div></div>
-      <div class="ksp-section"><h4>Key Selling Points</h4><div class="ksp-list"><div class="ksp-item"><div><strong>Fully Bespoke Design</strong> — Senior designers, no templates, 100% unique.</div></div><div class="ksp-item"><div><strong>You Own It</strong> — After 12 months, 100% yours to host and manage as you wish.</div></div><div class="ksp-item"><div><strong>Scalable Integrations</strong> — CRMs, booking tools, e-commerce, multilingual.</div></div></div></div>
-      <div class="script-prompt">"You've been with us long enough to know our quality. This is the premium version — and after a year, it's completely yours."</div>
+      <div class="ksp-section"><h4 data-nl="Kernverkooppunten">Key Selling Points</h4><div class="ksp-list"><div class="ksp-item"><div><strong data-nl="Volledig op maat design">Fully Bespoke Design</strong> — <span data-nl="Senior designers, geen templates, 100% uniek.">Senior designers, no templates, 100% unique.</span></div></div><div class="ksp-item"><div><strong data-nl="U bezit het">You Own It</strong> — <span data-nl="Na 12 maanden is het 100% van u om te hosten en beheren naar wens.">After 12 months, 100% yours to host and manage as you wish.</span></div></div><div class="ksp-item"><div><strong data-nl="Schaalbare integraties">Scalable Integrations</strong> — <span data-nl="CRM&apos;s, boekingstools, e-commerce, meertalig.">CRMs, booking tools, e-commerce, multilingual.</span></div></div></div></div>
+      <div class="script-prompt" data-nl="&ldquo;U bent lang genoeg klant om onze kwaliteit te kennen. Dit is de premiumversie — en na een jaar is hij helemaal van u.&rdquo;">"You've been with us long enough to know our quality. This is the premium version — and after a year, it's completely yours."</div>
     </div>
   </div>
 
@@ -666,16 +674,16 @@
       <div class="product-toggle-left"><div class="product-icon" style="background:rgba(90,180,255,0.1);">📍</div><div><div class="product-name">Listings & Reviews</div><div class="product-price">From €39 p/m · No setup fee</div></div></div><span class="chevron">▼</span>
     </div>
     <div class="product-body">
-      <button class="back-to-discovery" onclick="jumpTo('discovery')">← Back to Discovery</button>
-      <div class="pitch-line">"83% of people use Google to find local businesses. If your info is wrong or missing — or you have no reviews — customers choose someone else before they even reach your website."</div>
+      <button class="back-to-discovery" onclick="jumpTo('discovery')" data-nl="← Terug naar Vragen">← Back to Discovery</button>
+      <div class="pitch-line" data-nl="&ldquo;83% van de mensen gebruikt Google om lokale bedrijven te vinden. Als uw informatie onjuist is of ontbreekt — of u heeft nauwelijks reviews — kiezen klanten voor iemand anders nog voordat ze uw website bereiken.&rdquo;">"83% of people use Google to find local businesses. If your info is wrong or missing — or you have no reviews — customers choose someone else before they even reach your website."</div>
       <div class="plans-row three">
         <div class="plan-card"><div class="plan-name">Basic</div><div class="plan-price">€39 <span>p/m ex VAT</span></div><ul class="plan-features"><li>Google, Apple Maps, Facebook + 30 others</li><li>Always up-to-date (active sync)</li><li>Unlimited basic changes</li></ul></div>
         <div class="plan-card"><div class="plan-name">Standard</div><div class="plan-price">€45 <span>p/m ex VAT</span></div><ul class="plan-features"><li>All Basic, plus:</li><li>Reputation management</li><li>Duplicate suppression</li><li>Social posting</li><li>Analytics dashboard</li></ul></div>
         <div class="plan-card"><div class="plan-name">Ultimate</div><div class="plan-price">€49 <span>p/m ex VAT</span></div><ul class="plan-features"><li>All Standard, plus:</li><li>Review response platform</li><li>Review monitoring notifications</li><li>Competitor analysis</li><li>Dedicated call-back support</li></ul></div>
       </div>
-      <div class="ksp-section"><h4>Key Selling Points</h4><div class="ksp-list"><div class="ksp-item"><div><strong>Built on 150 Data Points</strong> — The more complete your listing, the better it performs on Google, Maps, and credibility — and it adds the greatest value in AI search. It makes your business AI ready.</div></div><div class="ksp-item"><div><strong>Works in LLMs & TikTok</strong> — Listings surface your business inside AI search results and TikTok search, not just Google.</div></div><div class="ksp-item"><div><strong>Duplicate Suppression</strong> — Removes fake or low-quality entries that damage your credibility.</div></div><div class="ksp-item"><div><strong>Full Analytics Dashboard</strong> — See exactly where you're showing up and how you're performing.</div></div><div class="ksp-item"><div><strong>83%</strong> of people use Google to find local businesses.</div></div><div class="ksp-item"><div><strong>1-star rating increase = up to 10% revenue boost.</strong></div></div><div class="ksp-item"><div><strong>4–5 star businesses rank 9% higher</strong> in Google's local pack.</div></div><div class="ksp-item"><div><strong>80% of consumers</strong> choose businesses based on online reviews.</div></div></div></div>
-      <div class="insight-blue"><strong>Standard vs. Ultimate</strong> — Ultimate adds a full competitor analysis so you can see exactly how you stack up, plus dedicated call-back support when you need us.</div>
-      <div class="script-prompt">"A great website is only half the picture. If your Google listing is outdated or you have two old reviews — that's the first impression. We fix all of that."</div>
+      <div class="ksp-section"><h4 data-nl="Kernverkooppunten">Key Selling Points</h4><div class="ksp-list"><div class="ksp-item"><div><strong data-nl="Gebouwd op 150 datapunten">Built on 150 Data Points</strong> — <span data-nl="Hoe completer uw vermelding, hoe beter die scoort op Google, Maps en geloofwaardigheid — en het voegt de meeste waarde toe in AI-zoekopdrachten. Het maakt uw bedrijf AI-klaar.">The more complete your listing, the better it performs on Google, Maps, and credibility — and it adds the greatest value in AI search. It makes your business AI ready.</span></div></div><div class="ksp-item"><div><strong data-nl="Werkt in LLMs &amp; TikTok">Works in LLMs & TikTok</strong> — <span data-nl="Vermeldingen maken uw bedrijf zichtbaar in AI-zoekresultaten en TikTok-zoekopdrachten, niet alleen Google.">Listings surface your business inside AI search results and TikTok search, not just Google.</span></div></div><div class="ksp-item"><div><strong data-nl="Duplicaatonderdrukking">Duplicate Suppression</strong> — <span data-nl="Verwijdert nep of lage kwaliteit vermeldingen die uw geloofwaardigheid schaden.">Removes fake or low-quality entries that damage your credibility.</span></div></div><div class="ksp-item"><div><strong data-nl="Volledig analysedashboard">Full Analytics Dashboard</strong> — <span data-nl="Zie precies waar u zichtbaar bent en hoe u presteert.">See exactly where you're showing up and how you're performing.</span></div></div><div class="ksp-item"><div><strong>83%</strong> <span data-nl="van de mensen gebruikt Google om lokale bedrijven te vinden.">of people use Google to find local businesses.</span></div></div><div class="ksp-item"><div data-nl="<strong>1 ster extra beoordeling = tot 10% omzetgroei.</strong>"><strong>1-star rating increase = up to 10% revenue boost.</strong></div></div><div class="ksp-item"><div><strong data-nl="4–5 sterren bedrijven scoren 9% hoger">4–5 star businesses rank 9% higher</strong> <span data-nl="in Google&apos;s lokale resultaten.">in Google's local pack.</span></div></div><div class="ksp-item"><div><strong>80% <span data-nl="van de consumenten">of consumers</span></strong> <span data-nl="kiest bedrijven op basis van online reviews.">choose businesses based on online reviews.</span></div></div></div></div>
+      <div class="insight-blue" data-nl="<strong>Standard vs. Ultimate</strong> — Ultimate voegt een volledige concurrentieanalyse toe zodat u precies kunt zien hoe u ervoor staat, plus dedicated call-back ondersteuning wanneer u ons nodig heeft."><strong>Standard vs. Ultimate</strong> — Ultimate adds a full competitor analysis so you can see exactly how you stack up, plus dedicated call-back support when you need us.</div>
+      <div class="script-prompt" data-nl="&ldquo;Een geweldige website is maar de helft van het verhaal. Als uw Google-vermelding verouderd is of u heeft twee oude reviews — dat is de eerste indruk. Wij lossen dat op.&rdquo;">"A great website is only half the picture. If your Google listing is outdated or you have two old reviews — that's the first impression. We fix all of that."</div>
     </div>
   </div>
 
@@ -684,15 +692,15 @@
       <div class="product-toggle-left"><div class="product-icon" style="background:rgba(181,242,60,0.1);">🔍</div><div><div class="product-name">SEO</div><div class="product-price">From €229 p/m · All plans include full audit</div></div></div><span class="chevron">▼</span>
     </div>
     <div class="product-body">
-      <button class="back-to-discovery" onclick="jumpTo('discovery')">← Back to Discovery</button>
-      <div class="pitch-line">"Your website exists — but can your customers actually find it? SEO is what turns a nice-looking site into one that consistently brings in new business."</div>
+      <button class="back-to-discovery" onclick="jumpTo('discovery')" data-nl="← Terug naar Vragen">← Back to Discovery</button>
+      <div class="pitch-line" data-nl="&ldquo;Uw website bestaat — maar kunnen uw klanten hem ook vinden? SEO is wat een mooi ogende site verandert in één die consistent nieuwe klanten aantrekt.&rdquo;">"Your website exists — but can your customers actually find it? SEO is what turns a nice-looking site into one that consistently brings in new business."</div>
       <div class="plans-row three">
         <div class="plan-card"><div class="plan-name">Elite</div><div class="plan-price">€229 <span>p/m ex VAT</span></div><ul class="plan-features"><li>3 keyword clusters</li><li>5 pages optimised</li><li>Annual strategy review</li><li>Monthly monitoring</li><li>12 AI blogs/year</li></ul></div>
         <div class="plan-card"><div class="plan-name">Premium</div><div class="plan-price">€499 <span>p/m ex VAT</span></div><ul class="plan-features"><li>3 keyword clusters</li><li>8 pages optimised</li><li>6-monthly strategy review</li><li>Monthly monitoring</li><li>12 professional blogs/year</li></ul></div>
         <div class="plan-card"><div class="plan-name">Ultimate</div><div class="plan-price">€1,299 <span>p/m ex VAT</span></div><ul class="plan-features"><li>8 keyword clusters</li><li>8 pages optimised</li><li>Quarterly strategy review</li><li>Monthly monitoring</li><li>24 professional blogs/year</li><li>1 Backlink (DA20+)</li></ul></div>
       </div>
-      <div class="ksp-section"><h4>Key Selling Points</h4><div class="ksp-list"><div class="ksp-item"><div><strong>More Traffic Without Ad Spend</strong> — Higher rankings bring steady organic customers.</div></div><div class="ksp-item"><div><strong>Long-Term ROI</strong> — Unlike ads, SEO keeps compounding over time.</div></div><div class="ksp-item"><div><strong>Stay Ahead of Competitors</strong> — If you're not doing it, they are.</div></div></div></div>
-      <div class="script-prompt">"We built your site to be found — SEO is what actually makes that happen consistently. Think of it as the engine behind the website you already have."</div>
+      <div class="ksp-section"><h4 data-nl="Kernverkooppunten">Key Selling Points</h4><div class="ksp-list"><div class="ksp-item"><div><strong data-nl="Meer verkeer zonder advertentiekosten">More Traffic Without Ad Spend</strong> — <span data-nl="Hogere posities zorgen voor een constante stroom organische klanten.">Higher rankings bring steady organic customers.</span></div></div><div class="ksp-item"><div><strong data-nl="Langetermijn ROI">Long-Term ROI</strong> — <span data-nl="In tegenstelling tot advertenties blijft SEO in waarde groeien.">Unlike ads, SEO keeps compounding over time.</span></div></div><div class="ksp-item"><div><strong data-nl="Blijf concurrenten voor">Stay Ahead of Competitors</strong> — <span data-nl="Als u het niet doet, doen zij het wel.">If you're not doing it, they are.</span></div></div></div></div>
+      <div class="script-prompt" data-nl="&ldquo;We hebben uw site gebouwd om gevonden te worden — SEO is wat dat ook daadwerkelijk consistent laat gebeuren. Zie het als de motor achter de website die u al heeft.&rdquo;">"We built your site to be found — SEO is what actually makes that happen consistently. Think of it as the engine behind the website you already have."</div>
     </div>
   </div>
 
@@ -701,15 +709,15 @@
       <div class="product-toggle-left"><div class="product-icon" style="background:rgba(255,170,90,0.1);">📢</div><div><div class="product-name">Online Advertising</div><div class="product-price">From €500 p/m · Fully managed PPC</div></div></div><span class="chevron">▼</span>
     </div>
     <div class="product-body">
-      <button class="back-to-discovery" onclick="jumpTo('discovery')">← Back to Discovery</button>
-      <div class="pitch-line">"SEO is the long game. If you need customers now — paid advertising puts you at the top of Google immediately, and you only pay when someone clicks."</div>
+      <button class="back-to-discovery" onclick="jumpTo('discovery')" data-nl="← Terug naar Vragen">← Back to Discovery</button>
+      <div class="pitch-line" data-nl="&ldquo;SEO is het lange spel. Als u nu klanten nodig heeft — zet betaald adverteren u bovenaan Google onmiddellijk, en u betaalt alleen wanneer iemand klikt.&rdquo;">"SEO is the long game. If you need customers now — paid advertising puts you at the top of Google immediately, and you only pay when someone clicks."</div>
       <div class="plans-row three">
         <div class="plan-card"><div class="plan-name">Basic</div><div class="plan-price">€500 <span>p/m · Mgmt: €150</span></div><ul class="plan-features"><li>Fully managed</li><li>1 product/service campaign</li><li>Continuous optimisation</li><li>Monthly report & dashboard</li></ul></div>
         <div class="plan-card"><div class="plan-name">Standard</div><div class="plan-price">€1,000 <span>p/m · Mgmt: €180</span></div><ul class="plan-features"><li>Everything in Basic</li><li>Two products/services</li><li>Bi-monthly performance call</li></ul></div>
         <div class="plan-card"><div class="plan-name">Plus</div><div class="plan-price">€2,500 <span>p/m · Mgmt: €250</span></div><ul class="plan-features"><li>Everything in Standard</li><li>Up to 4 products/services</li></ul></div>
       </div>
-      <div class="ksp-section"><h4>Key Selling Points</h4><div class="ksp-list"><div class="ksp-item"><div><strong>Immediate Visibility</strong> — Top of Google from day one.</div></div><div class="ksp-item"><div><strong>Only Pay for Results</strong> — PPC = pay per click, full budget control.</div></div><div class="ksp-item"><div><strong>High-Intent Traffic</strong> — People actively searching = higher conversion.</div></div></div></div>
-      <div class="script-prompt">"€500 a month. If that brings you two or three new clients, it's already paid for itself. And we manage everything."</div>
+      <div class="ksp-section"><h4 data-nl="Kernverkooppunten">Key Selling Points</h4><div class="ksp-list"><div class="ksp-item"><div><strong data-nl="Directe zichtbaarheid">Immediate Visibility</strong> — <span data-nl="Bovenaan Google vanaf dag één.">Top of Google from day one.</span></div></div><div class="ksp-item"><div><strong data-nl="Alleen betalen voor resultaten">Only Pay for Results</strong> — <span data-nl="PPC = betaal per klik, volledige budgetcontrole.">PPC = pay per click, full budget control.</span></div></div><div class="ksp-item"><div><strong data-nl="Hoog-intentie verkeer">High-Intent Traffic</strong> — <span data-nl="Mensen die actief zoeken = hogere conversie.">People actively searching = higher conversion.</span></div></div></div></div>
+      <div class="script-prompt" data-nl="&ldquo;€500 per maand. Als dat u twee of drie nieuwe klanten oplevert, heeft het zichzelf al terugverdiend. En wij regelen alles.&rdquo;">"€500 a month. If that brings you two or three new clients, it's already paid for itself. And we manage everything."</div>
     </div>
   </div>
 
@@ -718,21 +726,21 @@
       <div class="product-toggle-left"><div class="product-icon" style="background:rgba(192,122,255,0.1);">✨</div><div><div class="product-name">AI Social Visibility</div><div class="product-price">3 packages: Leads · Local Search · Visibility</div></div></div><span class="chevron">▼</span>
     </div>
     <div class="product-body">
-      <button class="back-to-discovery" onclick="jumpTo('discovery')">← Back to Discovery</button>
-      <div class="pitch-line">"What would it look like if your social media was always active, always on-brand — without you needing to think about it?"</div>
+      <button class="back-to-discovery" onclick="jumpTo('discovery')" data-nl="← Terug naar Vragen">← Back to Discovery</button>
+      <div class="pitch-line" data-nl="&ldquo;Hoe zou het eruit zien als uw social media altijd actief was, altijd on-brand — zonder dat u er zelf over hoeft na te denken?&rdquo;">"What would it look like if your social media was always active, always on-brand — without you needing to think about it?"</div>
       <div class="plans-row three">
         <div class="plan-card"><div class="plan-name">Leads</div><div class="plan-price" style="font-size:14px">Lead generation focus</div><ul class="plan-features"><li>Content designed to drive enquiries</li></ul></div>
         <div class="plan-card"><div class="plan-name">Local Search</div><div class="plan-price" style="font-size:14px">Local visibility focus</div><ul class="plan-features"><li>Boosts local search & AI discoverability</li></ul></div>
         <div class="plan-card"><div class="plan-name">Visibility</div><div class="plan-price" style="font-size:14px">Brand awareness focus</div><ul class="plan-features"><li>Always-on brand presence</li></ul></div>
       </div>
-      <div class="ksp-section"><h4>Objection Handling</h4>
+      <div class="ksp-section"><h4 data-nl="Bezwarenhandling">Objection Handling</h4>
         <table class="obj-table"><tr><th>Objection</th><th>Response</th></tr>
-          <tr><td class="objection">"I can post myself"</td><td class="response">You can — and you can add your own posts too. But we make sure your brand stays visible every month without you needing to think about it.</td></tr>
-          <tr><td class="objection">"I don't have time"</td><td class="response">That's exactly why businesses choose this. We handle planning, writing, scheduling, and publishing.</td></tr>
-          <tr><td class="objection">"AI can do this"</td><td class="response">AI generates ideas quickly — but someone still needs to protect your brand voice and publish consistently. We combine AI with expert oversight.</td></tr>
+          <tr><td class="objection" data-nl="&ldquo;Ik post zelf wel&rdquo;">"I can post myself"</td><td class="response" data-nl="Dat kan — en u kunt ook zelf posts toevoegen. Maar wij zorgen dat uw merk elke maand zichtbaar blijft zonder dat u er over na hoeft te denken.">You can — and you can add your own posts too. But we make sure your brand stays visible every month without you needing to think about it.</td></tr>
+          <tr><td class="objection" data-nl="&ldquo;Ik heb geen tijd&rdquo;">"I don't have time"</td><td class="response" data-nl="Precies daarom kiezen bedrijven hiervoor. Wij regelen planning, schrijven, inplannen én publiceren.">That's exactly why businesses choose this. We handle planning, writing, scheduling, and publishing.</td></tr>
+          <tr><td class="objection" data-nl="&ldquo;AI kan dit toch&rdquo;">"AI can do this"</td><td class="response" data-nl="AI genereert snel ideeën — maar iemand moet nog steeds de merkstem bewaken en consistent publiceren. Wij combineren AI met menselijk toezicht.">AI generates ideas quickly — but someone still needs to protect your brand voice and publish consistently. We combine AI with expert oversight.</td></tr>
         </table>
       </div>
-      <div class="script-prompt">"How often do you currently post? Do you have a content plan for the next three months? Most business owners don't — and that's not a criticism, it's a time problem. We solve that."</div>
+      <div class="script-prompt" data-nl="&ldquo;Hoe vaak post u momenteel? Heeft u een contentplan voor de komende drie maanden? De meeste ondernemers niet — en dat is geen kritiek, het is een tijdsprobleem. Wij lossen dat op.&rdquo;">"How often do you currently post? Do you have a content plan for the next three months? Most business owners don't — and that's not a criticism, it's a time problem. We solve that."</div>
     </div>
   </div>
 </section>
@@ -740,28 +748,28 @@
 <!-- OBJECTIONS -->
 <section id="objections" class="phase">
   <div class="phase-tag">Phase 08</div>
-  <div class="phase-title">Objections</div>
-  <div class="phase-subtitle">These customers already know us. Objections here are mostly about value, price, or change aversion — not trust.</div>
+  <div class="phase-title" data-nl="Bezwaren">Objections</div>
+  <div class="phase-subtitle" data-nl="Deze klanten kennen ons al. Bezwaren gaan hier voornamelijk over waarde, prijs of weerstand tegen verandering — niet over vertrouwen.">These customers already know us. Objections here are mostly about value, price, or change aversion — not trust.</div>
 
   <div class="script-block">
-    <div class="script-header"><span class="script-role role-warn">Transition</span><span style="font-size:13px;color:var(--text-mid)">Objections about switching from Telenet</span></div>
+    <div class="script-header"><span class="script-role role-warn">Transition</span><span style="font-size:13px;color:var(--text-mid)" data-nl="Bezwaren over de overstap van Telenet">Objections about switching from Telenet</span></div>
     <div class="script-body">
-      <table class="obj-table"><tr><th>Objection</th><th>Response</th></tr>
-        <tr><td class="objection">"I'm happy with what I had through Telenet"</td><td class="response">That makes sense — because we're the ones who built and managed it. Nothing changes in terms of quality. What does change is you now work with us directly — faster support, more flexibility, and a full suite of products we couldn't offer through that channel.</td></tr>
-        <tr><td class="objection">"Why can't I just stay on Telenet?"</td><td class="response">The Telenet partnership has come to an end — that's why we're making this transition. But you're not losing anything. You're actually gaining a more direct relationship with the team that's been doing the work all along.</td></tr>
-        <tr><td class="objection">"I didn't ask for this change"</td><td class="response">I completely understand — and I appreciate your patience with it. I'm personally here to make sure this transition goes smoothly for you.</td></tr>
+      <table class="obj-table"><tr><th data-nl="Bezwaar">Objection</th><th data-nl="Reactie">Response</th></tr>
+        <tr><td class="objection" data-nl="&ldquo;Ik was tevreden met wat ik via Telenet had&rdquo;">"I'm happy with what I had through Telenet"</td><td class="response" data-nl="Dat begrijp ik — want wij zijn degenen die het hebben gebouwd en beheerd. Qua kwaliteit verandert er niets. Wat wél verandert, is dat u nu rechtstreeks met ons samenwerkt — snellere ondersteuning, meer flexibiliteit en een compleet productaanbod dat we via dat kanaal niet konden aanbieden.">That makes sense — because we're the ones who built and managed it. Nothing changes in terms of quality. What does change is you now work with us directly — faster support, more flexibility, and a full suite of products we couldn't offer through that channel.</td></tr>
+        <tr><td class="objection" data-nl="&ldquo;Waarom kan ik niet gewoon bij Telenet blijven?&rdquo;">"Why can't I just stay on Telenet?"</td><td class="response" data-nl="De samenwerking met Telenet is beëindigd — daarom maken we deze overgang. Maar u verliest niets. U krijgt juist een directere relatie met het team dat het werk altijd al deed.">The Telenet partnership has come to an end — that's why we're making this transition. But you're not losing anything. You're actually gaining a more direct relationship with the team that's been doing the work all along.</td></tr>
+        <tr><td class="objection" data-nl="&ldquo;Ik heb hier niet om gevraagd&rdquo;">"I didn't ask for this change"</td><td class="response" data-nl="Dat begrijp ik volledig — en ik waardeer uw geduld daarmee. Ik ben er persoonlijk voor om ervoor te zorgen dat deze overgang soepel verloopt voor u.">I completely understand — and I appreciate your patience with it. I'm personally here to make sure this transition goes smoothly for you.</td></tr>
       </table>
     </div>
   </div>
 
   <div class="script-block">
-    <div class="script-header"><span class="script-role role-warn">Price</span><span style="font-size:13px;color:var(--text-mid)">Handling cost objections</span></div>
+    <div class="script-header"><span class="script-role role-warn">Price</span><span style="font-size:13px;color:var(--text-mid)" data-nl="Omgaan met kostenbezwaren">Handling cost objections</span></div>
     <div class="script-body">
-      <table class="obj-table"><tr><th>Objection</th><th>Response</th></tr>
-        <tr><td class="objection">"It's more expensive than before"</td><td class="response">You're getting more than before — a more capable platform, more products, and direct access to our team. But let's be practical: if this brings you even one extra customer a month, what does that cover? For most businesses, it more than pays for itself.</td></tr>
-        <tr><td class="objection">"I can do it myself"</td><td class="response">Absolutely — tools like Wix exist. But you'd be trading our expertise and support for something you manage yourself. If that's 5–10 hours a month, what does that cost you? And if something breaks, who fixes it?</td></tr>
-        <tr><td class="objection">"I need to think about it"</td><td class="response">Of course. Can I ask — is it the price, the product, or something else? I'd rather understand and come back with the right answer than leave you with an open question.</td></tr>
-        <tr><td class="objection">"I already have someone doing this"</td><td class="response">Fair enough — when did you last review the results they're delivering? We're happy to do a quick audit and show you exactly where you stand. If they're doing a great job, brilliant. If not, you'll know.</td></tr>
+      <table class="obj-table"><tr><th data-nl="Bezwaar">Objection</th><th data-nl="Reactie">Response</th></tr>
+        <tr><td class="objection" data-nl="&ldquo;Het is duurder dan voorheen&rdquo;">"It's more expensive than before"</td><td class="response" data-nl="U krijgt ook meer dan voorheen — een krachtigere oplossing, meer producten en directe toegang tot ons team. Maar laten we praktisch zijn: als dit u ook maar één extra klant per maand oplevert — wat dekt dat dan al? Voor de meeste bedrijven verdient het zichzelf ruimschoots terug.">You're getting more than before — a more capable platform, more products, and direct access to our team. But let's be practical: if this brings you even one extra customer a month, what does that cover? For most businesses, it more than pays for itself.</td></tr>
+        <tr><td class="objection" data-nl="&ldquo;Ik doe het zelf wel&rdquo;">"I can do it myself"</td><td class="response" data-nl="Absoluut — tools zoals Wix bestaan. Maar dan verruilt u onze expertise en ondersteuning voor iets wat u zelf beheert. Als dat 5 tot 10 uur per maand kost — wat kost u dat? En als er iets misgaat — wie lost dat dan op?">Absolutely — tools like Wix exist. But you'd be trading our expertise and support for something you manage yourself. If that's 5–10 hours a month, what does that cost you? And if something breaks, who fixes it?</td></tr>
+        <tr><td class="objection" data-nl="&ldquo;Ik moet er even over nadenken&rdquo;">"I need to think about it"</td><td class="response" data-nl="Uiteraard. Mag ik vragen — is het de prijs, het product, of iets anders? Ik help liever met het juiste antwoord dan u met een open vraag te laten zitten.">Of course. Can I ask — is it the price, the product, or something else? I'd rather understand and come back with the right answer than leave you with an open question.</td></tr>
+        <tr><td class="objection" data-nl="&ldquo;Ik heb al iemand die dit doet&rdquo;">"I already have someone doing this"</td><td class="response" data-nl="Dat begrijp ik — wanneer heeft u de resultaten die ze leveren voor het laatst bekeken? We doen graag een snelle audit en laten u precies zien waar u staat. Als ze het geweldig doen, prima. Als niet — dan weet u het.">Fair enough — when did you last review the results they're delivering? We're happy to do a quick audit and show you exactly where you stand. If they're doing a great job, brilliant. If not, you'll know.</td></tr>
       </table>
     </div>
   </div>
@@ -771,85 +779,85 @@
 <!-- CLOSE -->
 <section id="close" class="phase">
   <div class="phase-tag">Phase 09</div>
-  <div class="phase-title">Close</div>
-  <div class="phase-subtitle">You've earned the right to ask. Confident, clear, no pressure.</div>
+  <div class="phase-title" data-nl="Sluiten">Close</div>
+  <div class="phase-subtitle" data-nl="U heeft het recht verdiend om te vragen. Zelfverzekerd, helder, geen druk.">You've earned the right to ask. Confident, clear, no pressure.</div>
 
   <div class="script-block">
-    <div class="script-header"><span class="script-role role-you">You</span><span style="font-size:13px;color:var(--text-mid)">The ask</span></div>
-    <div class="script-body">"Based on everything you've told me today, and knowing the work we've already done for you — I'd recommend <span class="ph">[specific product + plan]</span>. It's <span class="ph">[price]</span>, and we can have everything sorted within <span class="ph">[timeframe]</span>.<br><br>Does that work for you?"</div>
+    <div class="script-header"><span class="script-role role-you">You</span><span style="font-size:13px;color:var(--text-mid)" data-nl="Het verzoek">The ask</span></div>
+    <div class="script-body" data-nl="&ldquo;Op basis van alles wat u me vandaag heeft verteld, en gezien het werk dat we al voor u hebben gedaan — zou ik <span class='ph'>[specifiek product + abonnement]</span> aanraden. Dat is <span class='ph'>[prijs]</span>, en we kunnen alles geregeld hebben binnen <span class='ph'>[tijdsbestek]</span>.<br><br>Klinkt dat goed voor u?&rdquo;">"Based on everything you've told me today, and knowing the work we've already done for you — I'd recommend <span class="ph">[specific product + plan]</span>. It's <span class="ph">[price]</span>, and we can have everything sorted within <span class="ph">[timeframe]</span>.<br><br>Does that work for you?"</div>
   </div>
 
   <!-- RECOMMENDATION PANEL -->
   <div id="rec-panel">
-    <div style="font-family:'DM Mono',monospace;font-size:11px;text-transform:uppercase;letter-spacing:0.1em;color:var(--text-dim);margin-bottom:12px;">💡 Based on this call</div>
+    <div id="rec-based-label" style="font-family:'DM Mono',monospace;font-size:11px;text-transform:uppercase;letter-spacing:0.1em;color:var(--text-dim);margin-bottom:12px;" data-nl="💡 Op basis van dit gesprek">💡 Based on this call</div>
     <div id="rec-content">
-      <div id="rec-empty" style="background:var(--surface2);border:1px solid var(--border);border-radius:10px;padding:18px;font-size:13px;color:var(--text-dim);font-style:italic;">Select questions in Discovery to generate a personalised recommendation here.</div>
+      <div id="rec-empty" style="background:var(--surface2);border:1px solid var(--border);border-radius:10px;padding:18px;font-size:13px;color:var(--text-dim);font-style:italic;" data-nl="Selecteer vragen in Discovery om hier een persoonlijke aanbeveling te genereren.">Select questions in Discovery to generate a personalised recommendation here.</div>
     </div>
   </div>
 
   <div class="close-options" style="margin-top:24px">
     <div class="close-card">
-      <h4>✅ If they say yes</h4>
-      <p style="margin-bottom:10px">Confirm the details, then say:</p>
-      <p style="font-style:italic;color:var(--text);margin-bottom:10px">"Perfect. What we'll do now is get you booked in for an onboarding call — that's where we'll walk you through everything, get all the details we need from you, and make sure the setup is exactly right for your business. You'll hear from us shortly to confirm the time."</p>
-      <p>Confirm their email address, keep the energy warm. They've been a customer — treat them like one.</p>
+      <h4 data-nl="✅ Als ze ja zeggen">✅ If they say yes</h4>
+      <p style="margin-bottom:10px" data-nl="Bevestig de details, en zeg dan:">Confirm the details, then say:</p>
+      <p style="font-style:italic;color:var(--text);margin-bottom:10px" data-nl="&ldquo;Prima. Wat we nu doen is een onboarding-gesprek inplannen — daar lopen we alles met u door, verzamelen we alle informatie die we nodig hebben en zorgen we dat de opzet precies goed is voor uw bedrijf. U hoort spoedig van ons om de tijd te bevestigen.&rdquo;">"Perfect. What we'll do now is get you booked in for an onboarding call — that's where we'll walk you through everything, get all the details we need from you, and make sure the setup is exactly right for your business. You'll hear from us shortly to confirm the time."</p>
+      <p data-nl="Bevestig hun e-mailadres, houd de sfeer warm. Ze zijn al klant — behandel ze als zodanig.">Confirm their email address, keep the energy warm. They've been a customer — treat them like one.</p>
     </div>
     <div class="close-card">
-      <h4>⏳ If they need time</h4>
-      <p>"No problem — can I send you a summary of what we discussed? And when's a good time to follow up — would Thursday or Friday work?" Always book the follow-up before ending the call.</p>
+      <h4 data-nl="⏳ Als ze tijd nodig hebben">⏳ If they need time</h4>
+      <p data-nl="&ldquo;Geen probleem — mag ik u een samenvatting sturen van wat we hebben besproken? En wanneer schikt een follow-up — werkt donderdag of vrijdag?&rdquo; Plan altijd de follow-up in voor u het gesprek beëindigt.">"No problem — can I send you a summary of what we discussed? And when's a good time to follow up — would Thursday or Friday work?" Always book the follow-up before ending the call.</p>
     </div>
     <div class="close-card">
-      <h4>🚫 If they say no</h4>
-      <p>"I appreciate your honesty. Can I ask — is it the product, the price, or the timing? I'd rather understand now so I can come back when the fit is right."</p>
+      <h4 data-nl="🚫 Als ze nee zeggen">🚫 If they say no</h4>
+      <p data-nl="&ldquo;Ik waardeer uw eerlijkheid. Mag ik vragen — is het het product, de prijs of het moment? Ik begrijp het liever nu zodat ik op het juiste moment kan terugkomen.&rdquo;">"I appreciate your honesty. Can I ask — is it the product, the price, or the timing? I'd rather understand now so I can come back when the fit is right."</p>
     </div>
     <div class="close-card">
-      <h4>📋 Always</h4>
-      <p>Log the outcome, note objections, set a follow-up reminder. A no today from a long-term customer is often a yes in 3 months.</p>
+      <h4 data-nl="📋 Altijd">📋 Always</h4>
+      <p data-nl="Log het resultaat, noteer bezwaren, stel een follow-up herinnering in. Een 'nee' vandaag van een langdurige klant is vaak een 'ja' over 3 maanden.">Log the outcome, note objections, set a follow-up reminder. A no today from a long-term customer is often a yes in 3 months.</p>
     </div>
   </div>
 
   <div class="oneliners" style="margin-top:24px">
-    <div class="oneliner">"You've trusted us with your website for years. This is just the next step in that same relationship."</div>
-    <div class="oneliner">"We're not asking you to take a leap of faith — you already know the quality of our work."</div>
+    <div class="oneliner" data-nl="&ldquo;U heeft ons al jaren vertrouwd met uw website. Dit is gewoon de volgende stap in diezelfde relatie.&rdquo;">"You've trusted us with your website for years. This is just the next step in that same relationship."</div>
+    <div class="oneliner" data-nl="&ldquo;We vragen u niet een sprong in het diepe te maken — u kent de kwaliteit van ons werk al.&rdquo;">"We're not asking you to take a leap of faith — you already know the quality of our work."</div>
   </div>
 </section>
 <hr class="divider">
 
 <!-- CUSTOMER JOURNEY -->
 <section id="journey" class="phase">
-  <div class="phase-tag">After the Sale</div>
-  <div class="phase-title">Customer Journey & Sign-Up Process</div>
-  <div class="phase-subtitle">Know what happens after you close — so you can set expectations confidently on the call.</div>
-  <div class="insight-blue"><strong>💡 Tell the customer what happens next</strong><br>After they say yes, briefly walk them through the journey. It removes uncertainty and builds confidence in the decision they just made.</div>
+  <div class="phase-tag" data-nl="Na de verkoop">After the Sale</div>
+  <div class="phase-title" data-nl="Klanttraject & Aanmeldproces">Customer Journey & Sign-Up Process</div>
+  <div class="phase-subtitle" data-nl="Weet wat er na het sluiten gebeurt — zodat u verwachtingen zelfverzekerd kunt stellen tijdens het gesprek.">Know what happens after you close — so you can set expectations confidently on the call.</div>
+  <div class="insight-blue" data-nl="<strong>💡 Vertel de klant wat er daarna komt</strong><br>Na hun 'ja' neemt u hen kort mee door het traject. Het neemt onzekerheid weg en geeft vertrouwen in de beslissing die ze net hebben genomen."><strong>💡 Tell the customer what happens next</strong><br>After they say yes, briefly walk them through the journey. It removes uncertainty and builds confidence in the decision they just made.</div>
   <div class="script-block">
-    <div class="script-header"><span class="script-role role-you">You</span><span style="font-size:13px;color:var(--text-mid)">What to say after closing</span></div>
-    <div class="script-body">"Perfect. Here's what happens from here — we'll get you booked in for an onboarding call where we gather everything we need. Our team builds your site fast, and then you get an approval call to review the first version. From there you can change everything — we handle the revisions, do a final quality check, and then you're live with ongoing support from that point forward."</div>
+    <div class="script-header"><span class="script-role role-you">You</span><span style="font-size:13px;color:var(--text-mid)" data-nl="Wat u zegt na het sluiten">What to say after closing</span></div>
+    <div class="script-body" data-nl="&ldquo;Prima. Hier is wat er nu gaat gebeuren — we plannen een onboarding-gesprek in waar we alles ophalen wat we nodig hebben. Ons team bouwt uw site snel, en dan krijgt u een goedkeuringsgesprek om de eerste versie te bekijken. Vanaf daar kunt u alles aanpassen — we verwerken de revisies, doen een laatste kwaliteitscontrole, en dan gaat u live met doorlopende ondersteuning.&rdquo;">"Perfect. Here's what happens from here — we'll get you booked in for an onboarding call where we gather everything we need. Our team builds your site fast, and then you get an approval call to review the first version. From there you can change everything — we handle the revisions, do a final quality check, and then you're live with ongoing support from that point forward."</div>
   </div>
   <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;margin:16px 0;">
     <div class="script-block" style="margin:0">
-      <div class="script-header"><span class="script-role role-tip">Customer Journey</span></div>
+      <div class="script-header"><span class="script-role role-tip" data-nl="Klanttraject">Customer Journey</span></div>
       <div class="script-body" style="font-size:13px;">
         <div style="display:flex;flex-direction:column;gap:10px;">
-          <div style="display:flex;gap:10px;align-items:flex-start;"><span style="color:var(--accent);font-family:'DM Mono',monospace;font-size:11px;flex-shrink:0;margin-top:2px;">01</span><div><strong style="color:var(--text)">Sale + book approval call</strong><br><span style="color:var(--text-mid)">Close the sale and schedule the first approval call</span></div></div>
-          <div style="display:flex;gap:10px;align-items:flex-start;"><span style="color:var(--accent);font-family:'DM Mono',monospace;font-size:11px;flex-shrink:0;margin-top:2px;">02</span><div><strong style="color:var(--text)">Order placed & website built</strong><br><span style="color:var(--text-mid)">Our team builds the website based on the brief</span></div></div>
-          <div style="display:flex;gap:10px;align-items:flex-start;"><span style="color:var(--accent);font-family:'DM Mono',monospace;font-size:11px;flex-shrink:0;margin-top:2px;">03</span><div><strong style="color:var(--text)">Approval call</strong><br><span style="color:var(--text-mid)">First draft delivered fast — customer can change everything from here</span></div></div>
-          <div style="display:flex;gap:10px;align-items:flex-start;"><span style="color:var(--accent);font-family:'DM Mono',monospace;font-size:11px;flex-shrink:0;margin-top:2px;">04</span><div><strong style="color:var(--text)">Revisions</strong><br><span style="color:var(--text-mid)">Production & revisions based on feedback</span></div></div>
-          <div style="display:flex;gap:10px;align-items:flex-start;"><span style="color:var(--accent);font-family:'DM Mono',monospace;font-size:11px;flex-shrink:0;margin-top:2px;">05</span><div><strong style="color:var(--text)">2nd Approval Call</strong><br><span style="color:var(--text-mid)">Final review with customer before going live</span></div></div>
-          <div style="display:flex;gap:10px;align-items:flex-start;"><span style="color:var(--accent);font-family:'DM Mono',monospace;font-size:11px;flex-shrink:0;margin-top:2px;">06</span><div><strong style="color:var(--text)">Final QA checks</strong><br><span style="color:var(--text-mid)">Internal quality assurance before launch</span></div></div>
-          <div style="display:flex;gap:10px;align-items:flex-start;"><span style="color:var(--accent);font-family:'DM Mono',monospace;font-size:11px;flex-shrink:0;margin-top:2px;">07</span><div><strong style="color:var(--text)">Set Live & Ongoing Support</strong><br><span style="color:var(--text-mid)">Website goes live — ongoing support from here</span></div></div>
+          <div style="display:flex;gap:10px;align-items:flex-start;"><span style="color:var(--accent);font-family:'DM Mono',monospace;font-size:11px;flex-shrink:0;margin-top:2px;">01</span><div><strong style="color:var(--text)" data-nl="Verkoop + goedkeuringsgesprek inplannen">Sale + book approval call</strong><br><span style="color:var(--text-mid)" data-nl="Sluit de verkoop en plan het eerste goedkeuringsgesprek in">Close the sale and schedule the first approval call</span></div></div>
+          <div style="display:flex;gap:10px;align-items:flex-start;"><span style="color:var(--accent);font-family:'DM Mono',monospace;font-size:11px;flex-shrink:0;margin-top:2px;">02</span><div><strong style="color:var(--text)" data-nl="Order geplaatst & website gebouwd">Order placed & website built</strong><br><span style="color:var(--text-mid)" data-nl="Ons team bouwt de website op basis van de briefing">Our team builds the website based on the brief</span></div></div>
+          <div style="display:flex;gap:10px;align-items:flex-start;"><span style="color:var(--accent);font-family:'DM Mono',monospace;font-size:11px;flex-shrink:0;margin-top:2px;">03</span><div><strong style="color:var(--text)" data-nl="Goedkeuringsgesprek">Approval call</strong><br><span style="color:var(--text-mid)" data-nl="Eerste versie snel opgeleverd — klant kan alles aanpassen">First draft delivered fast — customer can change everything from here</span></div></div>
+          <div style="display:flex;gap:10px;align-items:flex-start;"><span style="color:var(--accent);font-family:'DM Mono',monospace;font-size:11px;flex-shrink:0;margin-top:2px;">04</span><div><strong style="color:var(--text)" data-nl="Revisies">Revisions</strong><br><span style="color:var(--text-mid)" data-nl="Productie & revisies op basis van feedback">Production & revisions based on feedback</span></div></div>
+          <div style="display:flex;gap:10px;align-items:flex-start;"><span style="color:var(--accent);font-family:'DM Mono',monospace;font-size:11px;flex-shrink:0;margin-top:2px;">05</span><div><strong style="color:var(--text)" data-nl="2e Goedkeuringsgesprek">2nd Approval Call</strong><br><span style="color:var(--text-mid)" data-nl="Eindreview met klant voor go-live">Final review with customer before going live</span></div></div>
+          <div style="display:flex;gap:10px;align-items:flex-start;"><span style="color:var(--accent);font-family:'DM Mono',monospace;font-size:11px;flex-shrink:0;margin-top:2px;">06</span><div><strong style="color:var(--text)" data-nl="Eindcontrole kwaliteit">Final QA checks</strong><br><span style="color:var(--text-mid)" data-nl="Interne kwaliteitscontrole voor lancering">Internal quality assurance before launch</span></div></div>
+          <div style="display:flex;gap:10px;align-items:flex-start;"><span style="color:var(--accent);font-family:'DM Mono',monospace;font-size:11px;flex-shrink:0;margin-top:2px;">07</span><div><strong style="color:var(--text)" data-nl="Live zetten & doorlopende ondersteuning">Set Live & Ongoing Support</strong><br><span style="color:var(--text-mid)" data-nl="Website gaat live — doorlopende support vanaf hier">Website goes live — ongoing support from here</span></div></div>
         </div>
       </div>
     </div>
     <div class="script-block" style="margin:0">
-      <div class="script-header"><span class="script-role role-tip">Sales Sign-Up Process</span><span style="font-size:11px;color:var(--text-dim)">(until Salesforce payments go live)</span></div>
+      <div class="script-header"><span class="script-role role-tip" data-nl="Aanmeldproces">Sales Sign-Up Process</span><span style="font-size:11px;color:var(--text-dim)" data-nl="(tot Salesforce-betalingen live gaan)">(until Salesforce payments go live)</span></div>
       <div class="script-body" style="font-size:13px;">
         <div style="display:flex;flex-direction:column;gap:10px;">
-          <div style="display:flex;gap:10px;align-items:flex-start;"><span style="color:var(--orange);font-family:'DM Mono',monospace;font-size:11px;flex-shrink:0;margin-top:2px;">01</span><div><strong style="color:var(--text)">Read confirmation script</strong><br><span style="color:var(--text-mid)">Read the closing script to the customer</span></div></div>
-          <div style="display:flex;gap:10px;align-items:flex-start;"><span style="color:var(--orange);font-family:'DM Mono',monospace;font-size:11px;flex-shrink:0;margin-top:2px;">02</span><div><strong style="color:var(--text)">Complete online salesform</strong><br><span style="color:var(--text-mid)">Fill in the order form online</span></div></div>
-          <div style="display:flex;gap:10px;align-items:flex-start;"><span style="color:var(--orange);font-family:'DM Mono',monospace;font-size:11px;flex-shrink:0;margin-top:2px;">03</span><div><strong style="color:var(--text)">Richie/Fidel places order</strong><br><span style="color:var(--text-mid)">Internal team processes and places the order</span></div></div>
-          <div style="display:flex;gap:10px;align-items:flex-start;"><span style="color:var(--orange);font-family:'DM Mono',monospace;font-size:11px;flex-shrink:0;margin-top:2px;">04</span><div><strong style="color:var(--text)">Customer receives payment link</strong><br><span style="color:var(--text-mid)">Payment link sent to the customer</span></div></div>
-          <div style="display:flex;gap:10px;align-items:flex-start;"><span style="color:var(--orange);font-family:'DM Mono',monospace;font-size:11px;flex-shrink:0;margin-top:2px;">05</span><div><strong style="color:var(--text)">Customer pays → Order placed</strong><br><span style="color:var(--text-mid)">Payment confirmed, production begins</span></div></div>
-          <div style="display:flex;gap:10px;align-items:flex-start;"><span style="color:var(--red);font-family:'DM Mono',monospace;font-size:11px;flex-shrink:0;margin-top:2px;">!</span><div><strong style="color:var(--red)">If not paid within 1 business day</strong><br><span style="color:var(--text-mid)">Sales to follow up with the customer directly</span></div></div>
+          <div style="display:flex;gap:10px;align-items:flex-start;"><span style="color:var(--orange);font-family:'DM Mono',monospace;font-size:11px;flex-shrink:0;margin-top:2px;">01</span><div><strong style="color:var(--text)" data-nl="Bevestigingsscript voorlezen">Read confirmation script</strong><br><span style="color:var(--text-mid)" data-nl="Lees het sluitingsscript voor aan de klant">Read the closing script to the customer</span></div></div>
+          <div style="display:flex;gap:10px;align-items:flex-start;"><span style="color:var(--orange);font-family:'DM Mono',monospace;font-size:11px;flex-shrink:0;margin-top:2px;">02</span><div><strong style="color:var(--text)" data-nl="Online verkoopformulier invullen">Complete online salesform</strong><br><span style="color:var(--text-mid)" data-nl="Vul het orderformulier online in">Fill in the order form online</span></div></div>
+          <div style="display:flex;gap:10px;align-items:flex-start;"><span style="color:var(--orange);font-family:'DM Mono',monospace;font-size:11px;flex-shrink:0;margin-top:2px;">03</span><div><strong style="color:var(--text)" data-nl="Richie/Fidel plaatst de order">Richie/Fidel places order</strong><br><span style="color:var(--text-mid)" data-nl="Intern team verwerkt en plaatst de order">Internal team processes and places the order</span></div></div>
+          <div style="display:flex;gap:10px;align-items:flex-start;"><span style="color:var(--orange);font-family:'DM Mono',monospace;font-size:11px;flex-shrink:0;margin-top:2px;">04</span><div><strong style="color:var(--text)" data-nl="Klant ontvangt betaallink">Customer receives payment link</strong><br><span style="color:var(--text-mid)" data-nl="Betaallink verstuurd naar de klant">Payment link sent to the customer</span></div></div>
+          <div style="display:flex;gap:10px;align-items:flex-start;"><span style="color:var(--orange);font-family:'DM Mono',monospace;font-size:11px;flex-shrink:0;margin-top:2px;">05</span><div><strong style="color:var(--text)" data-nl="Klant betaalt → Order geplaatst">Customer pays → Order placed</strong><br><span style="color:var(--text-mid)" data-nl="Betaling bevestigd, productie begint">Payment confirmed, production begins</span></div></div>
+          <div style="display:flex;gap:10px;align-items:flex-start;"><span style="color:var(--red);font-family:'DM Mono',monospace;font-size:11px;flex-shrink:0;margin-top:2px;">!</span><div><strong style="color:var(--red)" data-nl="Niet betaald binnen 1 werkdag">If not paid within 1 business day</strong><br><span style="color:var(--text-mid)" data-nl="Sales neemt direct contact op met de klant">Sales to follow up with the customer directly</span></div></div>
         </div>
       </div>
     </div>
@@ -858,8 +866,26 @@
 
 </main>
 <script>
+// ── LANGUAGE ──
+let currentLang = 'en';
+
+function setLang(lang) {
+  currentLang = lang;
+  localStorage.setItem('lang', lang);
+  document.querySelectorAll('.lang-btn').forEach(btn => {
+    btn.classList.toggle('active', btn.dataset.lang === lang);
+  });
+  document.querySelectorAll('[data-nl]').forEach(el => {
+    if (!el.dataset.en) el.dataset.en = el.innerHTML;
+    el.innerHTML = lang === 'nl' ? el.dataset.nl : el.dataset.en;
+  });
+  // Re-render dynamic panels so conclusions and UI strings update too
+  if(typeof renderSelected==='function')renderSelected();
+  if(typeof renderRecommendation==='function')renderRecommendation();
+}
+
 function toggleAccordion(h){const a=h.closest('.product-accordion');a.classList.toggle('open');}
-function toggleQBlock(btn){const block=btn.closest('.q-block');const body=block.querySelector('.q-more-body');body.classList.toggle('open');btn.classList.toggle('open');btn.textContent=body.classList.contains('open')?'− less questions':'+ more questions';}
+function toggleQBlock(btn){const block=btn.closest('.q-block');const body=block.querySelector('.q-more-body');body.classList.toggle('open');btn.classList.toggle('open');const isOpen=body.classList.contains('open');btn.textContent=isOpen?(currentLang==='nl'?'− minder vragen':'− less questions'):(currentLang==='nl'?'+ meer vragen':'+ more questions');}
 function toggleSidebar(){document.getElementById('sidebar').classList.toggle('open');document.getElementById('overlay').classList.toggle('open');}
 function jumpTo(id){const el=document.getElementById(id);if(!el)return;if(el.classList.contains('product-accordion'))el.classList.add('open');el.scrollIntoView({behavior:'smooth',block:'start'});document.getElementById('sidebar').classList.remove('open');document.getElementById('overlay').classList.remove('open');}
 
@@ -901,8 +927,65 @@ const conclusionMap={
   'Is your business growing the way you want it to — or do you feel like you\'re leaving customers on the table?':'You feel like you\'re leaving customers on the table.'
 };
 
+const conclusionMapNL={
+  'Your website is often the first impression someone gets of your business — does it represent the quality of what you actually do?':'Uw website weerspiegelt niet volledig de kwaliteit van wat u echt doet.',
+  'When did you last update your website? Does it still reflect where your business is today?':'Uw website weerspiegelt niet meer waar uw bedrijf vandaag staat.',
+  'Have you checked lately how your website looks compared to your competitors? Are they showing up stronger than you online?':'Uw concurrenten zijn sterker online aanwezig dan u.',
+  'Are you getting enquiries through your website, or are most of your leads still coming through word of mouth?':'Uw website genereert geen actieve leads voor u.',
+  'If someone in [city] searches for [their service] right now — do you think you\'d come up?':'U verschijnt waarschijnlijk niet wanneer potentiële klanten naar u zoeken.',
+  'Do you know where you rank on Google for your main service?':'U heeft geen helder beeld van uw Google-positie.',
+  'Would you be willing to invest in being found organically on Google over the next 6–12 months?':'U staat open voor investeren in langdurige organische Google-zichtbaarheid.',
+  'Is ranking higher on Google something you\'d prioritise as a growth strategy?':'Hoger scoren op Google is een duidelijke groeistrategie voor u.',
+  'Are you aware that SEO is a long-term investment — and does that appeal to you?':'U begrijpt dat SEO een langetermijninvestering is en staat open voor die aanpak.',
+  'Has anything changed in the business since we last worked on your site — new services, different focus, new location?':'Uw website weerspiegelt niet de huidige staat van uw bedrijf.',
+  'Have you launched any new services or products that aren\'t on your site yet?':'Nieuwe diensten die u aanbiedt zijn niet zichtbaar voor potentiële klanten online.',
+  'Does your website still feel like you — or has your business moved on from it?':'Uw bedrijf is verder gegaan, maar uw website niet.',
+  'What does your Google rating look like right now — are customers leaving reviews?':'Uw online reputatie wordt niet actief beheerd.',
+  'Do you respond to your reviews — good and bad?':'U reageert niet op reviews, wat uw zichtbaarheid en vertrouwen schaadt.',
+  'Outside of word of mouth — how are new customers finding you today?':'U leunt te zwaar op mond-tot-mondreclame voor nieuwe klanten.',
+  'Is your online presence actively bringing you new business, or is it more passive?':'Uw online aanwezigheid is passief — ze werkt niet hard genoeg voor u.',
+  'If you could get more leads online without relying on referrals — would that make a difference?':'Er is onbenut leadpotentieel online dat u niet bereikt.',
+  'Are you active on social media at all — Instagram, Facebook? How consistent has that been?':'Uw social media aanwezigheid is inconsistent.',
+  'Do you feel like your social media reflects the quality of your business?':'Uw social media weerspiegelt niet de kwaliteit van uw bedrijf.',
+  'How much time do you actually spend on social media for your business each week?':'Social media kost te veel tijd ten koste van uw bedrijfsvoering.',
+  'Is staying consistent on social something you struggle with?':'Consistent blijven op social media is een echte uitdaging voor u.',
+  'If your social media was always active and on-brand without you thinking about it — would that help?':'U profiteert van social media die wordt beheerd zonder tijdsinvestering.',
+  'Have you ever tried Google Ads or paid advertising? How did that go?':'Eerdere advertentiepogingen hebben niet de resultaten opgeleverd die u nodig had.',
+  'Are you currently spending anything on online advertising?':'U investeert momenteel niet in online adverteren.',
+  'Have you ever felt like you\'re invisible on Google compared to competitors?':'U heeft het gevoel dat concurrenten u overtreffen op Google.',
+  'Is getting more leads quickly something that\'s important to you right now?':'Snel nieuwe leads krijgen is een prioriteit voor het bedrijf.',
+  'If every €1 you spent on ads brought back €3 — would you want to know how?':'U staat open voor betaald adverteren als de ROI duidelijk is.',
+  'What\'s your main focus for the business over the next 12 months — grow, stabilise, expand?':'Groei is de voornaamste prioriteit voor het bedrijf dit jaar.',
+  'If everything went well this year — what would that look like for your business?':'U heeft een duidelijke visie van waar u het bedrijf naartoe wilt brengen.',
+  'Where do you want to be in a year from now, and is your online presence set up to get you there?':'Uw online aanwezigheid is niet afgestemd op uw groeistrategie.',
+  'Are you where you want to be in terms of growth, or is there more potential you\'re not reaching?':'Er is meer potentieel in het bedrijf dat nog niet wordt benut.',
+  'Is your business growing the way you want it to — or do you feel like you\'re leaving customers on the table?':'U heeft het gevoel dat u klanten laat liggen.'
+};
+
+const uiStrings={
+  en:{
+    primaryLabel:'⭐ Primary recommendation',
+    altLabel:'🔄 Alternative package',
+    altsHeader:'💡 Lighter alternatives — individual products',
+    viewDetails:'View details →',
+    whyFits:'Why this fits — based on what you heard:',
+    noSignals:'Not enough signals yet — keep asking questions to refine the recommendation.',
+    noQuestions:'Select questions in Discovery to generate a personalised recommendation here.'
+  },
+  nl:{
+    primaryLabel:'⭐ Primaire aanbeveling',
+    altLabel:'🔄 Alternatief pakket',
+    altsHeader:'💡 Lichtere alternatieven — losse producten',
+    viewDetails:'Bekijk details →',
+    whyFits:'Waarom dit past — gebaseerd op wat u heeft gehoord:',
+    noSignals:'Nog niet genoeg signalen — blijf vragen stellen om de aanbeveling te verfijnen.',
+    noQuestions:'Selecteer vragen in Discovery om hier een gepersonaliseerde aanbeveling te genereren.'
+  }
+};
+
 function getConclusion(text){
-  const clean=text.replace(/<[^>]+>/g,'').trim().replace(/^[""]|[""]$/g,'').trim();
+  const clean=text.replace(/<[^>]+>/g,'').trim().replace(/^[“”""]|[“”""]$/g,'').trim();
+  if(currentLang==='nl'&&conclusionMapNL[clean])return conclusionMapNL[clean];
   return conclusionMap[clean]||text.replace(/<[^>]+>/g,'').trim();
 }
 
@@ -969,9 +1052,9 @@ function getRecommendation(signals){
 
 function renderRecommendation(){
   const content=document.getElementById('rec-content');
-  const empty=document.getElementById('rec-empty');
+  const ui=uiStrings[currentLang];
   if(selectedQuestions.length===0){
-    content.innerHTML='<div id="rec-empty" style="background:var(--surface2);border:1px solid var(--border);border-radius:10px;padding:18px;font-size:13px;color:var(--text-dim);font-style:italic;">Select questions in Discovery to generate a personalised recommendation here.</div>';
+    content.innerHTML=`<div style="background:var(--surface2);border:1px solid var(--border);border-radius:10px;padding:18px;font-size:13px;color:var(--text-dim);font-style:italic;">${ui.noQuestions}</div>`;
     return;
   }
   const signals=getSignals();
@@ -982,11 +1065,11 @@ function renderRecommendation(){
   if(primary){
     html+=`<div class="rec-primary">
       <div class="rec-primary-header">
-        <div><div class="rec-label">⭐ Primary recommendation</div><div class="rec-pkg-name">${primary.icon} ${primary.name}</div><div class="rec-pkg-price">${primary.price}</div></div>
-        <button class="rec-jump-btn" onclick="jumpTo('${primary.id}')">View details →</button>
+        <div><div class="rec-label">${ui.primaryLabel}</div><div class="rec-pkg-name">${primary.icon} ${primary.name}</div><div class="rec-pkg-price">${primary.price}</div></div>
+        <button class="rec-jump-btn" onclick="jumpTo('${primary.id}')">${ui.viewDetails}</button>
       </div>
       <div class="rec-body">
-        <div class="rec-why-title">Why this fits — based on what you heard:</div>
+        <div class="rec-why-title">${ui.whyFits}</div>
         ${conclusions}
         <div style="margin-top:12px;font-size:12px;color:var(--text-dim);font-style:italic;">${primary.reason}</div>
       </div>
@@ -995,20 +1078,20 @@ function renderRecommendation(){
   if(secondary){
     html+=`<div class="rec-primary" style="border-color:rgba(90,180,255,0.3);">
       <div class="rec-primary-header" style="background:rgba(90,180,255,0.07);">
-        <div><div class="rec-label" style="color:var(--blue);">🔄 Alternative package</div><div class="rec-pkg-name">${secondary.icon} ${secondary.name}</div><div class="rec-pkg-price">${secondary.price}</div></div>
-        <button class="rec-jump-btn" style="background:var(--blue);" onclick="jumpTo('${secondary.id}')">View details →</button>
+        <div><div class="rec-label" style="color:var(--blue);">${ui.altLabel}</div><div class="rec-pkg-name">${secondary.icon} ${secondary.name}</div><div class="rec-pkg-price">${secondary.price}</div></div>
+        <button class="rec-jump-btn" style="background:var(--blue);" onclick="jumpTo('${secondary.id}')">${ui.viewDetails}</button>
       </div>
       <div class="rec-body"><div style="font-size:12px;color:var(--text-dim);font-style:italic;">${secondary.reason}</div></div>
     </div>`;
   }
   if(alts.length>0){
-    html+=`<div style="font-family:'DM Mono',monospace;font-size:10px;text-transform:uppercase;letter-spacing:0.1em;color:var(--text-dim);margin:16px 0 8px;">💡 Lighter alternatives — individual products</div>`;
+    html+=`<div style="font-family:'DM Mono',monospace;font-size:10px;text-transform:uppercase;letter-spacing:0.1em;color:var(--text-dim);margin:16px 0 8px;">${ui.altsHeader}</div>`;
     alts.forEach(a=>{
-      html+=`<div class="rec-alt"><div class="rec-alt-left"><h4>${a.icon} ${a.name} — ${a.price}</h4><p>${a.reason}</p></div><button class="rec-alt-btn" onclick="jumpTo('${a.id}')">View details →</button></div>`;
+      html+=`<div class="rec-alt"><div class="rec-alt-left"><h4>${a.icon} ${a.name} — ${a.price}</h4><p>${a.reason}</p></div><button class="rec-alt-btn" onclick="jumpTo('${a.id}')">${ui.viewDetails}</button></div>`;
     });
   }
   if(!primary&&!secondary&&alts.length===0){
-    html='<div style="background:var(--surface2);border:1px solid var(--border);border-radius:10px;padding:18px;font-size:13px;color:var(--text-dim);">Not enough signals yet — keep asking questions to refine the recommendation.</div>';
+    html=`<div style="background:var(--surface2);border:1px solid var(--border);border-radius:10px;padding:18px;font-size:13px;color:var(--text-dim);">${ui.noSignals}</div>`;
   }
   content.innerHTML=html;
 }
@@ -1034,7 +1117,9 @@ function renderSelected(){
 function removeSelected(i){
   const q=selectedQuestions[i];
   document.querySelectorAll('.q-block-main.selected,.q-more-item.selected').forEach(el=>{
-    const t=el.textContent.replace(/<[^>]+>/g,'').trim();
+    // Use stored EN text (data-en) when in NL mode so matching works
+    const raw=el.dataset.en||el.innerHTML;
+    const t=raw.replace(/<[^>]+>/g,'').trim().replace(/^[""""“”]|[""""“”]$/g,'').trim();
     if(t===q.text||t.slice(0,30)===q.text.slice(0,30))el.classList.remove('selected');
   });
   selectedQuestions.splice(i,1);
@@ -1050,16 +1135,20 @@ function resetCall(){
 }
 
 document.addEventListener('DOMContentLoaded',()=>{
+  // Bind question handlers FIRST — captures EN text before any lang swap
   document.querySelectorAll('.q-block').forEach(block=>{
     const tag=block.querySelector('.q-tag').textContent.trim();
     const mainEl=block.querySelector('.q-block-main');
-    const mainText=mainEl.textContent.trim();
+    const mainText=mainEl.textContent.trim().replace(/^[""""""]|[""""""]$/g,'').trim();
     mainEl.onclick=()=>selectQuestion(mainEl,tag,mainText);
     block.querySelectorAll('.q-more-item').forEach(item=>{
-      const itemText=item.textContent.trim();
+      const itemText=item.textContent.trim().replace(/^[""""""]|[""""""]$/g,'').trim();
       item.onclick=()=>selectQuestion(item,tag,itemText);
     });
   });
+  // Apply saved language AFTER handlers are bound
+  const savedLang=localStorage.getItem('lang')||'en';
+  if(savedLang!=='en')setLang(savedLang);
 });
 
 window.addEventListener('scroll',()=>{
